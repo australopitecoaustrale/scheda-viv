@@ -4,144 +4,155 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="Scheda di allenamento che si adatta ogni giorno a come stai.">
-<meta name="theme-color" content="#1D4ED8">
+<meta name="theme-color" content="#2350D0">
 <title>Scheda Viva</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap">
 <style>
-/* Layout: colonna unica da app (max 620px), barra schede fissa in basso; colori dei dischi olimpici come codice semantico */
+/* Layout: colonna unica da app (max 620px), barra schede in basso. Un solo carattere (Archivo) usato in due larghezze:
+   largo e pesante per titoli e numeri, normale per il testo. L'unico gesto forte è il bilanciere caricato della prontezza. */
 :root{
-  --bg:#EEF1F5; --surface:#FFFFFF; --sunk:#E3E8EF; --ink:#121821; --muted:#566273; --line:#D3DAE3;
-  --accent:#1D4ED8; --accent-ink:#FFFFFF; --accent-soft:#DCE6FD;
-  --go:#17834A; --go-soft:#DDF2E6; --warn:#A87A00; --warn-soft:#FBF0CF; --stop:#C2302A; --stop-soft:#FBE1DF;
-  --p25:#D7322C; --p20:#2457D6; --p15:#E8B90F; --p10:#24924F; --p5:#F4F4F2; --p2:#9AA3AE;
-  --f-display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
-  --f-body:"Public Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-  --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
-  --r:12px; --r-sm:8px;
+  --bg:#F1F3F0; --surface:#FFFFFF; --sunk:#E6EAE5; --ink:#191C1A; --muted:#5C655F; --line:#D6DCD5;
+  --accent:#2350D0; --accent-ink:#FFFFFF; --accent-soft:#E0E7FB;
+  --go:#1E8A50; --go-soft:#DFF1E6; --warn:#946A00; --warn-soft:#F8EDCB; --stop:#C4342C; --stop-soft:#F9E1DE;
+  --p25:#D7322C; --p20:#2457D6; --p15:#E8B90F; --p10:#24924F; --p5:#F4F4F2; --p2:#9AA3AE; --steel:#8E978F;
+  --f:"Archivo",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --r:14px; --r-sm:9px;
 }
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
-  --bg:#0D1117; --surface:#151B23; --sunk:#1C2430; --ink:#E6EBF1; --muted:#93A0B0; --line:#29323E;
-  --accent:#6E95FF; --accent-ink:#0B1020; --accent-soft:#1B2A4F;
-  --go:#4CC284; --go-soft:#14301F; --warn:#E5B63A; --warn-soft:#352B0E; --stop:#F2706A; --stop-soft:#3A1715;
-  --p5:#D9DCDF; color-scheme:dark }}
+  --bg:#131513; --surface:#1B1E1B; --sunk:#242824; --ink:#E8ECE8; --muted:#9AA39C; --line:#2E332E;
+  --accent:#7C9BFF; --accent-ink:#0E1430; --accent-soft:#1F2A4C;
+  --go:#57C78B; --go-soft:#173222; --warn:#E6B940; --warn-soft:#352F10; --stop:#F27A70; --stop-soft:#3C1A17;
+  --p5:#D9DCDF; --steel:#6E776F; color-scheme:dark }}
 :root[data-theme="dark"]{
-  --bg:#0D1117; --surface:#151B23; --sunk:#1C2430; --ink:#E6EBF1; --muted:#93A0B0; --line:#29323E;
-  --accent:#6E95FF; --accent-ink:#0B1020; --accent-soft:#1B2A4F;
-  --go:#4CC284; --go-soft:#14301F; --warn:#E5B63A; --warn-soft:#352B0E; --stop:#F2706A; --stop-soft:#3A1715;
-  --p5:#D9DCDF; color-scheme:dark }
+  --bg:#131513; --surface:#1B1E1B; --sunk:#242824; --ink:#E8ECE8; --muted:#9AA39C; --line:#2E332E;
+  --accent:#7C9BFF; --accent-ink:#0E1430; --accent-soft:#1F2A4C;
+  --go:#57C78B; --go-soft:#173222; --warn:#E6B940; --warn-soft:#352F10; --stop:#F27A70; --stop-soft:#3C1A17;
+  --p5:#D9DCDF; --steel:#6E776F; color-scheme:dark }
 *{box-sizing:border-box}
-body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5;
-  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 96px}
+body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:15.5px;line-height:1.5;font-variant-numeric:tabular-nums;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 104px}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
 .app{max-width:620px;margin:0 auto}
-h1,h2,h3{font-family:var(--f-display);font-weight:800;letter-spacing:.01em;line-height:1.05;text-wrap:balance;margin:0}
-h1{font-size:2.4rem;text-transform:uppercase}
-h2{font-size:1.65rem;text-transform:uppercase}
-h3{font-size:1.2rem;text-transform:uppercase;letter-spacing:.02em}
+h1,h2,h3{font-family:var(--f);line-height:1.08;text-wrap:balance;margin:0}
+h1{font-size:2.15rem;font-weight:850;font-stretch:125%;letter-spacing:-.015em}
+h2{font-size:1.45rem;font-weight:800;font-stretch:118%;letter-spacing:-.01em}
+h3{font-size:1.08rem;font-weight:750;font-stretch:112%}
 p{margin:0}
 .muted{color:var(--muted)}
-.small{font-size:.85rem}
-.mono,.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
-.label{font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+.small{font-size:.87rem}
+.mono,.num{font-variant-numeric:tabular-nums}
+.label{font-size:.86rem;font-weight:500;color:var(--muted)}
 .stack{display:flex;flex-direction:column;gap:12px}
-.stack-lg{display:flex;flex-direction:column;gap:22px}
+.stack-lg{display:flex;flex-direction:column;gap:26px}
 .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .between{justify-content:space-between}
 .grow{flex:1;min-width:0}
-header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:14px 10px;border-bottom:1px solid var(--line);margin-bottom:18px}
-.brand{display:flex;align-items:center;gap:10px}
-.brand b{white-space:nowrap;font-family:var(--f-display);font-size:1.45rem;text-transform:uppercase;letter-spacing:.03em}
-.brand-mark{width:28px;height:28px;border-radius:50%;border:5px solid var(--accent);position:relative}
-.brand-mark::after{content:"";position:absolute;inset:6px;border-radius:50%;background:var(--accent)}
-.pill{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;font-size:.75rem;font-weight:700;letter-spacing:.04em;background:var(--sunk);color:var(--muted)}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:14px 12px;margin-bottom:14px}
+.brand{display:flex;align-items:center;gap:9px}
+.brand b{white-space:nowrap;font-size:1.15rem;font-weight:850;font-stretch:125%;letter-spacing:-.01em}
+.brand-mark{width:22px;height:22px;border-radius:50%;border:4px solid var(--accent);position:relative;flex:none}
+.brand-mark::after{content:"";position:absolute;inset:4px;border-radius:50%;background:var(--accent)}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;font-size:.78rem;font-weight:600;background:var(--sunk);color:var(--muted)}
 .pill.go{background:var(--go-soft);color:var(--go)} .pill.warn{background:var(--warn-soft);color:var(--warn)} .pill.stop{background:var(--stop-soft);color:var(--stop)} .pill.acc{background:var(--accent-soft);color:var(--accent)}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px}
-.panel{background:var(--sunk);border-radius:var(--r);padding:14px}
+.card{background:var(--surface);border-radius:var(--r);padding:18px;box-shadow:0 1px 0 var(--line),0 0 0 1px var(--line)}
+.panel{background:var(--sunk);border-radius:var(--r);padding:14px 16px}
 .divide>*+*{border-top:1px solid var(--line)}
-button,.btn{font:inherit;cursor:pointer;border:0;border-radius:10px;padding:11px 16px;font-weight:700;background:var(--sunk);color:var(--ink);transition:transform .08s ease,background .15s ease}
+button,.btn{font:inherit;cursor:pointer;border:0;border-radius:12px;padding:12px 16px;font-weight:650;background:var(--sunk);color:var(--ink);transition:transform .08s ease,background .15s ease}
 button:active{transform:scale(.98)}
-button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,.chip:focus-within{outline:3px solid var(--accent);outline-offset:2px}
-.btn-primary{background:var(--accent);color:var(--accent-ink)}
-.btn-ghost{background:transparent;border:1px solid var(--line)}
-.btn-sm{padding:6px 11px;font-size:.82rem;border-radius:8px}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,.chip:focus-within,a:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.btn-primary{background:var(--accent);color:var(--accent-ink);font-stretch:110%;font-weight:750}
+.btn-ghost{background:transparent;box-shadow:inset 0 0 0 1px var(--line)}
+.btn-sm{padding:7px 12px;font-size:.84rem;border-radius:9px}
 .btn-danger{background:var(--stop-soft);color:var(--stop)}
 .btn-wide{width:100%}
 button[disabled]{opacity:.5;cursor:not-allowed}
 input,select,textarea{font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:var(--r-sm);padding:10px 12px;width:100%}
-textarea{min-height:76px;resize:vertical}
-.field{display:flex;flex-direction:column;gap:6px;min-width:0}
-.field>span{font-weight:600;font-size:.88rem}
+textarea{min-height:80px;resize:vertical}
+.field{display:flex;flex-direction:column;gap:7px;min-width:0}
+.field>span{font-weight:600;font-size:.92rem}
 .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
-@media (max-width:420px){.grid3{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
 .chip{position:relative;display:inline-flex}
 .chip input{position:absolute;opacity:0;inset:0;cursor:pointer;margin:0}
-.chip span{display:inline-block;padding:8px 13px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-weight:600;font-size:.88rem}
-.chip input:checked+span{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
-.scale{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
-.scale .chip span{width:100%;text-align:center;padding:9px 2px;border-radius:8px;font-size:.76rem;overflow-wrap:anywhere}
-.scale .chip{display:block}
-nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--surface);border-top:1px solid var(--line);
-  padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px))}
+.chip span{display:inline-block;padding:8px 14px;border-radius:999px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--line);font-weight:600;font-size:.9rem}
+.chip input:checked+span{background:var(--ink);color:var(--bg);box-shadow:none}
+.scale5{display:flex;flex-direction:column;gap:5px}
+.scale5 .dots{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.scale5 .chip{display:block}
+.scale5 .chip span{display:block;width:100%;text-align:center;padding:9px 0;border-radius:10px;font-weight:750;font-stretch:115%}
+.scale5 .chip input:checked+span{background:var(--accent);color:var(--accent-ink)}
+.scale5 .ends{display:flex;justify-content:space-between;font-size:.78rem;color:var(--muted)}
+nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--surface);box-shadow:0 -1px 0 var(--line);
+  padding:4px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px))}
 nav.tabs .in{max-width:620px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
-nav.tabs a{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0;border-radius:10px;color:var(--muted);text-decoration:none;font-size:.72rem;font-weight:700;letter-spacing:.03em}
+nav.tabs a{position:relative;display:flex;flex-direction:column;align-items:center;gap:3px;padding:9px 0 5px;color:var(--muted);text-decoration:none;font-size:.74rem;font-weight:600}
 nav.tabs a svg{width:22px;height:22px}
-nav.tabs a[aria-current="page"]{color:var(--accent);background:var(--accent-soft)}
-.hero-date{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap}
-.coach{border-left:4px solid var(--accent);padding:4px 0 4px 14px}
-.coach b{display:block;font-family:var(--f-display);text-transform:uppercase;font-size:1.15rem;letter-spacing:.02em}
-.ex{padding:14px 0;display:flex;flex-direction:column;gap:10px}
+nav.tabs a[aria-current="page"]{color:var(--ink)}
+nav.tabs a[aria-current="page"]::before{content:"";position:absolute;top:0;left:30%;right:30%;height:3px;border-radius:0 0 3px 3px;background:var(--accent)}
+.today-head{display:flex;flex-direction:column;gap:6px}
+.coach{background:var(--sunk);border-radius:var(--r);padding:14px 16px;display:flex;flex-direction:column;gap:4px}
+.coach b{font-size:1rem;font-weight:750;font-stretch:112%}
+.ex{padding:15px 0;display:flex;flex-direction:column;gap:10px}
 .ex-head{display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
-.ex-name{font-weight:700;font-size:1.02rem}
-.rx{font-family:var(--f-mono);font-size:.86rem;color:var(--muted)}
-.sets{display:grid;grid-template-columns:28px repeat(3,minmax(0,1fr)) 44px;gap:6px;align-items:center}
-.sets .h{font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:700}
-.sets input{padding:8px 6px;text-align:center;font-family:var(--f-mono)}
-.sets .n{font-family:var(--f-mono);color:var(--muted);text-align:center}
-.tick{width:44px;height:40px;border-radius:8px;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;padding:0;color:var(--muted)}
-.tick[aria-pressed="true"]{background:var(--go);border-color:var(--go);color:var(--surface)}
-.plates{display:inline-flex;gap:3px;align-items:center;vertical-align:middle}
-.plate{display:inline-block;width:7px;border-radius:2px;border:1px solid rgba(0,0,0,.25)}
-.ready-ring{width:86px;height:86px;flex:none}
+.ex-name{font-weight:700;font-size:1.03rem}
+.rx{display:flex;flex-direction:column;gap:2px}
+.rxb{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.rxb-main{font-weight:850;font-stretch:125%;font-size:1.05rem}
+.rxb-load{font-weight:700;color:var(--accent)}
+.rxb-load.none{color:var(--muted);font-weight:500}
+.rxb-meta{font-size:.82rem;color:var(--muted)}
+.sess-list{counter-reset:ex}
+.sess-row{display:grid;grid-template-columns:26px minmax(0,1fr);gap:2px 8px;padding:11px 0;align-items:baseline}
+.sess-row::before{counter-increment:ex;content:counter(ex);font-weight:800;font-stretch:125%;color:var(--muted);grid-row:span 2}
+.sets{display:grid;grid-template-columns:24px repeat(3,minmax(0,1fr)) 46px;gap:6px;align-items:center}
+.sets .h{font-size:.74rem;color:var(--muted);font-weight:600;text-align:center}
+.sets input{padding:9px 4px;text-align:center;font-weight:600}
+.sets .n{font-weight:800;font-stretch:125%;color:var(--muted);text-align:center}
+.tick{width:46px;height:42px;border-radius:10px;background:var(--sunk);display:grid;place-items:center;padding:0;color:var(--muted)}
+.tick[aria-pressed="true"]{background:var(--go);color:var(--surface)}
+.plates{display:inline-flex;gap:2px;align-items:center;vertical-align:middle}
+.plate{display:inline-block;width:7px;border-radius:2px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.18)}
+.bar-wrap{display:flex;flex-direction:column;gap:6px}
+.barbell{width:100%;height:auto;display:block;max-width:420px}
 .zone-go{color:var(--go)} .zone-warn{color:var(--warn)} .zone-stop{color:var(--stop)}
-.banner{border-radius:var(--r);padding:12px 14px;font-size:.9rem;display:flex;gap:10px;align-items:flex-start}
-.banner.warn{background:var(--warn-soft);color:var(--ink)} .banner.warn b{color:var(--warn)}
+.banner{border-radius:var(--r);padding:13px 15px;font-size:.92rem;display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap}
+.banner.warn{background:var(--warn-soft)} .banner.warn b{color:var(--warn)}
 .banner.stop{background:var(--stop-soft)} .banner.stop b{color:var(--stop)}
 .banner.acc{background:var(--accent-soft)}
-.change{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 10px;padding:10px 0}
-.change .k{font-family:var(--f-mono);font-size:.8rem;color:var(--accent);font-weight:500;white-space:nowrap}
+.change{display:grid;grid-template-columns:76px minmax(0,1fr);gap:4px 10px;padding:11px 0}
+.change .k{font-size:.8rem;color:var(--accent);font-weight:700;padding-top:2px}
 .steps{display:flex;gap:4px}
 .steps i{flex:1;height:4px;border-radius:4px;background:var(--line)}
 .steps i.on{background:var(--accent)}
 .stat{display:flex;flex-direction:column;gap:2px}
-.stat .v{font-family:var(--f-display);font-size:2rem;font-weight:800;line-height:1}
+.stat .v{font-size:2rem;font-weight:850;font-stretch:125%;line-height:1}
 .chart{width:100%;height:auto;display:block}
-.chart text{fill:var(--muted);font-family:var(--f-mono);font-size:10px}
+.chart text{fill:var(--muted);font-family:var(--f);font-size:10px}
 .chart .grid{stroke:var(--line);stroke-width:1}
-.chart .ln{fill:none;stroke:var(--accent);stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round}
+.chart .ln{fill:none;stroke:var(--accent);stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round}
 .chart .area{fill:var(--accent);opacity:.1}
 .chart .dot{fill:var(--accent)}
-.vol{display:grid;grid-template-columns:110px minmax(0,1fr) 40px;gap:8px;align-items:center;font-size:.86rem}
+.vol{display:grid;grid-template-columns:96px minmax(0,1fr) 36px;gap:8px;align-items:center;font-size:.88rem}
 .vol .bar{position:relative;height:14px;background:var(--sunk);border-radius:4px;overflow:hidden}
 .vol .band{position:absolute;top:0;bottom:0;background:var(--go-soft)}
 .vol .fill{position:absolute;left:0;top:3px;bottom:3px;background:var(--accent);border-radius:3px}
-.timer{position:fixed;left:0;right:0;bottom:calc(64px + env(safe-area-inset-bottom,0px));z-index:6;display:flex;justify-content:center;padding:0 max(16px,env(safe-area-inset-right,0px)) 0 max(16px,env(safe-area-inset-left,0px))}
-.timer .in{background:var(--ink);color:var(--bg);border-radius:999px;padding:8px 8px 8px 18px;display:flex;align-items:center;gap:12px;font-family:var(--f-mono);box-shadow:0 6px 24px rgba(0,0,0,.25)}
+.timer{position:fixed;left:0;right:0;bottom:calc(68px + env(safe-area-inset-bottom,0px));z-index:6;display:flex;justify-content:center;padding:0 max(16px,env(safe-area-inset-right,0px)) 0 max(16px,env(safe-area-inset-left,0px))}
+.timer .in{background:var(--ink);color:var(--bg);border-radius:999px;padding:8px 8px 8px 18px;display:flex;align-items:center;gap:12px;box-shadow:0 8px 28px rgba(0,0,0,.28)}
+.timer b{font-stretch:125%;font-size:1.15rem}
 .timer button{background:var(--bg);color:var(--ink)}
-details summary{cursor:pointer;font-weight:700}
-.src{font-size:.86rem;padding:10px 0}
+details summary{cursor:pointer;font-weight:600}
+.src{font-size:.88rem;padding:11px 0}
 .src a{color:var(--accent);word-break:break-all}
-.proposal{display:grid;grid-template-columns:24px minmax(0,1fr);gap:10px;padding:10px 0;align-items:start}
+.proposal{display:grid;grid-template-columns:24px minmax(0,1fr);gap:10px;padding:11px 0;align-items:start}
 .proposal input{width:20px;height:20px;margin-top:3px}
-.welcome-plates{display:flex;gap:6px;align-items:center;height:70px}
-.welcome-plates i{display:block;width:14px;border-radius:3px}
-.empty{padding:28px 16px;text-align:center;border:1px dashed var(--line);border-radius:var(--r)}
-.toast{position:fixed;left:50%;transform:translateX(-50%);top:calc(12px + env(safe-area-inset-top,0px));z-index:20;background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-weight:600;font-size:.9rem;max-width:calc(100% - 32px)}
-.scroll-x{overflow-x:auto}
+.empty{padding:26px 16px;text-align:center;border-radius:var(--r);background:var(--sunk)}
+.toast{position:fixed;left:50%;transform:translateX(-50%);top:calc(12px + env(safe-area-inset-top,0px));z-index:20;background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;font-weight:600;font-size:.92rem;max-width:calc(100% - 32px)}
+@keyframes load-plate{from{transform:scaleY(.2);opacity:0}to{transform:none;opacity:1}}
+.barbell .pl{transform-box:fill-box;transform-origin:center;animation:load-plate .45s cubic-bezier(.3,1.4,.5,1) both}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
@@ -637,15 +648,16 @@ function render(){
 /* ---------- Onboarding ---------- */
 const OB_STEPS = ["Benvenuto","Tu","Obiettivo","Organizzazione","Nutrizione","Motivazione","Sicurezza","Riepilogo"];
 function chip(name, value, label, checked, type="checkbox"){ return `<label class="chip"><input type="${type}" name="${name}" value="${esc(value)}" ${checked?"checked":""}><span>${esc(label)}</span></label>`; }
-function scale(name, val, labels){ return `<div class="scale">${[1,2,3,4,5].map(v => `<label class="chip"><input type="radio" name="${name}" value="${v}" ${Number(val)===v?"checked":""}><span>${(labels&&labels[v-1])||v}</span></label>`).join("")}</div>`; }
+function scale(name, val, labels){ const lo = labels?.[0] || "", hi = labels?.[4] || "";
+  return `<div class="scale5"><div class="dots">${[1,2,3,4,5].map(v => `<label class="chip"><input type="radio" name="${name}" value="${v}" ${Number(val)===v?"checked":""} aria-label="${v}${v===1&&lo?" ("+lo+")":v===5&&hi?" ("+hi+")":""}"><span>${v}</span></label>`).join("")}</div>${lo||hi?`<div class="ends"><span>${esc(lo)}</span><span>${esc(hi)}</span></div>`:""}</div>`; }
 function renderOnboarding(){
   const o = ui.ob || (ui.ob = S?.profile ? JSON.parse(JSON.stringify(S.profile)) : blankProfile());
   const st = ui.step;
-  const bar = st>0 ? `<div class="stack"><div class="steps">${OB_STEPS.slice(1).map((_,i) => `<i class="${i<st?"on":""}"></i>`).join("")}</div><span class="label">Passo ${st} di ${OB_STEPS.length-1} · ${OB_STEPS[st]}</span></div>` : "";
+  const bar = st>0 ? `<div class="stack"><div class="steps">${OB_STEPS.slice(1).map((_,i) => `<i class="${i<st?"on":""}"></i>`).join("")}</div><span class="label">Passo ${st} di ${OB_STEPS.length-1}: ${OB_STEPS[st].toLowerCase()}</span></div>` : "";
   let body = "";
   if (st===0){
     body = `<div class="stack-lg">
-      <div class="welcome-plates" aria-hidden="true">${[["--p25",70],["--p20",64],["--p15",56],["--p10",48],["--p5",40]].map(([c,h]) => `<i style="height:${h}px;background:var(${c})"></i>`).join("")}<span style="flex:1;height:6px;background:var(--muted);border-radius:3px"></span></div>
+      ${barbell(0,"go",{colors:["var(--p25)","var(--p20)","var(--p15)","var(--p10)"]})}
       <h1>Una scheda che cambia con te</h1>
       <p>Inserisci i tuoi dati una volta. Ogni giorno fai un check di 20 secondi su sonno, energia e dolori, ti alleni, dici com'è andata, e la scheda si riscrive per la volta successiva: carichi, serie, esercizi.</p>
       <div class="panel stack small">
@@ -761,13 +773,22 @@ function plateMath(kg){
 }
 function rxText(r, id){
   const u = unitOf(id), lab = LIB[id].rlab || (u==="s" ? "s" : u==="min" ? "min" : "rip");
-  const load = u==="kg" ? (r.load ? ` · ${fmtNum(r.load,2)} kg` : " · carico da trovare") : u==="bw" ? " · corpo libero" : "";
-  if (LIB[id].t==="cardio") return `${r.rl}–${r.rh} min`;
-  return `${r.sets}×${r.rl}–${r.rh} ${lab} · RIR ${r.rir}${load}${r.rest?` · rec ${r.rest>=120?fmtNum(r.rest/60)+"′":r.rest+"″"}`:""}`;
+  if (LIB[id].t==="cardio") return `<div class="rx"><div class="rxb"><span class="rxb-main">${r.rl}–${r.rh} min</span></div></div>`;
+  const load = u==="kg" ? (r.load ? `<span class="rxb-load">${fmtNum(r.load,2)} kg</span>` : `<span class="rxb-load none">carico da trovare</span>`) : u==="bw" ? `<span class="rxb-load none">corpo libero</span>` : "";
+  const rest = r.rest ? `, recupero ${r.rest>=120?fmtNum(r.rest/60)+" min":r.rest+" s"}` : "";
+  return `<div class="rx"><div class="rxb"><span class="rxb-main">${r.sets} × ${r.rl}–${r.rh}</span>${load}</div><div class="rxb-meta">${lab==="rip"?"ripetizioni":lab==="s"?"secondi":lab}, ${r.rir} in riserva${rest}</div></div>`;
 }
-function ring(score, zone){
-  const C = 2*Math.PI*36, f = clamp(score,0,100)/100;
-  return `<svg class="ready-ring" viewBox="0 0 86 86" role="img" aria-label="Prontezza ${score} su 100"><circle cx="43" cy="43" r="36" fill="none" stroke="var(--sunk)" stroke-width="10"/><circle cx="43" cy="43" r="36" fill="none" stroke="var(--${zone})" stroke-width="10" stroke-linecap="round" stroke-dasharray="${C*f} ${C}" transform="rotate(-90 43 43)"/><text x="43" y="50" text-anchor="middle" font-family="Big Shoulders Display,Impact,sans-serif" font-weight="800" font-size="24" fill="var(--ink)">${score}</text></svg>`;
+function barbell(score, zone, opts={}){
+  const n = opts.colors ? opts.colors.length : score>=80 ? 4 : score>=65 ? 3 : score>=40 ? 2 : 1;
+  const H = [74,66,58,50], cols = opts.colors || Array(n).fill(`var(--${zone})`);
+  let pl = "";
+  for (let i=0;i<n;i++){ const h = H[i], y = 50-h/2, xl = 92-(i+1)*15, xr = 228+i*15;
+    pl += `<rect class="pl" style="animation-delay:${i*70}ms" x="${xl}" y="${y}" width="12" height="${h}" rx="3" fill="${cols[i]}"/><rect class="pl" style="animation-delay:${i*70}ms" x="${xr}" y="${y}" width="12" height="${h}" rx="3" fill="${cols[i]}"/>`; }
+  const mid = opts.colors ? "" : `<text x="160" y="58" text-anchor="middle" font-family="Archivo,sans-serif" font-weight="850" font-stretch="125%" font-size="28" fill="var(--ink)">${score}</text>`;
+  return `<svg class="barbell" viewBox="0 0 320 100" role="img" aria-label="${opts.colors?"Bilanciere":"Prontezza "+score+" su 100"}">
+    <rect x="6" y="46" width="308" height="8" rx="4" fill="var(--steel)"/>
+    <rect x="92" y="40" width="8" height="20" rx="2" fill="var(--steel)"/><rect x="220" y="40" width="8" height="20" rx="2" fill="var(--steel)"/>
+    ${mid ? `<rect x="118" y="30" width="84" height="40" rx="10" fill="var(--bg)"/>` : ""}${pl}${mid}</svg>`;
 }
 function renderToday(){
   const d = S.draft;
@@ -790,28 +811,26 @@ function renderToday(){
   if (deloadActive()) banners.push(`<div class="banner acc"><div><b>Settimana di scarico in corso</b> fino a ${fmtDate(S.plan.deloadUntil)}.</div></div>`);
   const rdf = ui.rdForm || (ui.rdForm = {sleep:3, energy:3, stress:3, doms:2, mood:3, pain:"none"});
   return `
-    <div class="hero-date"><h1>${esc(fmtLong(t))}</h1>${planned ? '<span class="pill acc">Giorno di allenamento</span>' : '<span class="pill">Giorno libero</span>'}</div>
+    <div class="today-head"><span class="label">${esc(fmtLong(t)).replace(/^./, m => m.toUpperCase())}, ${planned ? "giorno di allenamento" : "giorno libero"}</span>
+      <h1>${esc(ses.name)}</h1>
+      <div class="row"><span class="pill acc" title="${esc(L.why)}">${LENSES[L.id].n}${L.id==="dup"?", giorno di "+DUPCYCLE[S.plan.dupI%3]:""}</span>${doneToday?'<span class="pill go">Oggi fatto</span>':""}</div></div>
     <div class="coach"><b>${c.t}</b><p>${c.b}</p></div>
     ${banners.join("")}
+    ${doneToday ? `<p class="muted small">Oggi hai già fatto ${esc(doneToday.name)} (fatica ${doneToday.rpe}/10, ${doneToday.dur} min). Il recupero ora è parte dell'allenamento.</p>` : ""}
+    <section class="stack"><h3>In programma</h3><p class="small muted">${esc(L.why)}</p>
+      <div class="divide sess-list">${ses.items.map(id => `<div class="sess-row"><span style="font-weight:650">${esc(LIB[id].n)}</span>${rxText(S.plan.ex[id], id)}</div>`).join("")}</div></section>
     ${fresh.length ? `<section class="stack"><h3>Cosa è cambiato dall'ultima seduta</h3><div class="divide">${fresh.map(changeRow).join("")}</div></section>` : ""}
-    ${doneToday ? `<div class="card stack"><h3>Seduta di oggi completata</h3><p class="muted">${esc(doneToday.name)} · RPE ${doneToday.rpe} · ${doneToday.dur} min. Il recupero ora è parte dell'allenamento.</p></div>` : ""}
     <section class="card stack">
-      <div class="row between"><div><span class="label">Prossima seduta</span><h2>${esc(ses.name)}</h2></div>
-        <span class="pill acc" title="${esc(L.why)}">${LENSES[L.id].n}${L.id==="dup"?" · "+DUPCYCLE[S.plan.dupI%3]:""}</span></div>
-      <p class="small muted">${esc(L.why)}</p>
-      <div class="divide">${ses.items.map(id => `<div class="stack" style="gap:2px;padding:9px 0"><span style="font-weight:600">${esc(LIB[id].n)}</span><span class="rx">${rxText(S.plan.ex[id], id)}</span></div>`).join("")}</div>
-    </section>
-    <section class="card stack">
-      <div><span class="label">Check di prontezza · 20 secondi</span><h3>Come stai oggi?</h3></div>
-      <div class="field"><span>Qualità del sonno</span>${scale("sleep",rdf.sleep,["Pessima","","Ok","","Ottima"])}</div>
-      <div class="field"><span>Energia</span>${scale("energy",rdf.energy,["A terra","","Normale","","Al top"])}</div>
-      <div class="field"><span>Stress</span>${scale("stress",rdf.stress,["Nullo","","Medio","","Altissimo"])}</div>
-      <div class="field"><span>Indolenzimento muscolare</span>${scale("doms",rdf.doms,["Nessuno","","Un po'","","Molto"])}</div>
-      <div class="field"><span>Voglia di allenarti</span>${scale("mood",rdf.mood,["Zero","","Così così","","Tanta"])}</div>
+      <div class="stack" style="gap:4px"><h2>Come stai oggi?</h2><p class="small muted">Venti secondi: la seduta si regola sulle risposte.</p></div>
+      <div class="field"><span>Qualità del sonno</span>${scale("sleep",rdf.sleep,["Pessima","","","","Ottima"])}</div>
+      <div class="field"><span>Energia</span>${scale("energy",rdf.energy,["A terra","","","","Al massimo"])}</div>
+      <div class="field"><span>Stress</span>${scale("stress",rdf.stress,["Nullo","","","","Altissimo"])}</div>
+      <div class="field"><span>Indolenzimento muscolare</span>${scale("doms",rdf.doms,["Nessuno","","","","Molto"])}</div>
+      <div class="field"><span>Voglia di allenarti</span>${scale("mood",rdf.mood,["Zero","","","","Tanta"])}</div>
       <div class="field"><span>Dolore articolare oggi?</span><div class="chips">${[["none","No"],["knee","Ginocchio"],["shoulder","Spalla"],["back","Schiena"],["other","Altro"]].map(([k,l]) => chip("pain",k,l,rdf.pain===k,"radio")).join("")}</div></div>
-      <div class="stack"><button class="btn-primary btn-wide" data-act="start">${planned||!doneToday?"Calcola la seduta di oggi":"Allenati comunque"}</button>
+      <div class="stack"><button class="btn-primary btn-wide" data-act="start">${doneToday?"Allenati comunque":"Calcola la seduta di oggi"}</button>
       ${S.profile.motiv.barriers.includes("tempo") || S.profile.duration>=45 ? `<button class="btn-ghost btn-wide" data-act="start-short">Ho solo 25 minuti</button>` : ""}
-      <button class="btn-ghost btn-wide" data-act="recovery">Solo recupero attivo (camminata e mobilità)</button></div>
+      <button class="btn-ghost btn-wide" data-act="recovery">Solo recupero attivo</button></div>
     </section>
     ${renderIntent()}`;
 }
@@ -834,13 +853,13 @@ function repeatedPain(){
 function changeRow(c){
   const label = {carico:"Carico", serie:"Serie", ripetizioni:"Range", esercizio:"Cambio", obiettivo:"Obiettivo", rir:"RIR"}[c.what] || c.what;
   const val = c.what==="carico" ? `${fmtNum(c.from,2)} → ${fmtNum(c.to,2)} kg` : c.what==="esercizio" ? `${esc(c.from)} → ${esc(c.to)}` : c.from!=="" && c.from!=null ? `${esc(c.from)} → ${esc(c.to)}` : esc(c.to);
-  return `<div class="change"><span class="k">${label}</span><div><b>${c.what==="esercizio"?"":esc(c.name)+" · "}${val}</b><div class="small muted">${esc(c.why)}${c.src==="Claude"?" · proposta da Claude":c.src==="tu"?" · scelta tua":""}</div></div></div>`;
+  return `<div class="change"><span class="k">${label}</span><div><b>${c.what==="esercizio"?"":esc(c.name)+": "}${val}</b><div class="small muted">${esc(c.why)}${c.src==="Claude"?" Proposta da Claude.":c.src==="tu"?" Scelta tua.":""}</div></div></div>`;
 }
 function renderLog(d){
   const rd = d.rd, z = rd?.zone || "go";
   return `
-    <div class="row between"><div><span class="label">${esc(fmtLong(d.d))}</span><h1>${esc(d.name)}</h1></div>${rd?ring(rd.score, z):""}</div>
-    <div class="row"><span class="pill ${z}">${ZONE[z]}</span><span class="pill acc">${LENSES[d.lens].n}${d.dayType?" · giorno di "+d.dayType:""}</span>${d.short?'<span class="pill">Versione 25 min</span>':""}</div>
+    <div class="today-head"><span class="label">In corso</span><h1>${esc(d.name)}</h1></div>
+    ${rd ? `<div class="bar-wrap">${barbell(rd.score, z)}<div class="row" style="justify-content:center"><span class="pill ${z}">Prontezza: ${ZONE[z].toLowerCase()}</span><span class="pill acc">${LENSES[d.lens].n}${d.dayType?", giorno di "+d.dayType:""}</span>${d.short?'<span class="pill">Versione 25 min</span>':""}</div></div>` : ""}
     ${z==="warn" ? `<p class="small">Il check dice energia sotto la media: un po' più di margine (RIR +1), carichi −5% e una serie in meno sui complementari.</p>` : z==="stop" ? `<p class="small">Recupero attivo: metà delle serie, carichi −15%, lontano dal cedimento. Muoverti oggi conta, spingere no.</p>` : `<p class="small">Tutto in ordine: segui la scheda. Registra peso, ripetizioni e RIR (quante ripetizioni pulite ti restavano).</p>`}
     <section class="divide">${d.items.map((it,i) => exLog(it,i)).join("")}</section>
     <div class="stack"><button class="btn-primary btn-wide" data-act="to-fb">Ho finito: com'è andata?</button><button class="btn-sm btn-ghost" data-act="abort">Annulla la seduta</button></div>`;
@@ -912,7 +931,7 @@ function weeklySets(){
 function renderPlan(){
   const v = weeklySets(), L = lens(), max = 24;
   const band = S.profile.level==="principiante" ? [6,12] : S.profile.level==="intermedio" ? [10,16] : [12,20];
-  return `<div><span class="label">${S.plan.days} giorni · ${EQUIP[S.profile.equip]} · ${GOALS[S.profile.goal]}</span><h1>La tua scheda</h1></div>
+  return `<div><span class="label">${S.plan.days} giorni a settimana, ${EQUIP[S.profile.equip].toLowerCase()}, obiettivo ${GOALS[S.profile.goal].toLowerCase()}</span><h1>La tua scheda</h1></div>
     <div class="panel stack small"><div class="row between"><b>${LENSES[L.id].n}</b>${S.profile.lensPref==="auto"?'<span class="pill">scelta automatica</span>':'<span class="pill acc">scelta da te</span>'}</div><p>${LENSES[L.id].d}</p><p class="muted">${esc(L.why)}</p></div>
     ${S.plan.sessions.map((s,si) => `<section class="card stack"><div class="row between"><h2>${esc(s.name)}</h2>${si===nextIdx()?'<span class="pill acc">Prossima</span>':""}</div>
       <div class="divide">${s.items.map(id => `<div class="ex" style="padding:10px 0"><div class="ex-head"><div class="grow"><div class="ex-name">${esc(LIB[id].n)}</div><div class="rx">${rxText(S.plan.ex[id], id)}</div></div>
@@ -978,7 +997,7 @@ const SOURCES = [
   ["Teixeira et al. (2012). Esercizio, attività fisica e teoria dell'autodeterminazione. Int J Behav Nutr Phys Act.","10.1186/1479-5868-9-78","Autonomia, competenza e relazione: perché puoi sempre scegliere e i messaggi non colpevolizzano."]
 ];
 function renderMethod(){
-  return `<div><span class="label">Come ragiona l'app</span><h1>Metodo</h1></div>
+  return `<h1>Come ragiona l'app</h1>
     <section class="stack"><h3>Il ciclo di ogni giorno</h3>
       <div class="divide small">${[["Check","Sonno, energia, stress, indolenzimento, voglia e dolori danno un punteggio di prontezza da 0 a 100."],["Seduta","La seduta di oggi si calcola dal piano, dalla lente attiva e dal punteggio: sopra 65 si spinge, 40–64 si riduce, sotto 40 si recupera. Un dolore articolare sostituisce al volo gli esercizi che lo sollecitano."],["Registro","Peso, ripetizioni e RIR di ogni serie. Il RIR è quante ripetizioni pulite ti restavano."],["Feedback","Fatica della seduta (CR-10), piacere, e per ogni esercizio: facile, giusto, duro, noioso, dolore."],["Riscrittura","Le regole aggiornano carichi, serie, range ed esercizi e spiegano ogni scelta. Claude può dare una seconda opinione che decidi tu se accettare."]].map(([a,b]) => `<div class="change"><span class="k">${a}</span><div>${b}</div></div>`).join("")}</div></section>
     <section class="stack"><h3>Quattro modi di pensare la scheda</h3>${Object.entries(LENSES).map(([k,l]) => `<div class="panel small"><b>${l.n}</b><p>${l.d}</p></div>`).join("")}
