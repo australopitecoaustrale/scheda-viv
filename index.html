@@ -174,6 +174,7 @@ details summary{cursor:pointer;font-weight:600}
 .fx .fx-far .fx-b{fill:var(--muted);opacity:.42}
 .fx .fx-head{fill:var(--ink)}
 .fx .fx-hand{fill:var(--ink)}
+.fx .fx-eye{fill:var(--sunk)}
 .fx .fx-work{fill:var(--work)}
 .fx .fx-work-far{opacity:.45}
 .fx .fx-trace{fill:none;stroke:var(--accent);stroke-width:2;stroke-dasharray:2 5;stroke-linecap:round;opacity:.55}
@@ -409,26 +410,26 @@ const P = o => Object.assign({}, STAND, o);
 const BENCH = [{t:"rect",x:30,y:142,w:112,h:8},{t:"rect",x:40,y:150,w:6,h:32},{t:"rect",x:126,y:150,w:6,h:32}];
 const SEAT = (x,y) => [{t:"rect",x:x-22,y:y+4,w:44,h:8},{t:"rect",x:x-4,y:y+12,w:8,h:182-y-12}];
 const ANIM = {
-  squat:{f:[P({rel:1,ua:-100,fa:40}), P({rel:1,sh:-35,th:85,to:40,ua:-100,fa:40})], hand:"bb"},
+  squat:{f:[P({hf:-9,hu:-2,eb:"d"}), P({sh:-35,th:85,to:40,hf:-9,hu:-2,eb:"d"})], hand:"bb"},
   goblet:{f:[P({rel:1,ua:25,fa:165}), P({rel:1,sh:-35,th:85,to:30,ua:25,fa:165})], hand:"db"},
   boxsquat:{f:[P({ua:85,fa:85}), P({sh:-28,th:80,to:35,ua:85,fa:85})], props:[{t:"rect",x:60,y:146,w:28,h:36}]},
   legpress:{f:[P({root:"hip",x:70,y:128,to:-55,th:120,sh:120,ua:20,fa:60}), P({root:"hip",x:70,y:128,to:-55,th:165,sh:95,ua:20,fa:60})], props:[{t:"rect",x:40,y:132,w:44,h:10},{t:"line",x1:44,y1:134,x2:22,y2:96}], foot:"sled"},
-  hinge:{f:[P({}), P({sh:-8,th:25,to:75})], hand:"bb"},
-  hinge_db:{f:[P({}), P({sh:-8,th:25,to:75})], hand:"db"},
-  deadlift:{f:[P({}), P({sh:-25,th:65,to:50})], hand:"bb"},
+  hinge:{f:[P({ua:10,fa:10}), P({sh:-8,th:25,to:75,ua:4,fa:4})], hand:"bb"},
+  hinge_db:{f:[P({ua:10,fa:10}), P({sh:-8,th:25,to:75,ua:4,fa:4})], hand:"db"},
+  deadlift:{f:[P({ua:8,fa:8}), P({sh:-25,th:65,to:50,ua:12,fa:12})], hand:"bb"},
   thrust:{f:[P({x:145,sh:10,th:110,to:-80,ua:90,fa:90}), P({x:145,sh:0,th:90,to:-90,ua:90,fa:90})], hand:"bb", props:[{t:"rect",x:16,y:150,w:38,h:32}]},
   bridge:{f:[P({x:140,sh:35,th:120,th2:120,sh2:120,to:-100,ua:90,fa:90}), P({x:140,sh:35,th:100,th2:100,sh2:100,to:-75,ua:90,fa:90})]},
-  lunge:{f:[P({x:115,th2:0,sh2:0}), P({x:115,sh:-10,th:80,to:5,th2:-25,sh2:-80})], hand:"db"},
+  lunge:{f:[P({x:115,th2:0,sh2:0,ua:4,fa:4}), P({x:115,sh:-10,th:80,to:5,th2:-25,sh2:-80,ua:4,fa:4})], hand:"db"},
   stepup:{f:[P({x:128,y:150,sh:-20,th:70,to:15,th2:-5,sh2:-5}), P({x:128,y:150,th2:60,sh2:-10})], hand:"db", props:[{t:"rect",x:108,y:150,w:46,h:32}]},
   bss:{f:[P({x:128,th:15,to:5,th2:-35,sh2:-70}), P({x:128,sh:-15,th:75,to:15,th2:-8,sh2:-124})], hand:"db", props:[{t:"rect",x:22,y:150,w:42,h:32}]},
   bench:{f:[P({root:"hip",x:100,y:136,to:-90,th:80,sh:0,ua:180,fa:180}), P({root:"hip",x:100,y:136,to:-90,th:80,sh:0,ua:60,fa:180})], hand:"bb", props:BENCH},
   bench_db:{f:[P({root:"hip",x:100,y:136,to:-90,th:80,sh:0,ua:180,fa:180}), P({root:"hip",x:100,y:136,to:-90,th:80,sh:0,ua:60,fa:180})], hand:"db", props:BENCH},
   incline:{f:[P({root:"hip",x:100,y:140,to:-60,th:85,sh:0,ua:180,fa:180}), P({root:"hip",x:100,y:140,to:-60,th:85,sh:0,ua:35,fa:170})], hand:"db", props:[{t:"rect",x:80,y:144,w:40,h:8},{t:"line",x1:96,y1:146,x2:52,y2:116},{t:"rect",x:96,y:152,w:6,h:30}]},
   chestpress:{f:[P({root:"hip",x:90,y:140,to:-10,th:85,sh:0,ua:-60,fa:90}), P({root:"hip",x:90,y:140,to:-10,th:85,sh:0,ua:88,fa:90})], hand:"db", props:[...SEAT(90,140),{t:"line",x1:80,y1:140,x2:72,y2:88}]},
-  pushup:{f:[P({x:170,sh:65,th:65,to:-65,ua:0,fa:0}), P({x:170,sh:80,th:80,to:-80,ua:75,fa:-47})]},
-  ohp:{f:[P({ua:30,fa:170}), P({ua:176,fa:180})], hand:"db"},
+  pushup:{face:-1,f:[P({x:170,sh:65,th:65,to:-65,hx:54,hy:178,eb:"r"}), P({x:170,sh:80,th:80,to:-80,hx:54,hy:178,eb:"r"})]},
+  ohp:{f:[P({ua:40,fa:172}), P({ua:172,fa:178})], hand:"db"},
   landmine:{f:[P({to:8,ua:30,fa:165,th2:-12,sh2:-12}), P({to:8,ua:120,fa:125,th2:-12,sh2:-12})], cable:{x:212,y:180,w:5}},
-  pike:{f:[P({x:168,sh:28,th:28,to:-130,ua:-47,fa:-47}), P({x:168,sh:28,th:28,to:-145,ua:-60,fa:-50})]},
+  pike:{face:-1,f:[P({x:168,sh:28,th:28,to:-130,hx:56,hy:178,eb:"r"}), P({x:168,sh:28,th:28,to:-148,hx:56,hy:178,eb:"r"})]},
   latpd:{f:[P({root:"hip",x:95,y:140,to:-15,th:85,sh:0,ua:172,fa:172}), P({root:"hip",x:95,y:140,to:-15,th:85,sh:0,ua:-25,fa:165})], hand:"handle", cable:{x:100,y:6,w:2}, props:[...SEAT(95,140),{t:"rect",x:112,y:126,w:20,h:7}]},
   pullup:{f:[P({root:"hip",x:100,y:140,th:8,sh:-20,ua:180,fa:180}), P({root:"hip",x:100,y:104,th:8,sh:-20,ua:-110,fa:110})], props:[{t:"line",x1:58,y1:36,x2:150,y2:36,w:5}]},
   pullover:{f:[P({root:"hip",x:100,y:136,to:-90,th:80,sh:0,ua:-105,fa:-105}), P({root:"hip",x:100,y:136,to:-90,th:80,sh:0,ua:180,fa:180})], hand:"db", props:BENCH},
@@ -438,11 +439,11 @@ const ANIM = {
   invrow:{f:[P({x:180,sh:78,th:78,to:-78,ua:180,fa:180}), P({x:180,sh:70,th:70,to:-70,ua:150,fa:-124})], props:[{t:"line",x1:20,y1:98,x2:96,y2:98,w:5}]},
   pallof:{f:[P({th2:-6,sh2:-6,ua:20,fa:160}), P({th2:-6,sh2:-6,ua:90,fa:90})], hand:"handle", cable:{x:6,y:92,w:2}},
   deadbug:{f:[P({root:"hip",x:110,y:172,to:-90,th:180,sh:90,ua:180,fa:180}), P({root:"hip",x:110,y:172,to:-90,th:180,sh:90,ua:-100,fa:-100,ua2:180,fa2:180,th2:100,sh2:100})]},
-  plank:{f:[P({x:180,sh:78,th:78,to:-78,ua:0,fa:-90}), P({x:180,sh:77,th:77,to:-77,ua:0,fa:-90})], breathe:1},
-  birddog:{f:[P({root:"knee",x:130,y:178,th:0,sh:90,to:-90,ua:-35,fa:-35}), P({root:"knee",x:130,y:178,th:0,sh:90,to:-90,ua:-90,fa:-90,ua2:-35,fa2:-35,th2:90,sh2:90})]},
+  plank:{face:-1,f:[P({x:180,sh:78,th:78,to:-78,ua:0,fa:-90}), P({x:180,sh:77,th:77,to:-77,ua:0,fa:-90})], breathe:1},
+  birddog:{face:-1,f:[P({root:"knee",x:130,y:178,th:0,sh:90,to:-90,ua:-35,fa:-35}), P({root:"knee",x:130,y:178,th:0,sh:90,to:-90,ua:-90,fa:-90,ua2:-35,fa2:-35,th2:90,sh2:90})]},
   farmer:{f:[P({root:"hip",x:100,y:103,th:22,sh:8,th2:-20,sh2:-32}), P({root:"hip",x:100,y:103,th:-20,sh:-32,th2:22,sh2:8})], hand:"db", walk:1},
   walk:{f:[P({root:"hip",x:100,y:103,th:22,sh:8,th2:-20,sh2:-32,ua:-20,fa:10,ua2:25,fa2:55}), P({root:"hip",x:100,y:103,th:-20,sh:-32,th2:22,sh2:8,ua:25,fa:55,ua2:-20,fa2:10})], walk:1},
-  curl:{f:[P({ua:0,fa:0}), P({ua:6,fa:160})], hand:"db"},
+  curl:{f:[P({ua:4,fa:10}), P({ua:8,fa:150})], hand:"db"},
   cablecurl:{f:[P({ua:0,fa:12}), P({ua:6,fa:160})], hand:"handle", cable:{x:150,y:180,w:2}},
   pushdown:{f:[P({ua:6,fa:150}), P({ua:6,fa:8})], hand:"handle", cable:{x:120,y:6,w:2}},
   french:{f:[P({ua:172,fa:-12}), P({ua:172,fa:178})], hand:"db"},
@@ -521,7 +522,19 @@ function solvePose(Q){
   const Hd=[Sh[0]+up[0]*(SEG.ne+SEG.hr), Sh[1]+up[1]*(SEG.ne+SEG.hr)];
   const off = Q.rel ? -Q.to : 0;
   const arm = (ua,fa) => { const u=dd(ua+off), f=dd(fa+off); const E=[Sh[0]+u[0]*SEG.ua, Sh[1]+u[1]*SEG.ua]; return [E,[E[0]+f[0]*SEG.fa, E[1]+f[1]*SEG.fa]]; };
-  const [E,W] = arm(Q.ua, Q.fa), [E2,W2] = arm(Q.ua2 ?? Q.ua, Q.fa2 ?? Q.fa);
+  let [E,W] = arm(Q.ua, Q.fa), [E2,W2] = arm(Q.ua2 ?? Q.ua, Q.fa2 ?? Q.fa);
+  // Mani vincolate a un punto (cinematica inversa): assoluto (hx,hy) o relativo al busto (hf avanti, hu su)
+  if (Q.hx != null || Q.hf != null){
+    const fs = Q.fs || 1, fw = [Math.cos(rad(Q.to))*fs, Math.sin(rad(Q.to))*fs];
+    const T = Q.hx != null ? [Q.hx, Q.hy] : [Sh[0]+fw[0]*Q.hf+up[0]*Q.hu, Sh[1]+fw[1]*Q.hf+up[1]*Q.hu];
+    const a = SEG.ua, b = SEG.fa, dx = T[0]-Sh[0], dy = T[1]-Sh[1];
+    const d = Math.max(Math.abs(a-b)+0.01, Math.min(Math.hypot(dx,dy), a+b-0.01)), ang = Math.atan2(dy,dx);
+    const c = Math.acos(Math.max(-1, Math.min(1, (a*a+d*d-b*b)/(2*a*d))));
+    const e1 = [Sh[0]+a*Math.cos(ang+c), Sh[1]+a*Math.sin(ang+c)], e2 = [Sh[0]+a*Math.cos(ang-c), Sh[1]+a*Math.sin(ang-c)];
+    const pickE = {d:(p,q)=>p[1]>q[1], u:(p,q)=>p[1]<q[1], l:(p,q)=>p[0]<q[0], r:(p,q)=>p[0]>q[0]}[Q.eb || "d"];
+    E = pickE(e1,e2) ? e1 : e2; const u = Math.hypot(T[0]-E[0], T[1]-E[1]) || 1;
+    W = [E[0]+(T[0]-E[0])/u*b, E[1]+(T[1]-E[1])/u*b]; E2 = E; W2 = W;
+  }
   const t2=dd(Q.th2 ?? Q.th), s2=dd(Q.sh2 ?? Q.sh);
   const K2=[H[0]+t2[0]*SEG.th, H[1]+t2[1]*SEG.th], A2=[K2[0]+s2[0]*SEG.sh, K2[1]+s2[1]*SEG.sh];
   const fdir=dd(Q.ft ?? 90), F=[A[0]+fdir[0]*12, A[1]+fdir[1]*12], F2=[A2[0]+12, A2[1]];
@@ -576,6 +589,12 @@ function figureSVG(key, J, id, opts={}){
     return s;
   };
   const W = [...work];
+  // Volto: naso e occhio rivolti nella direzione in cui guarda la figura (davanti al petto)
+  const to = Math.atan2(up[0], -up[1]), sgn = D.face || 1;
+  const fw = [Math.cos(to)*sgn, Math.sin(to)*sgn], hu = [up[0]/ul, up[1]/ul];
+  const nose = [J.Hd[0]+fw[0]*(SEG.hr+3), J.Hd[1]+fw[1]*(SEG.hr+3)];
+  const eye = [J.Hd[0]+fw[0]*5.5+hu[0]*2, J.Hd[1]+fw[1]*5.5+hu[1]*2];
+  const face = `<circle cx="${f1(nose[0])}" cy="${f1(nose[1])}" r="3.2" class="fx-head"/><circle cx="${f1(eye[0])}" cy="${f1(eye[1])}" r="1.8" class="fx-eye"/>`;
   const hand = D.hand==="bb" ? `<circle cx="${f1(J.W[0])}" cy="${f1(J.W[1])}" r="14" class="fx-plate"/><circle cx="${f1(J.W[0])}" cy="${f1(J.W[1])}" r="4" class="fx-hub"/>`
     : D.hand==="db" ? `<rect x="${f1(J.W[0]-8)}" y="${f1(J.W[1]-5.5)}" width="16" height="11" rx="3.5" class="fx-plate"/>`
     : D.hand==="handle" ? `<rect x="${f1(J.W[0]-5)}" y="${f1(J.W[1]-3)}" width="10" height="6" rx="3" class="fx-plate"/>` : "";
@@ -586,11 +605,11 @@ function figureSVG(key, J, id, opts={}){
     ${tr ? `<path d="${tr}" class="fx-trace"/>` : ""}${cable}
     <g class="fx-far">${leg(J.H,J.K2,J.A2,"fx-b")}${cap(heel2,J.F2,7,6,"fx-b")}${arm(J.Sh,J.E2,J.W2,"fx-b")}</g>
     ${W.map(s => hl(s,true)).join("")}
-    ${cap(J.H, J.Sh, 19, 23, "fx-b")}${cap(J.Sh, neck, 8, 8, "fx-b")}<circle cx="${f1(J.Hd[0])}" cy="${f1(J.Hd[1])}" r="${SEG.hr+1}" class="fx-head"/>
+    ${cap(J.H, J.Sh, 19, 23, "fx-b")}${cap(J.Sh, neck, 8, 8, "fx-b")}<circle cx="${f1(J.Hd[0])}" cy="${f1(J.Hd[1])}" r="${SEG.hr+1}" class="fx-head"/>${face}
     ${leg(J.H,J.K,J.A,"fx-b")}${cap(heel,J.F,7.5,6,"fx-b")}
     ${W.filter(s => s!=="ua").map(s => hl(s,false)).join("")}
-    ${arm(J.Sh,J.E,J.W,"fx-b fx-arm")}${W.includes("ua") ? hl("ua",false) : ""}
-    <circle cx="${f1(J.W[0])}" cy="${f1(J.W[1])}" r="4.2" class="fx-hand"/>${hand}${foot}`;
+    ${D.hand==="bb" ? hand : ""}${arm(J.Sh,J.E,J.W,"fx-b fx-arm")}${W.includes("ua") ? hl("ua",false) : ""}
+    ${D.hand==="bb" ? "" : hand}<circle cx="${f1(J.W[0])}" cy="${f1(J.W[1])}" r="4.6" class="fx-hand"/>${foot}`;
 }
 function cycleOf(key){
   const D = ANIM[key] || ANIM.walk;
