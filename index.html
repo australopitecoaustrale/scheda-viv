@@ -117,7 +117,8 @@ nav.tabs a[aria-current="page"]::before{content:"";position:absolute;top:0;left:
 .plates{display:inline-flex;gap:2px;align-items:center;vertical-align:middle}
 .plate{display:inline-block;width:7px;border-radius:2px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.18)}
 .bar-wrap{display:flex;flex-direction:column;gap:6px}
-.barbell{width:100%;height:auto;display:block;max-width:420px}
+.barbell{width:100%;height:auto;display:block;max-width:420px;margin:0 auto}
+.log-head+.bar-wrap .barbell{max-width:250px}
 .zone-go{color:var(--go)} .zone-warn{color:var(--warn)} .zone-stop{color:var(--stop)}
 .banner{border-radius:var(--r);padding:13px 15px;font-size:.92rem;display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap}
 .banner.warn{background:var(--warn-soft)} .banner.warn b{color:var(--warn)}
@@ -154,6 +155,83 @@ details summary{cursor:pointer;font-weight:600}
 @keyframes load-plate{from{transform:scaleY(.2);opacity:0}to{transform:none;opacity:1}}
 .barbell .pl{transform-box:fill-box;transform-origin:center;animation:load-plate .45s cubic-bezier(.3,1.4,.5,1) both}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* Figure animate */
+.fx{display:block;width:100%;height:auto}
+.fx .fx-ground{stroke:var(--line);stroke-width:2}
+.fx .fx-prop{fill:var(--sunk);stroke:var(--line);stroke-width:1.5}
+.fx .fx-prop-l{stroke:var(--line);stroke-linecap:round}
+.fx .fx-cable{stroke:var(--muted);stroke-dasharray:3 3}
+.fx g line{stroke-linecap:round;stroke-width:7}
+.fx .fx-near line{stroke:var(--ink)}
+.fx .fx-near .fx-torso{stroke-width:11}
+.fx .fx-far line{stroke:var(--muted);opacity:.5}
+.fx .fx-head{fill:var(--ink)}
+.fx .fx-plate{fill:var(--accent)}
+.fx .fx-plate-l{stroke:var(--accent);stroke-linecap:round}
+.fx .fx-hub{fill:var(--surface)}
+.fx-thumb{width:52px;flex:none;background:var(--sunk);border-radius:10px;padding:3px}
+.fx-thumb g line{stroke-width:9}
+.fx-stage{position:relative;display:block;width:100%;background:var(--sunk);border-radius:var(--r);padding:8px 8px 4px}
+.fx-big{max-height:42vh;margin:0 auto}
+.fx-mid{max-height:24vh;margin:0 auto}
+button.fx-tap{border-radius:var(--r)}
+.fx-hint{position:absolute;right:10px;bottom:8px;font-size:.74rem;font-weight:600;color:var(--muted);background:var(--surface);padding:3px 8px;border-radius:999px}
+/* Righe esercizio */
+.exrow{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:transparent;padding:10px 0;border-radius:0;font-weight:400}
+.exrow:active{transform:none;background:var(--sunk)}
+.exrow-body{display:flex;flex-direction:column;gap:3px;flex:1;min-width:0}
+.exrow-name{font-weight:650}
+.exrow-more{font-size:.76rem;color:var(--accent);font-weight:650;white-space:nowrap}
+.planrow{display:flex;align-items:center;gap:8px}
+.planrow .exrow{flex:1;min-width:0}
+.planrow .exrow-more{display:none}
+details.changes>summary{display:flex;align-items:center;gap:10px;list-style:none}
+details.changes>summary::-webkit-details-marker{display:none}
+details.changes>summary::after{content:"";width:8px;height:8px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(45deg);margin-left:auto;transition:transform .2s}
+details.changes[open]>summary::after{transform:rotate(-135deg)}
+/* Seduta guidata */
+.log-head{display:flex;flex-direction:column;gap:12px}
+.prog{display:flex;gap:5px}
+.prog button{flex:1;height:8px;padding:0;border-radius:4px;background:var(--line)}
+.prog button.ok{background:var(--go)}
+.prog button.cur{background:var(--accent)}
+.ex-focus{display:flex;flex-direction:column;gap:14px}
+.ex-focus .sets{grid-template-columns:40px repeat(3,minmax(0,1fr)) 50px}
+.ex-focus .sets input{height:46px;font-size:1.05rem}
+.ex-focus .tick{width:50px;height:46px}
+.log-nav{display:grid;grid-template-columns:minmax(0,auto) minmax(0,1fr);gap:10px}
+.log-nav .btn-primary{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* Scheda tecnica */
+.sheet{position:fixed;inset:0;z-index:30;display:flex;align-items:flex-end;justify-content:center}
+.sheet-bg{position:absolute;inset:0;background:rgba(10,14,12,.45);opacity:0;transition:opacity .28s ease}
+.sheet-card{position:relative;width:100%;max-width:620px;max-height:92vh;overflow-y:auto;background:var(--surface);border-radius:22px 22px 0 0;
+  padding:10px max(18px,env(safe-area-inset-right,0px)) calc(24px + env(safe-area-inset-bottom,0px)) max(18px,env(safe-area-inset-left,0px));
+  display:flex;flex-direction:column;gap:14px;transform:translateY(100%);transition:transform .38s cubic-bezier(.2,.9,.25,1);outline:none}
+.sheet.open .sheet-bg{opacity:1}
+.sheet.open .sheet-card{transform:none}
+.sheet-grip{width:40px;height:5px;border-radius:3px;background:var(--line);align-self:center}
+ol.how{margin:0;padding:0;list-style:none;counter-reset:how;display:flex;flex-direction:column;gap:12px}
+ol.how li{counter-increment:how;display:grid;grid-template-columns:30px minmax(0,1fr);gap:2px 10px}
+ol.how li::before{content:counter(how);grid-row:span 2;width:26px;height:26px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-weight:800;font-size:.85rem}
+.yt{display:block;text-align:center;padding:12px;border-radius:12px;box-shadow:inset 0 0 0 1px var(--line);color:var(--ink);font-weight:650;text-decoration:none}
+/* Transizioni tra viste */
+#view{view-transition-name:view}
+::view-transition-old(root),::view-transition-new(root){animation:none}
+::view-transition-group(view){animation:none}
+::view-transition-old(view){animation:vt-fade-out .16s ease both}
+::view-transition-new(view){animation:vt-fade-in .3s cubic-bezier(.2,.8,.2,1) both}
+html[data-vt="next"]::view-transition-old(view){animation:vt-out-l .24s cubic-bezier(.4,0,.2,1) both}
+html[data-vt="next"]::view-transition-new(view){animation:vt-in-r .34s cubic-bezier(.2,.8,.2,1) both}
+html[data-vt="prev"]::view-transition-old(view){animation:vt-out-r .24s cubic-bezier(.4,0,.2,1) both}
+html[data-vt="prev"]::view-transition-new(view){animation:vt-in-l .34s cubic-bezier(.2,.8,.2,1) both}
+@keyframes vt-fade-in{from{opacity:0;transform:translateY(10px)}}
+@keyframes vt-fade-out{to{opacity:0}}
+@keyframes vt-out-l{to{opacity:0;transform:translateX(-18%)}}
+@keyframes vt-in-r{from{opacity:0;transform:translateX(22%)}}
+@keyframes vt-out-r{to{opacity:0;transform:translateX(18%)}}
+@keyframes vt-in-l{from{opacity:0;transform:translateX(-22%)}}
+@media (prefers-reduced-motion:reduce){.sheet-card,.sheet-bg{transition:none}}
 </style>
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
@@ -208,6 +286,7 @@ const LIB = {
   bench_bb:{n:"Panca piana con bilanciere",p:"hpush",m:["petto","tricipiti"],s:["spalle"],need:"gym",st:["shoulder"],t:"c",inc:2.5,bar:1,cue:"Scapole addotte, piedi a terra, bilanciere sul basso petto, gomiti a 45–70°."},
   chest_press:{n:"Chest press alla macchina",p:"hpush",m:["petto","tricipiti"],need:"gym",t:"c",inc:5,cue:"Schiena appoggiata, spingi senza staccare le scapole dallo schienale."},
   bench_db:{n:"Distensioni con manubri",p:"hpush",m:["petto","tricipiti"],s:["spalle"],need:"db",st:["shoulder"],t:"c",inc:2,cue:"Manubri sopra il petto, scendi controllato fino a sentire l'allungamento."},
+  incline_db:{n:"Distensioni su panca inclinata",p:"hpush",m:["petto","spalle","tricipiti"],need:"db",st:["shoulder"],t:"c",inc:2,cue:"Panca a 30°, scapole indietro, scendi fino a sentire l'allungamento della parte alta del petto."},
   pushup:{n:"Piegamenti",p:"hpush",m:["petto","tricipiti"],s:["core"],need:"bw",t:"c",unit:"bw",cue:"Corpo in linea, petto verso terra. Mani su un rialzo per facilitare, piedi su un rialzo per rendere più duro."},
   landmine:{n:"Landmine press",p:"vpush",m:["spalle","tricipiti"],need:"gym",t:"c",inc:2.5,cue:"Spinta in diagonale, costole basse; è gentile con le spalle."},
   ohp_db:{n:"Military press con manubri",p:"vpush",m:["spalle","tricipiti"],need:"db",st:["shoulder"],t:"c",inc:2,cue:"Glutei contratti, spingi sopra la testa senza inarcare la schiena."},
@@ -233,13 +312,19 @@ const LIB = {
   lat_raise:{n:"Alzate laterali",p:"shoulder",m:["spalle"],need:"db",t:"i",inc:1,cue:"Braccia leggermente avanti, sali fino all'altezza spalle."},
   face_pull:{n:"Face pull",p:"shoulder",m:["spalle","dorso"],need:"gym",t:"i",inc:2.5,cue:"Corda verso la fronte, gomiti alti, ruota le mani fuori."},
   rear_fly:{n:"Aperture posteriori",p:"shoulder",m:["spalle","dorso"],need:"db",t:"i",inc:1,cue:"Busto inclinato, apri le braccia guidando con i gomiti."},
+  leg_curl:{n:"Leg curl da seduto",p:"kneeflex",m:["femorali"],need:"gym",t:"i",inc:2.5,cue:"Da seduto i femorali lavorano in allungamento: negli studi crescono più che da prono."},
+  nordic:{n:"Nordic curl",p:"kneeflex",m:["femorali"],need:"bw",st:["knee"],t:"i",unit:"bw",cue:"Scendi il più lentamente possibile frenando con i femorali; usa le mani nel finale."},
+  leg_ext:{n:"Leg extension",p:"kneeext",m:["quadricipiti"],need:"gym",st:["knee"],t:"i",inc:2.5,cue:"Schiena appoggiata, estendi completamente e scendi lento fino a 90°."},
+  cable_fly:{n:"Croci ai cavi",p:"fly",m:["petto"],need:"gym",t:"i",inc:2.5,cue:"Gomiti leggermente piegati e fermi, apri finché senti allungare il petto, poi chiudi davanti."},
+  bird_dog:{n:"Bird dog",p:"core",m:["core","glutei"],need:"bw",t:"i",unit:"bw",cue:"Braccio e gamba opposti, bacino fermo, tieni due secondi per lato."},
+  suitcase:{n:"Camminata con un manubrio",p:"carry",m:["core"],need:"db",t:"i",inc:2,rlab:"passi",cue:"Un solo manubrio pesante: resisti alla spinta laterale restando dritto."},
   calf:{n:"Sollevamenti sui polpacci",p:"calf",m:["polpacci"],need:"bw",t:"i",inc:2,cue:"Su un gradino, pausa di un secondo in basso e in alto."},
   z2:{n:"Cardio in zona 2",p:"cardio",m:[],need:"bw",t:"cardio",unit:"min",cue:"Cammino veloce, bici o cyclette a un ritmo in cui riesci ancora a parlare a frasi intere."},
   intervals:{n:"Intervalli 30/30",p:"cardio",m:[],need:"bw",t:"cardio",unit:"min",cue:"30 s forte, 30 s piano, per il tempo indicato. Bici o corsa leggera."}
 };
 const MUSCLES = ["petto","dorso","spalle","quadricipiti","glutei","femorali","bicipiti","tricipiti","core","polpacci"];
 const EQRANK = {bw:0, db:1, gym:2};
-const FALLBACK = {vpull:"hpull", vpush:"hpush", carry:"core", tri:"hpush", bi:"hpull", calf:"single", shoulder:"vpush"};
+const FALLBACK = {vpull:"hpull", vpush:"hpush", carry:"core", tri:"hpush", bi:"hpull", calf:"single", shoulder:"vpush", kneeflex:"hinge", kneeext:"single", fly:"hpush"};
 const JOINT = {knee:"ginocchio", shoulder:"spalla", back:"schiena", other:"altro"};
 const GOALS = {forza:"Forza", ipertrofia:"Massa muscolare", ricomposizione:"Dimagrire e tonificare", salute:"Salute e benessere", resistenza:"Resistenza"};
 const LEVELS = {principiante:"Principiante", intermedio:"Intermedio", avanzato:"Avanzato"};
@@ -256,24 +341,246 @@ const SPLITS = {
   2:[{k:"A",name:"Total body A",slots:["squat","hpush","hpull","hinge","vpush","core","bi","calf"]},
      {k:"B",name:"Total body B",slots:["hinge","vpull","single","hpush","hpull","core","shoulder","tri"]}],
   3:[{k:"A",name:"Total body A",slots:["squat","hpush","hpull","single","core","shoulder","bi"]},
-     {k:"B",name:"Total body B",slots:["hinge","vpush","vpull","single","core","tri","calf"]},
+     {k:"B",name:"Total body B",slots:["hinge","vpush","vpull","single","kneeflex","core","tri","calf"]},
      {k:"C",name:"Total body C",slots:["squat","hpull","hpush","hinge","carry","shoulder","core"]}],
-  4:[{k:"UA",name:"Parte alta A",slots:["hpush","hpull","vpush","vpull","shoulder","bi","tri"]},
-     {k:"LA",name:"Parte bassa A",slots:["squat","hinge","single","core","calf","carry"]},
+  4:[{k:"UA",name:"Parte alta A",slots:["hpush","hpull","vpush","vpull","shoulder","fly","bi","tri"]},
+     {k:"LA",name:"Parte bassa A",slots:["squat","hinge","single","kneeflex","core","calf","carry"]},
      {k:"UB",name:"Parte alta B",slots:["vpull","hpush","hpull","vpush","tri","bi","shoulder"]},
-     {k:"LB",name:"Parte bassa B",slots:["hinge","squat","single","core","calf","core"]}],
+     {k:"LB",name:"Parte bassa B",slots:["hinge","squat","kneeext","kneeflex","single","core","calf"]}],
   5:[{k:"U",name:"Parte alta",slots:["hpush","hpull","vpush","vpull","bi","tri"]},
-     {k:"L",name:"Parte bassa",slots:["squat","hinge","single","core","calf"]},
-     {k:"PU",name:"Spinta",slots:["hpush","vpush","hpush","shoulder","tri","core"]},
+     {k:"L",name:"Parte bassa",slots:["squat","hinge","single","kneeflex","core","calf"]},
+     {k:"PU",name:"Spinta",slots:["hpush","vpush","fly","shoulder","tri","core"]},
      {k:"PL",name:"Trazione",slots:["vpull","hpull","hpull","shoulder","bi","core"]},
-     {k:"LG",name:"Gambe",slots:["hinge","squat","single","calf","core"]}],
-  6:[{k:"PU1",name:"Spinta A",slots:["hpush","vpush","hpush","shoulder","tri","core"]},
+     {k:"LG",name:"Gambe",slots:["hinge","squat","kneeext","kneeflex","single","calf","core"]}],
+  6:[{k:"PU1",name:"Spinta A",slots:["hpush","vpush","fly","shoulder","tri","core"]},
      {k:"PL1",name:"Trazione A",slots:["vpull","hpull","shoulder","bi","core","carry"]},
-     {k:"LG1",name:"Gambe A",slots:["squat","hinge","single","calf","core"]},
-     {k:"PU2",name:"Spinta B",slots:["vpush","hpush","hpush","tri","shoulder","core"]},
+     {k:"LG1",name:"Gambe A",slots:["squat","hinge","kneeflex","single","calf","core"]},
+     {k:"PU2",name:"Spinta B",slots:["vpush","hpush","fly","tri","shoulder","core"]},
      {k:"PL2",name:"Trazione B",slots:["hpull","vpull","hpull","bi","shoulder","core"]},
-     {k:"LG2",name:"Gambe B",slots:["hinge","squat","single","core","calf"]}]
+     {k:"LG2",name:"Gambe B",slots:["hinge","squat","kneeext","kneeflex","calf","core"]}]
 };
+
+/* ================= Animazioni tecniche =================
+   Figura vista di lato, cinematica diretta. Angoli in gradi: 0 = segmento verso il basso, positivo = ruotato in avanti (+x).
+   Busto: 0 = verticale, positivo = inclinato in avanti. root: ankle (caviglia fissa), hip (anca), knee (ginocchio). */
+const SEG = {sh:38, th:40, to:50, ua:28, fa:26, ne:7, hr:9};
+const GROUND = 182;
+const STAND = {root:"ankle", x:100, y:180, sh:0, th:0, to:0, ua:0, fa:0, ft:90};
+const P = o => Object.assign({}, STAND, o);
+const BENCH = [{t:"rect",x:30,y:142,w:112,h:8},{t:"rect",x:40,y:150,w:6,h:32},{t:"rect",x:126,y:150,w:6,h:32}];
+const SEAT = (x,y) => [{t:"rect",x:x-22,y:y+4,w:44,h:8},{t:"rect",x:x-4,y:y+12,w:8,h:182-y-12}];
+const ANIM = {
+  squat:{f:[P({rel:1,ua:-100,fa:40}), P({rel:1,sh:-35,th:85,to:40,ua:-100,fa:40})], hand:"bb"},
+  goblet:{f:[P({rel:1,ua:25,fa:165}), P({rel:1,sh:-35,th:85,to:30,ua:25,fa:165})], hand:"db"},
+  boxsquat:{f:[P({ua:85,fa:85}), P({sh:-28,th:80,to:35,ua:85,fa:85})], props:[{t:"rect",x:60,y:146,w:28,h:36}]},
+  legpress:{f:[P({root:"hip",x:70,y:128,to:-55,th:120,sh:120,ua:20,fa:60}), P({root:"hip",x:70,y:128,to:-55,th:165,sh:95,ua:20,fa:60})], props:[{t:"rect",x:40,y:132,w:44,h:10},{t:"line",x1:44,y1:134,x2:22,y2:96}], foot:"sled"},
+  hinge:{f:[P({}), P({sh:-8,th:25,to:75})], hand:"bb"},
+  hinge_db:{f:[P({}), P({sh:-8,th:25,to:75})], hand:"db"},
+  deadlift:{f:[P({}), P({sh:-25,th:65,to:50})], hand:"bb"},
+  thrust:{f:[P({x:145,sh:10,th:110,to:-80,ua:90,fa:90}), P({x:145,sh:0,th:90,to:-90,ua:90,fa:90})], hand:"bb", props:[{t:"rect",x:16,y:150,w:38,h:32}]},
+  bridge:{f:[P({x:140,sh:35,th:120,th2:120,sh2:120,to:-100,ua:90,fa:90}), P({x:140,sh:35,th:100,th2:100,sh2:100,to:-75,ua:90,fa:90})]},
+  lunge:{f:[P({x:115,th2:0,sh2:0}), P({x:115,sh:-10,th:80,to:5,th2:-25,sh2:-80})], hand:"db"},
+  stepup:{f:[P({x:128,y:150,sh:-20,th:70,to:15,th2:-5,sh2:-5}), P({x:128,y:150,th2:60,sh2:-10})], hand:"db", props:[{t:"rect",x:108,y:150,w:46,h:32}]},
+  bss:{f:[P({x:128,th:15,to:5,th2:-35,sh2:-70}), P({x:128,sh:-15,th:75,to:15,th2:-8,sh2:-124})], hand:"db", props:[{t:"rect",x:22,y:150,w:42,h:32}]},
+  bench:{f:[P({root:"hip",x:100,y:136,to:-90,th:80,sh:0,ua:180,fa:180}), P({root:"hip",x:100,y:136,to:-90,th:80,sh:0,ua:60,fa:180})], hand:"bb", props:BENCH},
+  bench_db:{f:[P({root:"hip",x:100,y:136,to:-90,th:80,sh:0,ua:180,fa:180}), P({root:"hip",x:100,y:136,to:-90,th:80,sh:0,ua:60,fa:180})], hand:"db", props:BENCH},
+  incline:{f:[P({root:"hip",x:100,y:140,to:-60,th:85,sh:0,ua:180,fa:180}), P({root:"hip",x:100,y:140,to:-60,th:85,sh:0,ua:35,fa:170})], hand:"db", props:[{t:"rect",x:80,y:144,w:40,h:8},{t:"line",x1:96,y1:146,x2:52,y2:116},{t:"rect",x:96,y:152,w:6,h:30}]},
+  chestpress:{f:[P({root:"hip",x:90,y:140,to:-10,th:85,sh:0,ua:-60,fa:90}), P({root:"hip",x:90,y:140,to:-10,th:85,sh:0,ua:88,fa:90})], hand:"db", props:[...SEAT(90,140),{t:"line",x1:80,y1:140,x2:72,y2:88}]},
+  pushup:{f:[P({x:170,sh:65,th:65,to:-65,ua:0,fa:0}), P({x:170,sh:80,th:80,to:-80,ua:75,fa:-47})]},
+  ohp:{f:[P({ua:30,fa:170}), P({ua:176,fa:180})], hand:"db"},
+  landmine:{f:[P({to:8,ua:30,fa:165,th2:-12,sh2:-12}), P({to:8,ua:120,fa:125,th2:-12,sh2:-12})], cable:{x:212,y:180,w:5}},
+  pike:{f:[P({x:165,sh:30,th:30,to:-155,ua:-64,fa:-64}), P({x:165,sh:30,th:30,to:-168,ua:-40,fa:-115})]},
+  latpd:{f:[P({root:"hip",x:95,y:140,to:-15,th:85,sh:0,ua:172,fa:172}), P({root:"hip",x:95,y:140,to:-15,th:85,sh:0,ua:-25,fa:165})], hand:"handle", cable:{x:100,y:6,w:2}, props:[...SEAT(95,140),{t:"rect",x:112,y:126,w:20,h:7}]},
+  pullup:{f:[P({root:"hip",x:100,y:140,th:8,sh:-20,ua:180,fa:180}), P({root:"hip",x:100,y:104,th:8,sh:-20,ua:-110,fa:110})], props:[{t:"line",x1:58,y1:36,x2:150,y2:36,w:5}]},
+  pullover:{f:[P({root:"hip",x:100,y:136,to:-90,th:80,sh:0,ua:-105,fa:-105}), P({root:"hip",x:100,y:136,to:-90,th:80,sh:0,ua:180,fa:180})], hand:"db", props:BENCH},
+  rowcs:{f:[P({x:60,to:45,th:10,ua:0,fa:0}), P({x:60,to:45,th:10,ua:-65,fa:10})], hand:"db", props:[{t:"line",x1:66,y1:176,x2:132,y2:84,w:7}]},
+  cablerow:{f:[P({root:"hip",x:70,y:150,to:22,th:78,sh:62,ua:90,fa:90}), P({root:"hip",x:70,y:150,to:-6,th:78,sh:62,ua:-55,fa:90})], hand:"handle", cable:{x:212,y:150,w:2}, props:[{t:"rect",x:44,y:154,w:46,h:8}]},
+  rowdb:{f:[P({x:122,to:80,th:12,sh:-6,ua:0,fa:0}), P({x:122,to:80,th:12,sh:-6,ua:-58,fa:18})], hand:"db", props:[{t:"rect",x:150,y:136,w:52,h:46}]},
+  invrow:{f:[P({x:180,sh:78,th:78,to:-78,ua:180,fa:180}), P({x:180,sh:70,th:70,to:-70,ua:150,fa:-124})], props:[{t:"line",x1:20,y1:98,x2:96,y2:98,w:5}]},
+  pallof:{f:[P({th2:-6,sh2:-6,ua:20,fa:160}), P({th2:-6,sh2:-6,ua:90,fa:90})], hand:"handle", cable:{x:6,y:92,w:2}},
+  deadbug:{f:[P({root:"hip",x:110,y:172,to:-90,th:180,sh:90,ua:180,fa:180}), P({root:"hip",x:110,y:172,to:-90,th:180,sh:90,ua:-100,fa:-100,ua2:180,fa2:180,th2:100,sh2:100})]},
+  plank:{f:[P({x:180,sh:78,th:78,to:-78,ua:0,fa:-90}), P({x:180,sh:77,th:77,to:-77,ua:0,fa:-90})], breathe:1},
+  birddog:{f:[P({root:"knee",x:130,y:178,th:0,sh:90,to:-90,ua:-35,fa:-35}), P({root:"knee",x:130,y:178,th:0,sh:90,to:-90,ua:-90,fa:-90,ua2:-35,fa2:-35,th2:90,sh2:90})]},
+  farmer:{f:[P({root:"hip",x:100,y:103,th:22,sh:8,th2:-20,sh2:-32}), P({root:"hip",x:100,y:103,th:-20,sh:-32,th2:22,sh2:8})], hand:"db", walk:1},
+  walk:{f:[P({root:"hip",x:100,y:103,th:22,sh:8,th2:-20,sh2:-32,ua:-20,fa:10,ua2:25,fa2:55}), P({root:"hip",x:100,y:103,th:-20,sh:-32,th2:22,sh2:8,ua:25,fa:55,ua2:-20,fa2:10})], walk:1},
+  curl:{f:[P({ua:0,fa:0}), P({ua:6,fa:160})], hand:"db"},
+  cablecurl:{f:[P({ua:0,fa:12}), P({ua:6,fa:160})], hand:"handle", cable:{x:150,y:180,w:2}},
+  pushdown:{f:[P({ua:6,fa:150}), P({ua:6,fa:8})], hand:"handle", cable:{x:120,y:6,w:2}},
+  french:{f:[P({ua:172,fa:-12}), P({ua:172,fa:178})], hand:"db"},
+  latraise:{f:[P({ua:6,fa:6}), P({ua:82,fa:86})], hand:"db"},
+  facepull:{f:[P({th2:-6,sh2:-6,ua:105,fa:105}), P({th2:-6,sh2:-6,ua:-88,fa:150})], hand:"handle", cable:{x:212,y:40,w:2}},
+  rearfly:{f:[P({sh:-8,th:25,to:70,ua:0,fa:0}), P({sh:-8,th:25,to:70,ua:-72,fa:-72})], hand:"db"},
+  calf:{f:[P({ft:90}), P({y:171,ft:52})], props:[{t:"rect",x:86,y:180,w:44,h:4}]},
+  legcurl:{f:[P({root:"hip",x:90,y:140,to:-12,th:88,sh:88}), P({root:"hip",x:90,y:140,to:-12,th:88,sh:-8})], foot:"pad", props:[...SEAT(90,140),{t:"line",x1:80,y1:140,x2:72,y2:90}]},
+  legext:{f:[P({root:"hip",x:90,y:140,to:-12,th:88,sh:2}), P({root:"hip",x:90,y:140,to:-12,th:88,sh:86})], foot:"pad", props:[...SEAT(90,140),{t:"line",x1:80,y1:140,x2:72,y2:90}]},
+  nordic:{f:[P({root:"knee",x:100,y:178,th:0,sh:-90,to:0,ua:10,fa:30}), P({root:"knee",x:100,y:178,th:-55,sh:-90,to:55,ua:70,fa:75})], props:[{t:"rect",x:50,y:166,w:12,h:16}]},
+  fly:{f:[P({th2:-6,sh2:-6,ua:-30,fa:-10}), P({th2:-6,sh2:-6,ua:92,fa:96})], hand:"handle"}
+};
+const ANIM_OF = {back_squat:"squat",leg_press:"legpress",goblet_squat:"goblet",box_squat:"boxsquat",rdl_bb:"hinge",trapbar:"deadlift",hip_thrust:"thrust",rdl_db:"hinge_db",
+  glute_bridge:"bridge",rev_lunge:"lunge",step_up:"stepup",bss:"bss",bench_bb:"bench",chest_press:"chestpress",bench_db:"bench_db",incline_db:"incline",pushup:"pushup",
+  landmine:"landmine",ohp_db:"ohp",pike:"pike",lat_pd:"latpd",pullup:"pullup",db_pullover:"pullover",cs_row:"rowcs",cable_row:"cablerow",row_db:"rowdb",inv_row:"invrow",
+  pallof:"pallof",dead_bug:"deadbug",plank:"plank",side_plank:"plank",bird_dog:"birddog",farmer:"farmer",suitcase:"farmer",curl_db:"curl",hammer:"curl",cable_curl:"cablecurl",
+  pushdown:"pushdown",french_db:"french",close_pu:"pushup",lat_raise:"latraise",face_pull:"facepull",rear_fly:"rearfly",calf:"calf",z2:"walk",intervals:"walk",
+  leg_curl:"legcurl",nordic:"nordic",leg_ext:"legext",cable_fly:"fly"};
+/* Passi per principianti: [posizione di partenza, movimento, errore da evitare] */
+const STEPS = {
+  squat:["Bilanciere sulla parte alta della schiena, mani poco più larghe delle spalle, piedi a larghezza spalle con le punte un po' aperte.","Inspira, porta il bacino indietro e in basso come per sederti, con le ginocchia che seguono le punte. Risali spingendo il pavimento.","Talloni che si staccano o ginocchia che collassano verso l'interno: riduci il carico e la profondità finché restano stabili."],
+  goblet:["Tieni il manubrio in verticale contro il petto, gomiti stretti, piedi a larghezza spalle.","Scendi tra le ginocchia mantenendo il busto alto, poi risali spingendo dai talloni.","Arrotondare la schiena in basso: scendi solo fin dove resta neutra."],
+  boxsquat:["In piedi davanti a una panca o una sedia, braccia avanti per bilanciarti.","Siediti appena sulla panca senza rilassarti, poi rialzati spingendo dai talloni.","Lasciarsi cadere sulla panca: la discesa deve essere controllata."],
+  legpress:["Schiena e bacino appoggiati, piedi al centro della pedana a larghezza spalle.","Fai scendere la pedana finché le ginocchia arrivano verso il petto, poi spingi senza bloccare le ginocchia.","Bacino che si stacca dal sedile in basso: è il segnale per fermarsi prima."],
+  hinge:["In piedi, bilanciere davanti alle cosce, ginocchia morbide, schiena neutra.","Spingi il bacino indietro facendo scorrere il bilanciere lungo le gambe finché senti tirare i femorali, poi risali contraendo i glutei.","Piegare la schiena invece delle anche: il movimento parte dal bacino."],
+  hinge_db:["In piedi, manubri davanti alle cosce, ginocchia morbide, schiena neutra.","Spingi il bacino indietro facendo scendere i manubri lungo le gambe, poi risali contraendo i glutei.","Manubri lontani dal corpo: tienili vicini alle gambe."],
+  deadlift:["Dentro la trap bar, piedi a larghezza anche, afferra le maniglie con le braccia tese.","Petto alto, spingi il pavimento e alzati insieme con anche e ginocchia. Scendi con lo stesso percorso.","Strattonare il carico da terra: metti in tensione le braccia prima di spingere."],
+  thrust:["Scapole appoggiate al bordo della panca, bilanciere sulle anche con un'imbottitura, piedi a terra.","Spingi dai talloni fino ad allineare spalle, anche e ginocchia, tieni un secondo e scendi.","Inarcare la schiena in alto: guarda in avanti e chiudi le costole."],
+  bridge:["Sdraiato a pancia in su, un piede a terra vicino ai glutei, l'altra gamba distesa.","Spingi dal tallone e solleva il bacino finché il corpo forma una linea, poi scendi lentamente.","Bacino che ruota da un lato: tienilo parallelo al pavimento."],
+  lunge:["In piedi, manubri lungo i fianchi, busto dritto.","Fai un passo ampio indietro e scendi finché il ginocchio posteriore sfiora il pavimento, poi torna su spingendo con la gamba davanti.","Ginocchio davanti che crolla verso l'interno: tienilo in linea con il piede."],
+  stepup:["Davanti a una panca stabile all'altezza del ginocchio, un piede sopra tutto appoggiato.","Sali spingendo con la gamba sopra fino a stenderla, poi scendi lentamente.","Darsi lo slancio con il piede a terra: deve lavorare la gamba sul rialzo."],
+  bss:["Collo del piede posteriore su una panca, piede anteriore circa un passo avanti.","Scendi in verticale finché la coscia anteriore è quasi parallela, poi risali.","Piede anteriore troppo vicino alla panca: fai un piccolo passo in più in avanti."],
+  bench:["Sdraiato sulla panca, occhi sotto il bilanciere, scapole strette e piedi ben piantati a terra.","Porta il bilanciere al basso petto con i gomiti a 45–70°, poi spingi verso l'alto.","Far rimbalzare il bilanciere sul petto o staccare il sedere dalla panca."],
+  bench_db:["Sdraiato sulla panca con un manubrio per mano sopra il petto, scapole strette.","Scendi controllato finché senti allungare il petto, poi spingi su avvicinando i manubri.","Gomiti completamente aperti a 90°: tienili un po' più chiusi per proteggere le spalle."],
+  incline:["Panca inclinata a circa 30°, manubri sopra il petto, scapole indietro.","Scendi fino a sentire l'allungamento della parte alta del petto, poi spingi in alto.","Inclinazione troppo alta: oltre 45° diventa un esercizio per le spalle."],
+  chestpress:["Regola il sedile in modo che le maniglie siano all'altezza del petto, schiena appoggiata.","Spingi in avanti fino a quasi stendere le braccia, poi torna indietro lentamente.","Staccare le spalle dallo schienale per spingere di più."],
+  pushup:["Mani poco più larghe delle spalle, corpo in linea dalla testa ai talloni.","Scendi con il petto verso terra e i gomiti a 45°, poi spingi via il pavimento. Per iniziare appoggia le mani su un rialzo.","Bacino che cede verso il basso: contrai addominali e glutei."],
+  ohp:["In piedi o seduto, manubri all'altezza delle spalle, glutei e addominali contratti.","Spingi sopra la testa fino a stendere le braccia, poi scendi controllato.","Inarcare la schiena per spingere: riduci il carico."],
+  landmine:["Un capo del bilanciere fissato a terra davanti a te, l'altro tenuto all'altezza della spalla.","Spingi in diagonale in avanti e in alto fino a stendere il braccio, poi torna alla spalla.","Ruotare il busto per aiutarti: deve muoversi solo il braccio."],
+  pike:["Mani a terra, bacino alto, il corpo forma una V rovesciata.","Piega i gomiti portando la testa verso il pavimento tra le mani, poi spingi su.","Bacino che si abbassa: tienilo alto per caricare le spalle."],
+  latpd:["Seduto con le cosce sotto il cuscinetto, presa poco più larga delle spalle.","Petto in alto, porta la sbarra verso la parte alta del petto guidando con i gomiti, poi risali lento.","Tirare dietro la nuca o dondolare con il busto."],
+  pullup:["Appeso alla sbarra con le braccia tese, presa poco più larga delle spalle.","Tira i gomiti verso i fianchi finché il mento supera la sbarra, poi scendi controllato. Per iniziare usa un elastico o fai solo la discesa lenta.","Mezze ripetizioni: parti sempre da braccia distese."],
+  pullover:["Sdraiato sulla panca, un manubrio tenuto con due mani sopra il petto.","Porta il manubrio dietro la testa con i gomiti morbidi finché senti allungare dorsali e petto, poi torna su.","Scendere troppo se la spalla dà fastidio: fermati dove è comodo."],
+  rowcs:["Petto appoggiato su una panca inclinata, manubri che pendono a braccia tese.","Tira i gomiti indietro verso i fianchi stringendo le scapole, poi scendi lento.","Staccare il petto dalla panca per tirare di più."],
+  cablerow:["Seduto con i piedi sulla pedana, ginocchia morbide, schiena dritta.","Tira la maniglia verso l'ombelico portando indietro i gomiti, poi allunga in avanti lasciando andare le scapole.","Dondolare con il busto per muovere il peso."],
+  rowdb:["Mano e ginocchio su una panca, schiena piatta, manubrio a braccio teso.","Tira il gomito verso l'anca, tieni un attimo e scendi lento.","Ruotare il busto per sollevare: il busto resta fermo."],
+  invrow:["Sdraiato sotto una sbarra bassa o un tavolo robusto, corpo dritto e talloni a terra.","Tira il petto verso la sbarra stringendo le scapole, poi scendi controllato.","Bacino che cede: corpo rigido come in un plank."],
+  pallof:["Di fianco al cavo o all'elastico, maniglia al petto con due mani.","Spingi le braccia in avanti e resisti alla rotazione per due secondi, poi riporta al petto.","Lasciarsi ruotare verso il cavo: il busto resta frontale."],
+  deadbug:["Sdraiato sulla schiena, braccia verso il soffitto, anche e ginocchia a 90°.","Allunga lentamente un braccio dietro la testa e la gamba opposta in avanti, poi torna e cambia lato.","Zona lombare che si stacca dal pavimento: riduci l'ampiezza."],
+  plank:["Avambracci a terra, gomiti sotto le spalle, gambe distese.","Tieni il corpo in linea respirando normalmente per il tempo indicato.","Bacino troppo alto o troppo basso: guarda il pavimento e contrai i glutei."],
+  birddog:["A quattro zampe, mani sotto le spalle e ginocchia sotto le anche.","Allunga un braccio in avanti e la gamba opposta indietro, tieni due secondi e torna. Alterna i lati.","Ruotare il bacino quando sollevi la gamba: muoviti lentamente."],
+  farmer:["Prendi i manubri da terra piegando le gambe, poi alzati con le spalle basse.","Cammina a passi corti e controllati per la distanza indicata, poi posa i pesi.","Spalle che salgono verso le orecchie o busto che si piega di lato."],
+  walk:["Scegli un'attività che puoi sostenere: camminata veloce, bici o cyclette.","Mantieni un ritmo in cui riesci ancora a parlare a frasi intere. Negli intervalli alterna 30 secondi forte e 30 piano.","Partire troppo forte: i primi minuti sono di riscaldamento."],
+  curl:["In piedi, manubri lungo i fianchi, gomiti vicini al corpo.","Piega i gomiti portando i manubri verso le spalle, poi scendi lentamente.","Dondolare con la schiena per sollevare: riduci il peso."],
+  cablecurl:["Davanti al cavo basso, maniglia in mano, gomiti ai fianchi.","Piega i gomiti verso le spalle mantenendo la tensione, poi scendi lento.","Gomiti che vanno avanti: restano fermi ai fianchi."],
+  pushdown:["Davanti al cavo alto, maniglia o corda in mano, gomiti incollati ai fianchi.","Spingi verso il basso fino a stendere le braccia, poi risali fino a 90°.","Gomiti che si aprono o salgono: è il tricipite che deve lavorare."],
+  french:["Seduto o in piedi, un manubrio tenuto con due mani sopra la testa.","Piega i gomiti portando il manubrio dietro la testa, poi stendi le braccia.","Gomiti che si allargano molto: tienili puntati in alto."],
+  latraise:["In piedi, manubri lungo i fianchi, leggera inclinazione in avanti. (La figura è vista di lato: le braccia salgono ai lati del corpo.)","Solleva le braccia lateralmente fino all'altezza delle spalle, poi scendi lento.","Usare pesi troppo alti e dare slancio: qui contano leggerezza e controllo."],
+  facepull:["Davanti al cavo alto con la corda, braccia tese in avanti.","Tira la corda verso la fronte portando i gomiti in alto e ruotando le mani verso l'esterno.","Tirare verso il petto: la corda va verso il viso."],
+  rearfly:["Busto inclinato in avanti a schiena piatta, manubri sotto le spalle.","Apri le braccia di lato guidando con i gomiti fino all'altezza delle spalle, poi scendi.","Stringere troppo le scapole: devono lavorare i deltoidi posteriori."],
+  calf:["In piedi con l'avampiede su un gradino, talloni liberi.","Sali sulle punte il più in alto possibile, tieni un secondo, poi scendi sotto il livello del gradino.","Rimbalzare in basso: fai una pausa per sentire l'allungamento."],
+  legcurl:["Seduto alla macchina, cuscinetto sopra le caviglie e cosce bloccate.","Piega le ginocchia fino in fondo portando i talloni sotto la seduta, poi torna su lentamente.","Staccare il bacino dal sedile per tirare di più."],
+  legext:["Seduto con la schiena appoggiata, cuscinetto davanti alle caviglie.","Stendi le ginocchia completamente, tieni un attimo, poi scendi lento fino a 90°.","Scendere di colpo: la fase di discesa va controllata."],
+  nordic:["In ginocchio su un tappetino, talloni bloccati da un compagno o sotto un supporto.","Con il corpo dritto, scendi in avanti il più lentamente possibile e frena con i femorali; nel finale aiutati con le mani.","Piegarsi alle anche: anca e busto restano in linea."],
+  fly:["Tra i due cavi, una maniglia per mano, braccia aperte con i gomiti leggermente piegati.","Chiudi le mani davanti al petto con un movimento ad arco, poi apri lentamente fino a sentire l'allungamento.","Piegare e stendere i gomiti: l'angolo resta fisso."]
+};
+const rad = d => d*Math.PI/180;
+const dd = a => [Math.sin(rad(a)), Math.cos(rad(a))];
+function solvePose(Q){
+  let A, K, H;
+  if (Q.root==="hip"){ H=[Q.x,Q.y]; const t=dd(Q.th); K=[H[0]+t[0]*SEG.th, H[1]+t[1]*SEG.th]; const s=dd(Q.sh); A=[K[0]+s[0]*SEG.sh, K[1]+s[1]*SEG.sh]; }
+  else if (Q.root==="knee"){ K=[Q.x,Q.y]; const t=dd(Q.th); H=[K[0]-t[0]*SEG.th, K[1]-t[1]*SEG.th]; const s=dd(Q.sh); A=[K[0]+s[0]*SEG.sh, K[1]+s[1]*SEG.sh]; }
+  else { A=[Q.x,Q.y]; const s=dd(Q.sh); K=[A[0]-s[0]*SEG.sh, A[1]-s[1]*SEG.sh]; const t=dd(Q.th); H=[K[0]-t[0]*SEG.th, K[1]-t[1]*SEG.th]; }
+  const up=[Math.sin(rad(Q.to)), -Math.cos(rad(Q.to))];
+  const Sh=[H[0]+up[0]*SEG.to, H[1]+up[1]*SEG.to];
+  const Hd=[Sh[0]+up[0]*(SEG.ne+SEG.hr), Sh[1]+up[1]*(SEG.ne+SEG.hr)];
+  const off = Q.rel ? -Q.to : 0;
+  const arm = (ua,fa) => { const u=dd(ua+off), f=dd(fa+off); const E=[Sh[0]+u[0]*SEG.ua, Sh[1]+u[1]*SEG.ua]; return [E,[E[0]+f[0]*SEG.fa, E[1]+f[1]*SEG.fa]]; };
+  const [E,W] = arm(Q.ua, Q.fa), [E2,W2] = arm(Q.ua2 ?? Q.ua, Q.fa2 ?? Q.fa);
+  const t2=dd(Q.th2 ?? Q.th), s2=dd(Q.sh2 ?? Q.sh);
+  const K2=[H[0]+t2[0]*SEG.th, H[1]+t2[1]*SEG.th], A2=[K2[0]+s2[0]*SEG.sh, K2[1]+s2[1]*SEG.sh];
+  const fdir=dd(Q.ft ?? 90), F=[A[0]+fdir[0]*12, A[1]+fdir[1]*12], F2=[A2[0]+12, A2[1]];
+  return {A,K,H,Sh,Hd,E,W,E2,W2,K2,A2,F,F2};
+}
+function lerpPose(a,b,t){ const o={}; for (const k in b){ o[k] = (typeof b[k]==="number" && typeof (a[k] ?? STAND[k])==="number") ? (a[k] ?? STAND[k]) + (b[k]-(a[k] ?? STAND[k]))*t : b[k]; } for (const k in a) if (!(k in o)) o[k]=a[k]; return o; }
+const ln = (p,q) => `x1="${p[0].toFixed(1)}" y1="${p[1].toFixed(1)}" x2="${q[0].toFixed(1)}" y2="${q[1].toFixed(1)}"`;
+function figureSVG(key, J){
+  const D = ANIM[key] || ANIM.walk;
+  const props = (D.props||[]).map(p => p.t==="rect" ? `<rect x="${p.x}" y="${p.y}" width="${p.w}" height="${p.h}" rx="2" class="fx-prop"/>` : `<line x1="${p.x1}" y1="${p.y1}" x2="${p.x2}" y2="${p.y2}" class="fx-prop-l" stroke-width="${p.w||5}"/>`).join("");
+  const cable = D.cable ? `<line ${ln([D.cable.x,D.cable.y],J.W)} class="fx-cable" stroke-width="${D.cable.w}"/>${D.cable.w<4?`<circle cx="${D.cable.x}" cy="${D.cable.y}" r="4" class="fx-prop"/>`:""}` : "";
+  const hand = D.hand==="bb" ? `<circle cx="${J.W[0].toFixed(1)}" cy="${J.W[1].toFixed(1)}" r="13" class="fx-plate"/><circle cx="${J.W[0].toFixed(1)}" cy="${J.W[1].toFixed(1)}" r="3.5" class="fx-hub"/>`
+    : D.hand==="db" ? `<rect x="${(J.W[0]-7).toFixed(1)}" y="${(J.W[1]-5).toFixed(1)}" width="14" height="10" rx="3" class="fx-plate"/>`
+    : D.hand==="handle" ? `<circle cx="${J.W[0].toFixed(1)}" cy="${J.W[1].toFixed(1)}" r="4" class="fx-plate"/>` : "";
+  let foot = "";
+  if (D.foot==="sled"){ const s=dd((J._sh??0)); const px=[s[1]*16,-s[0]*16]; foot = `<line x1="${(J.A[0]+px[0]+s[0]*6).toFixed(1)}" y1="${(J.A[1]+px[1]+s[1]*6).toFixed(1)}" x2="${(J.A[0]-px[0]+s[0]*6).toFixed(1)}" y2="${(J.A[1]-px[1]+s[1]*6).toFixed(1)}" class="fx-plate-l" stroke-width="6"/>`; }
+  if (D.foot==="pad") foot = `<circle cx="${J.A[0].toFixed(1)}" cy="${J.A[1].toFixed(1)}" r="6" class="fx-plate"/>`;
+  return `<line x1="4" y1="${GROUND}" x2="216" y2="${GROUND}" class="fx-ground"/>${props}${cable}
+    <g class="fx-far"><line ${ln(J.H,J.K2)}/><line ${ln(J.K2,J.A2)}/><line ${ln(J.A2,J.F2)}/><line ${ln(J.Sh,J.E2)}/><line ${ln(J.E2,J.W2)}/></g>
+    <g class="fx-near"><line ${ln(J.H,J.K)}/><line ${ln(J.K,J.A)}/><line ${ln(J.A,J.F)}/><line ${ln(J.H,J.Sh)} class="fx-torso"/><line ${ln(J.Sh,J.E)}/><line ${ln(J.E,J.W)}/></g>
+    <circle cx="${J.Hd[0].toFixed(1)}" cy="${J.Hd[1].toFixed(1)}" r="${SEG.hr}" class="fx-head"/>${hand}${foot}`;
+}
+function poseAt(key, t){
+  const D = ANIM[key] || ANIM.walk; const [a,b] = D.f;
+  let k;
+  if (D.walk) k = (1-Math.cos(t*2*Math.PI))/2;
+  else if (D.breathe) k = (1-Math.cos(t*2*Math.PI))/2;
+  else { const ph = t%1; const e = x => x<.5 ? 4*x*x*x : 1-Math.pow(-2*x+2,3)/2;
+    k = ph<.14 ? 0 : ph<.5 ? e((ph-.14)/.36) : ph<.64 ? 1 : 1-e((ph-.64)/.36); }
+  const Q = lerpPose(a,b,k); const J = solvePose(Q); J._sh = Q.sh; return J;
+}
+function animSVG(id, opts={}){
+  const key = ANIM_OF[id] || "walk";
+  const J = poseAt(key, opts.still ? 0.57 : 0);
+  return `<svg class="fx ${opts.cls||""}" viewBox="0 0 220 196" role="img" aria-label="Dimostrazione: ${esc(LIB[id]?.n||"")}" ${opts.still?"":`data-anim="${key}"`}>${figureSVG(key,J)}</svg>`;
+}
+let animRAF = null;
+const ANIM_DUR = 2800;
+function tickAnims(now){
+  const els = document.querySelectorAll("svg[data-anim]");
+  if (!els.length){ animRAF = null; return; }
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  els.forEach(el => { const key = el.dataset.anim, D = ANIM[key]; const dur = D.walk ? 1300 : D.breathe ? 3600 : ANIM_DUR;
+    const t = reduce ? 0.57 : (now % dur)/dur; el.innerHTML = figureSVG(key, poseAt(key, t)); });
+  animRAF = reduce ? null : requestAnimationFrame(tickAnims);
+}
+function startAnims(){ if (!animRAF) animRAF = requestAnimationFrame(tickAnims); }
+
+/* ================= Transizioni tra viste ================= */
+function vt(fn, dir){
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (!document.startViewTransition || reduce){ fn(); return; }
+  document.documentElement.dataset.vt = dir || "fade";
+  try { const t = document.startViewTransition(fn); t.finished.finally(() => { delete document.documentElement.dataset.vt; }); }
+  catch(e){ fn(); delete document.documentElement.dataset.vt; }
+}
+
+/* ================= Scheda tecnica dell'esercizio ================= */
+let sheetPrevFocus = null;
+function openSheet(id){
+  closeSheet(true);
+  const L = LIB[id]; if (!L) return;
+  const key = ANIM_OF[id] || "walk", st = STEPS[key] || [L.cue, "", ""];
+  const alts = candidates(L.p, S.profile, [id], []).slice(0,4);
+  const q = encodeURIComponent(L.n + " esecuzione corretta");
+  const el = document.createElement("div");
+  el.id = "sheet"; el.className = "sheet"; el.setAttribute("role","dialog"); el.setAttribute("aria-modal","true"); el.setAttribute("aria-label", L.n);
+  el.innerHTML = `<div class="sheet-bg" data-act="sheet-close"></div>
+    <div class="sheet-card" tabindex="-1">
+      <div class="sheet-grip" aria-hidden="true"></div>
+      <div class="row between"><h2 class="grow">${esc(L.n)}</h2><button class="btn-sm btn-ghost" data-act="sheet-close" aria-label="Chiudi">Chiudi</button></div>
+      <div class="fx-stage">${animSVG(id,{cls:"fx-big"})}</div>
+      ${(L.m||[]).length ? `<div class="chips">${L.m.map(m => `<span class="pill">${esc(m)}</span>`).join("")}${(L.s||[]).map(m => `<span class="pill" style="opacity:.7">${esc(m)}</span>`).join("")}</div>` : ""}
+      <ol class="how">
+        <li><b>Posizione</b><span>${esc(st[0])}</span></li>
+        <li><b>Movimento</b><span>${esc(st[1] || L.cue)}</span></li>
+      </ol>
+      <div class="panel small"><b>Il dettaglio che conta.</b> ${esc(L.cue)}</div>
+      ${st[2] ? `<div class="banner warn small"><div><b>Errore da evitare.</b> ${esc(st[2])}</div></div>` : ""}
+      ${alts.length ? `<div class="stack" style="gap:8px"><h3>Varianti dello stesso movimento</h3><div class="chips">${alts.map(a => `<button class="btn-sm btn-ghost" data-act="ex-info" data-id="${a}">${esc(LIB[a].n)}</button>`).join("")}</div></div>` : ""}
+      <a class="yt" href="https://www.youtube.com/results?search_query=${q}" target="_blank" rel="noopener noreferrer">Guarda video dimostrativi su YouTube</a>
+    </div>`;
+  document.body.appendChild(el);
+  sheetPrevFocus = document.activeElement;
+  requestAnimationFrame(() => { el.classList.add("open"); el.querySelector(".sheet-card").focus(); });
+  document.body.style.overflow = "hidden";
+  startAnims();
+}
+function closeSheet(instant){
+  const el = $("#sheet"); if (!el) return;
+  document.body.style.overflow = "";
+  if (instant){ el.remove(); return; }
+  el.classList.remove("open");
+  const done = () => el.remove();
+  el.addEventListener("transitionend", done, {once:true}); setTimeout(done, 400);
+  if (sheetPrevFocus && sheetPrevFocus.focus) sheetPrevFocus.focus();
+}
+document.addEventListener("keydown", e => { if (e.key==="Escape") closeSheet(); });
 
 /* ================= Stato ================= */
 let S = null;              // stato persistente (profilo, piano, corpo, bozza)
@@ -641,8 +948,8 @@ function render(){
   tabs.innerHTML = `<div class="in">${TABS.map(([k,l]) => `<a href="#${k}" ${ui.route===k?'aria-current="page"':""}>${ICON[k]}<span>${l}</span></a>`).join("")}</div>`;
   const view = {oggi:renderToday, piano:renderPlan, progressi:renderProgress, metodo:renderMethod, profilo:renderProfile}[ui.route] || renderToday;
   const demoBar = ui.demo ? `<div class="banner acc"><div class="grow">Profilo di esempio con 3 settimane di dati simulati. Nulla viene salvato.</div><button class="btn-sm btn-primary" data-act="exit-demo">Crea il mio</button></div>` : "";
-  app.innerHTML = header() + `<div class="stack-lg">${demoBar}${view()}</div>`;
-  renderTimer();
+  app.innerHTML = header() + `<div class="stack-lg" id="view">${demoBar}${view()}</div>`;
+  renderTimer(); startAnims();
 }
 
 /* ---------- Onboarding ---------- */
@@ -773,10 +1080,10 @@ function plateMath(kg){
 }
 function rxText(r, id){
   const u = unitOf(id), lab = LIB[id].rlab || (u==="s" ? "s" : u==="min" ? "min" : "rip");
-  if (LIB[id].t==="cardio") return `<div class="rx"><div class="rxb"><span class="rxb-main">${r.rl}–${r.rh} min</span></div></div>`;
+  if (LIB[id].t==="cardio") return `<span class="rx"><span class="rxb"><span class="rxb-main">${r.rl}–${r.rh} min</span></span></span>`;
   const load = u==="kg" ? (r.load ? `<span class="rxb-load">${fmtNum(r.load,2)} kg</span>` : `<span class="rxb-load none">carico da trovare</span>`) : u==="bw" ? `<span class="rxb-load none">corpo libero</span>` : "";
   const rest = r.rest ? `, recupero ${r.rest>=120?fmtNum(r.rest/60)+" min":r.rest+" s"}` : "";
-  return `<div class="rx"><div class="rxb"><span class="rxb-main">${r.sets} × ${r.rl}–${r.rh}</span>${load}</div><div class="rxb-meta">${lab==="rip"?"ripetizioni":lab==="s"?"secondi":lab}, ${r.rir} in riserva${rest}</div></div>`;
+  return `<span class="rx"><span class="rxb"><span class="rxb-main">${r.sets} × ${r.rl}–${r.rh}</span>${load}</div><span class="rxb-meta">${lab==="rip"?"ripetizioni":lab==="s"?"secondi":lab}, ${r.rir} in riserva${rest}</span></span>`;
 }
 function barbell(score, zone, opts={}){
   const n = opts.colors ? opts.colors.length : score>=80 ? 4 : score>=65 ? 3 : score>=40 ? 2 : 1;
@@ -818,8 +1125,8 @@ function renderToday(){
     ${banners.join("")}
     ${doneToday ? `<p class="muted small">Oggi hai già fatto ${esc(doneToday.name)} (fatica ${doneToday.rpe}/10, ${doneToday.dur} min). Il recupero ora è parte dell'allenamento.</p>` : ""}
     <section class="stack"><h3>In programma</h3><p class="small muted">${esc(L.why)}</p>
-      <div class="divide sess-list">${ses.items.map(id => `<div class="sess-row"><span style="font-weight:650">${esc(LIB[id].n)}</span>${rxText(S.plan.ex[id], id)}</div>`).join("")}</div></section>
-    ${fresh.length ? `<section class="stack"><h3>Cosa è cambiato dall'ultima seduta</h3><div class="divide">${fresh.map(changeRow).join("")}</div></section>` : ""}
+      <div class="divide">${ses.items.map(id => exRow(id, S.plan.ex[id])).join("")}</div></section>
+    ${fresh.length ? `<details class="changes" ${fresh.length<=3?"open":""}><summary><h3>Cosa è cambiato dall'ultima seduta</h3><span class="pill acc">${fresh.length}</span></summary><div class="divide">${fresh.map(changeRow).join("")}</div></details>` : ""}
     <section class="card stack">
       <div class="stack" style="gap:4px"><h2>Come stai oggi?</h2><p class="small muted">Venti secondi: la seduta si regola sulle risposte.</p></div>
       <div class="field"><span>Qualità del sonno</span>${scale("sleep",rdf.sleep,["Pessima","","","","Ottima"])}</div>
@@ -850,38 +1157,51 @@ function repeatedPain(){
   const c = {}; SESS.slice(0,5).forEach(s => { const set = new Set(); if (s.rd?.pain && s.rd.pain!=="none") set.add(s.rd.pain); s.items.forEach(it => { if (it.fb==="dolore") set.add(it.painJ||"other"); }); set.forEach(j => c[j]=(c[j]||0)+1); });
   const j = Object.keys(c).find(k => c[k] >= 3); return j || null;
 }
+function exRow(id, r, extra){
+  return `<button class="exrow" data-act="ex-info" data-id="${id}" aria-label="Come si fa: ${esc(LIB[id].n)}">${animSVG(id,{still:1,cls:"fx-thumb"})}<span class="exrow-body"><span class="exrow-name">${esc(LIB[id].n)}</span>${r ? rxText(r, id) : ""}</span><span class="exrow-more" aria-hidden="true">Come si fa</span></button>${extra||""}`;
+}
 function changeRow(c){
   const label = {carico:"Carico", serie:"Serie", ripetizioni:"Range", esercizio:"Cambio", obiettivo:"Obiettivo", rir:"RIR"}[c.what] || c.what;
   const val = c.what==="carico" ? `${fmtNum(c.from,2)} → ${fmtNum(c.to,2)} kg` : c.what==="esercizio" ? `${esc(c.from)} → ${esc(c.to)}` : c.from!=="" && c.from!=null ? `${esc(c.from)} → ${esc(c.to)}` : esc(c.to);
   return `<div class="change"><span class="k">${label}</span><div><b>${c.what==="esercizio"?"":esc(c.name)+": "}${val}</b><div class="small muted">${esc(c.why)}${c.src==="Claude"?" Proposta da Claude.":c.src==="tu"?" Scelta tua.":""}</div></div></div>`;
 }
 function renderLog(d){
-  const rd = d.rd, z = rd?.zone || "go";
+  const rd = d.rd, z = rd?.zone || "go", n = d.items.length;
+  const cur = clamp(d.cur||0, 0, n-1), it = d.items[cur];
+  const done = i => d.items[i].sets.length && d.items[i].sets.every(s => s.done);
   return `
-    <div class="today-head"><span class="label">In corso</span><h1>${esc(d.name)}</h1></div>
-    ${rd ? `<div class="bar-wrap">${barbell(rd.score, z)}<div class="row" style="justify-content:center"><span class="pill ${z}">Prontezza: ${ZONE[z].toLowerCase()}</span><span class="pill acc">${LENSES[d.lens].n}${d.dayType?", giorno di "+d.dayType:""}</span>${d.short?'<span class="pill">Versione 25 min</span>':""}</div></div>` : ""}
-    ${z==="warn" ? `<p class="small">Il check dice energia sotto la media: un po' più di margine (RIR +1), carichi −5% e una serie in meno sui complementari.</p>` : z==="stop" ? `<p class="small">Recupero attivo: metà delle serie, carichi −15%, lontano dal cedimento. Muoverti oggi conta, spingere no.</p>` : `<p class="small">Tutto in ordine: segui la scheda. Registra peso, ripetizioni e RIR (quante ripetizioni pulite ti restavano).</p>`}
-    <section class="divide">${d.items.map((it,i) => exLog(it,i)).join("")}</section>
-    <div class="stack"><button class="btn-primary btn-wide" data-act="to-fb">Ho finito: com'è andata?</button><button class="btn-sm btn-ghost" data-act="abort">Annulla la seduta</button></div>`;
+    <div class="log-head">
+      <div class="row between"><div class="today-head"><span class="label">${esc(d.name)}${d.short?", versione 25 minuti":""}</span><h2>Esercizio ${cur+1} di ${n}</h2></div>
+        ${rd ? `<span class="pill ${z}" title="Prontezza ${rd.score}/100">${rd.score} · ${ZONE[z]}</span>` : ""}</div>
+      <div class="prog" role="tablist" aria-label="Esercizi della seduta">${d.items.map((x,i) => `<button role="tab" aria-selected="${i===cur}" aria-label="${esc(LIB[x.id].n)}" class="${i===cur?"cur":done(i)?"ok":""}" data-act="goto" data-i="${i}"></button>`).join("")}</div>
+    </div>
+    ${cur===0 && rd ? `<div class="bar-wrap">${barbell(rd.score, z)}<p class="small muted" style="text-align:center">${z==="warn" ? "Energia sotto la media: RIR +1, carichi −5%, una serie in meno sui complementari." : z==="stop" ? "Recupero attivo: metà serie, carichi −15%, lontano dal cedimento." : "Tutto in ordine: segui la scheda."} ${LENSES[d.lens].n}${d.dayType?", giorno di "+d.dayType:""}.</p></div>` : ""}
+    ${exLog(it, cur)}
+    <div class="log-nav">
+      ${cur>0 ? `<button class="btn-ghost" data-act="prev">Precedente</button>` : `<span></span>`}
+      ${cur<n-1 ? `<button class="btn-primary" data-act="next">Prossimo: ${esc(LIB[d.items[cur+1].id].n)}</button>` : `<button class="btn-primary" data-act="to-fb">Ho finito: com'è andata?</button>`}
+    </div>
+    <button class="btn-sm btn-ghost" style="align-self:center" data-act="abort">Annulla la seduta</button>`;
 }
 function exLog(it, i){
   const L = LIB[it.id], u = unitOf(it.id), r = it.rx;
   const lab = L.rlab || (u==="s"?"sec":u==="min"?"min":"rip");
-  return `<div class="ex">
-    <div class="ex-head"><div class="grow"><div class="ex-name">${esc(L.n)}</div><div class="rx">${rxText(r, it.id)}</div>
-      ${L.bar && r.load ? `<div style="margin-top:6px">${plateMath(r.load)}</div>` : ""}
-      ${it.note.length ? `<div class="small" style="color:var(--warn);margin-top:4px">${esc(it.note.join(" · "))}</div>` : ""}</div>
-      <div class="row" style="flex-wrap:nowrap">${r.rest ? `<button class="btn-sm btn-ghost" data-act="rest" data-s="${r.rest}" aria-label="Avvia recupero">⏱ ${r.rest}″</button>` : ""}<button class="btn-sm btn-ghost" data-act="swap-today" data-i="${i}">Cambia</button></div></div>
-    <details><summary class="small muted">Tecnica</summary><p class="small" style="margin-top:6px">${esc(L.cue)}</p></details>
+  return `<section class="ex-focus card">
+    <button class="fx-stage fx-tap" data-act="ex-info" data-id="${it.id}" aria-label="Apri la scheda tecnica di ${esc(L.n)}">${animSVG(it.id,{cls:"fx-mid"})}<span class="fx-hint">Tocca per la scheda tecnica</span></button>
+    <div class="stack" style="gap:6px"><h2>${esc(L.n)}</h2>${rxText(r, it.id)}
+      ${L.bar && r.load ? `<div>${plateMath(r.load)}</div>` : ""}
+      ${it.note.length ? `<div class="small" style="color:var(--warn)">${esc(it.note.join(". "))}</div>` : ""}</div>
+    <div class="row">${r.rest ? `<button class="btn-sm btn-ghost" data-act="rest" data-s="${r.rest}">Avvia recupero ${r.rest>=120?fmtNum(r.rest/60)+" min":r.rest+" s"}</button>` : ""}<button class="btn-sm btn-ghost" data-act="swap-today" data-i="${i}">Cambia esercizio</button></div>
     <div class="sets">
-      <span class="h">#</span><span class="h">${u==="kg"?"kg":"—"}</span><span class="h">${lab}</span><span class="h">RIR</span><span class="h"></span>
+      <span class="h">Serie</span><span class="h">${u==="kg"?"kg":""}</span><span class="h">${lab}</span><span class="h">RIR</span><span class="h">Fatta</span>
       ${it.sets.map((s,j) => `<span class="n">${j+1}</span>
         <input id="kg-${i}-${j}" inputmode="decimal" ${u!=="kg"?"disabled placeholder='—'":""} value="${esc(s.kg)}" data-set="${i}.${j}.kg" aria-label="Kg serie ${j+1}">
         <input id="rp-${i}-${j}" inputmode="numeric" value="${esc(s.reps)}" placeholder="${r.rl}–${r.rh}" data-set="${i}.${j}.reps" aria-label="Ripetizioni serie ${j+1}">
         <input id="ri-${i}-${j}" inputmode="numeric" value="${esc(s.rir)}" placeholder="${r.rir}" data-set="${i}.${j}.rir" aria-label="RIR serie ${j+1}">
-        <button class="tick" aria-pressed="${s.done}" data-act="tick" data-i="${i}" data-j="${j}" aria-label="Serie ${j+1} fatta">✓</button>`).join("")}
+        <button class="tick" aria-pressed="${s.done}" data-act="tick" data-i="${i}" data-j="${j}" aria-label="Serie ${j+1} fatta"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg></button>`).join("")}
     </div>
-    <div class="row"><button class="btn-sm btn-ghost" data-act="add-set" data-i="${i}">+ serie</button></div></div>`;
+    <div class="row between"><button class="btn-sm btn-ghost" data-act="add-set" data-i="${i}">Aggiungi una serie</button><span class="small muted">RIR = ripetizioni pulite che ti restavano</span></div>
+  </section>`;
 }
 function renderFeedback(d){
   const FB = [["facile","Facile"],["giusto","Giusto"],["duro","Troppo duro"],["noioso","Noioso"],["dolore","Dolore"]];
@@ -890,7 +1210,7 @@ function renderFeedback(d){
       <div class="row"><input id="rpe" type="range" min="0" max="10" step="1" value="${d.rpe}" class="grow" aria-label="RPE seduta"><b class="num" id="rpe-v" style="font-size:1.6rem;min-width:2ch;text-align:right">${d.rpe}</b></div>
       <div class="field"><span>Quanto ti è piaciuta?</span>${scale("enjoy",d.enjoy,["Per niente","","Abbastanza","","Tantissimo"])}</div></section>
     <section class="stack"><h3>Esercizio per esercizio</h3><p class="small muted">È questo che riscrive la scheda: sii sincero.</p>
-      <div class="divide">${d.items.map((it,i) => `<div class="ex"><div class="ex-name">${esc(LIB[it.id].n)} <span class="rx">${it.sets.filter(s=>s.done).length}/${it.sets.length} serie</span></div>
+      <div class="divide">${d.items.map((it,i) => `<div class="ex"><div class="row" style="flex-wrap:nowrap">${animSVG(it.id,{still:1,cls:"fx-thumb"})}<div><div class="ex-name">${esc(LIB[it.id].n)}</div><span class="small muted">${it.sets.filter(s=>s.done).length} di ${it.sets.length} serie fatte</span></div></div>
         <div class="chips">${FB.map(([k,l]) => chip("fb"+i,k,l,it.fb===k,"radio")).join("")}</div>
         ${it.fb==="dolore" ? `<div class="chips">${Object.entries(JOINT).map(([k,l]) => chip("pj"+i,k,l[0].toUpperCase()+l.slice(1),it.painJ===k,"radio")).join("")}</div>` : ""}</div>`).join("")}</div></section>
     <label class="field"><span>Note per il coach (facoltative)</span><textarea id="fb-note" placeholder="es. ho dormito male, la panca mi è sembrata pesante, la spalla tira in basso…">${esc(d.note)}</textarea></label>
@@ -934,8 +1254,7 @@ function renderPlan(){
   return `<div><span class="label">${S.plan.days} giorni a settimana, ${EQUIP[S.profile.equip].toLowerCase()}, obiettivo ${GOALS[S.profile.goal].toLowerCase()}</span><h1>La tua scheda</h1></div>
     <div class="panel stack small"><div class="row between"><b>${LENSES[L.id].n}</b>${S.profile.lensPref==="auto"?'<span class="pill">scelta automatica</span>':'<span class="pill acc">scelta da te</span>'}</div><p>${LENSES[L.id].d}</p><p class="muted">${esc(L.why)}</p></div>
     ${S.plan.sessions.map((s,si) => `<section class="card stack"><div class="row between"><h2>${esc(s.name)}</h2>${si===nextIdx()?'<span class="pill acc">Prossima</span>':""}</div>
-      <div class="divide">${s.items.map(id => `<div class="ex" style="padding:10px 0"><div class="ex-head"><div class="grow"><div class="ex-name">${esc(LIB[id].n)}</div><div class="rx">${rxText(S.plan.ex[id], id)}</div></div>
-        <button class="btn-sm btn-ghost" data-act="swap-plan" data-id="${id}">Sostituisci</button></div></div>`).join("")}</div></section>`).join("")}
+      <div class="divide">${s.items.map(id => `<div class="planrow">${exRow(id, S.plan.ex[id])}<button class="btn-sm btn-ghost" data-act="swap-plan" data-id="${id}">Sostituisci</button></div>`).join("")}</div></section>`).join("")}
     <section class="stack"><h3>Volume settimanale per muscolo</h3>
       <p class="small muted">Serie dirette (le secondarie contano metà). La fascia verde è l'intervallo indicato dalle meta-analisi per il tuo livello: ${band[0]}–${band[1]} serie.</p>
       <div class="stack" style="gap:8px">${MUSCLES.map(m => `<div class="vol"><span>${m[0].toUpperCase()+m.slice(1)}</span><div class="bar"><span class="band" style="left:${band[0]/max*100}%;width:${(band[1]-band[0])/max*100}%"></span><span class="fill" style="width:${Math.min(100,v[m]/max*100)}%"></span></div><span class="num small">${fmtNum(v[m])}</span></div>`).join("")}</div></section>
@@ -991,6 +1310,9 @@ const SOURCES = [
   ["ACSM (2009). Modelli di progressione nell'allenamento con sovraccarichi. Med Sci Sports Exerc.","10.1249/MSS.0b013e3181915670","Range di ripetizioni, recuperi e incrementi per obiettivo e livello."],
   ["Foster et al. (2001). Monitoraggio dell'allenamento con la RPE di seduta. J Strength Cond Res.","10.1519/00124278-200102000-00019","La scala CR-10 a fine seduta alimenta il controllo della fatica e lo scarico."],
   ["Williams et al. (2017). Variabilità cardiaca, carichi e rischio di sovraccarico. J Sports Sci Med.","PMC5721172","Indicatori di prontezza e carichi elevati insieme predicono i problemi: base del check giornaliero."],
+  ["Maeo et al. (2021). Leg curl da seduto contro da prono: più ipertrofia dei femorali allenandoli in allungamento. Med Sci Sports Exerc.","10.1249/MSS.0000000000002523","Per questo la scheda preferisce il leg curl da seduto."],
+  ["Cholp, Zemková (2025). Volume alto e basso di Nordic curl: meta-analisi. Front Physiol.","10.3389/fphys.2025.1631205","2–3 serie da 8–12 migliorano forza eccentrica e lunghezza dei fascicoli dei femorali."],
+  ["Pecci et al. (2025). Variabili di allenamento e Nordic curl sull'architettura del bicipite femorale. Sports Health.","10.1177/19417381251331607","Il Nordic allunga i fascicoli con volume sufficiente e due sedute a settimana."],
   ["Morton et al. (2018). Proteine e guadagni da allenamento: meta-analisi. Br J Sports Med.","10.1136/bjsports-2017-097608","Riferimento di circa 1,6 g/kg/giorno mostrato nel profilo."],
   ["Mifflin et al. (1990). Equazione del metabolismo basale. Am J Clin Nutr.","10.1093/ajcn/51.2.241","Stima del metabolismo a riposo nel profilo."],
   ["Bull et al. (2020). Linee guida OMS su attività fisica e sedentarietà. Br J Sports Med.","10.1136/bjsports-2020-102955","Minimo di 2 giorni di forza e 150–300 minuti di attività aerobica a settimana."],
@@ -1145,6 +1467,14 @@ document.addEventListener("input", ev => {
 document.addEventListener("click", async ev => {
   const b = ev.target.closest("[data-act]"); if (!b) return;
   const a = b.dataset.act;
+  if (a==="ex-info"){ openSheet(b.dataset.id); return; }
+  if (a==="sheet-close"){ closeSheet(); return; }
+  if (S?.draft && (a==="next" || a==="prev" || a==="goto")){
+    const n = S.draft.items.length, c = S.draft.cur||0;
+    const to = a==="next" ? Math.min(n-1,c+1) : a==="prev" ? Math.max(0,c-1) : Number(b.dataset.i);
+    if (to===c) return;
+    vt(() => { S.draft.cur = to; Store.save(); render(); window.scrollTo(0,0); }, to>c ? "next" : "prev"); return;
+  }
   if (a==="ob-next"){ const err = validateStep(); if (err){ toast(err); return; } ui.step++; render(); window.scrollTo(0,0); return; }
   if (a==="ob-back"){ ui.step = Math.max(0, ui.step-1); render(); return; }
   if (a==="ob-cancel"){ ui.ob = null; ui.step = 0; ui.route = "profilo"; ui.editing = false; render(); return; }
@@ -1162,7 +1492,7 @@ document.addEventListener("click", async ev => {
   if (a==="start" || a==="start-short"){
     const rd = readRd(); const d = buildToday(nextIdx(), rd);
     if (a==="start-short"){ d.short = true; d.items = d.items.filter(it => LIB[it.id].t==="c").slice(0,3); d.items.forEach(it => { it.rx.sets = Math.min(it.rx.sets,2); it.sets = it.sets.slice(0,it.rx.sets); }); }
-    S.draft = d; ui.rdForm = null; Store.save(); render(); window.scrollTo(0,0); return;
+    d.cur = 0; S.draft = d; ui.rdForm = null; Store.save(); vt(() => { render(); window.scrollTo(0,0); }, "next"); return;
   }
   if (a==="recovery"){
     const rd = readRd(); S.draft = {id:rid(), d:today(), sIdx:-1, k:"REC", name:"Recupero attivo", lens:lens().id, dayType:null, rd, start:Date.now(), recovery:true, stage:"log", rpe:3, enjoy:4, note:"",
@@ -1171,7 +1501,10 @@ document.addEventListener("click", async ev => {
   }
   if (a==="tick"){ const s = S.draft.items[b.dataset.i].sets[b.dataset.j]; s.done = !s.done; b.setAttribute("aria-pressed", s.done);
     if (s.done && !s.reps){ const it = S.draft.items[b.dataset.i]; s.reps = String(it.rx.rl); const inp = $(`#rp-${b.dataset.i}-${b.dataset.j}`); if (inp) inp.value = s.reps; }
-    if (s.done){ const r = S.draft.items[b.dataset.i].rx.rest; if (r) startTimer(r); }
+    const allDone = S.draft.items[b.dataset.i].sets.every(x => x.done);
+    if (s.done && !allDone){ const r = S.draft.items[b.dataset.i].rx.rest; if (r) startTimer(r); }
+    const seg = document.querySelector(`.prog [data-i="${b.dataset.i}"]`); if (seg && allDone) seg.classList.add("ok");
+    if (allDone && s.done) toast("Esercizio completato. Passa al prossimo quando sei pronto.");
     Store.save(); return; }
   if (a==="add-set"){ const it = S.draft.items[b.dataset.i]; const last = it.sets[it.sets.length-1] || {kg:""}; it.sets.push({kg:last.kg, reps:"", rir:"", done:false}); Store.save(); render(); return; }
   if (a==="swap-today"){ const it = S.draft.items[b.dataset.i]; const others = S.draft.items.map(x => x.id);
@@ -1213,7 +1546,7 @@ function route(){
   ui.route = TABS.some(t => t[0]===h) ? h : "oggi";
   if (S && S.plan) render();
 }
-window.addEventListener("hashchange", () => { route(); window.scrollTo(0,0); });
+window.addEventListener("hashchange", () => { vt(() => { route(); window.scrollTo(0,0); }, "fade"); });
 
 (async function boot(){
   await Store.init();
