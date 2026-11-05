@@ -1,0 +1,499 @@
+{
+  "version": 1,
+  "updated": "2026-11-05",
+  "note": "Esercizi da palestra aggiunti dall'autore. L'app li legge all'apertura: basta pubblicare questo file su GitHub Pages.",
+  "exercises": {
+    "cable_crunch": {
+      "n": "Crunch al cavo in ginocchio",
+      "p": "core",
+      "m": [
+        "core"
+      ],
+      "need": "gym",
+      "t": "i",
+      "unit": "kg",
+      "anim": "crunch",
+      "lvl": "base",
+      "cue": "Arrotola la schiena verso le ginocchia: il movimento parte dalla gabbia toracica.",
+      "steps": [
+        "In ginocchio davanti al cavo alto, corda dietro la testa.",
+        "Arrotola la schiena portando i gomiti verso le ginocchia, senza muovere le anche.",
+        "Torna lento: il movimento viene dalla schiena, non dalle braccia."
+      ],
+      "err": "Tirare con le braccia invece di arrotolare la schiena.",
+      "adv": "Fai una pausa di 2 secondi in basso e aumenta il carico di 2,5 kg quando completi tutte le serie.",
+      "animNote": "Animazione del crunch a terra: il movimento è lo stesso."
+    },
+    "hack_squat": {
+      "n": "Hack squat alla macchina",
+      "p": "squat",
+      "m": [
+        "quadricipiti",
+        "glutei"
+      ],
+      "st": [
+        "knee"
+      ],
+      "need": "gym",
+      "t": "c",
+      "unit": "kg",
+      "anim": "legpress",
+      "lvl": "base",
+      "cue": "Schiena appoggiata, piedi a metà pedana: scendi finché il bacino è sotto le ginocchia.",
+      "steps": [
+        "Schiena e testa appoggiate, piedi a metà della pedana.",
+        "Scendi controllato fino a far scendere il bacino sotto il livello delle ginocchia.",
+        "Spingi dai talloni senza bloccare le ginocchia in alto."
+      ],
+      "err": "Piedi troppo in alto: il lavoro passa tutto sulla schiena.",
+      "adv": "Usa una pausa di 1 secondo in basso e il tempo di discesa di 3 secondi.",
+      "animNote": "Animazione della pressa: il lavoro è simile."
+    },
+    "machine_press": {
+      "n": "Military press alla macchina",
+      "p": "vpush",
+      "m": [
+        "spalle",
+        "tricipiti"
+      ],
+      "st": [
+        "shoulder"
+      ],
+      "need": "gym",
+      "t": "c",
+      "unit": "kg",
+      "anim": "ohp",
+      "lvl": "base",
+      "cue": "Impugnatura alla larghezza delle spalle, spingi in alto senza arcuare la schiena.",
+      "steps": [
+        "Siediti con la schiena appoggiata e le maniglie all'altezza delle spalle.",
+        "Spingi in alto fino a quasi stendere le braccia, senza bloccare i gomiti.",
+        "Torna lento fino all'altezza delle orecchie."
+      ],
+      "err": "Inarcare la schiena per aiutarti a spingere.",
+      "adv": "Alterna una serie con presa neutra e una con presa prona nella stessa seduta."
+    },
+    "back_ext": {
+      "n": "Iperestensioni alla panca romana",
+      "p": "hinge",
+      "m": [
+        "glutei",
+        "femorali"
+      ],
+      "st": [
+        "back"
+      ],
+      "need": "gym",
+      "t": "c",
+      "unit": "bw",
+      "anim": "hinge",
+      "lvl": "base",
+      "cue": "Schiena dritta, il movimento parte dai glutei e arriva fino alla linea del busto.",
+      "steps": [
+        "Blocca le caviglie sotto il supporto e incrocia le braccia sul petto.",
+        "Scendi piegandoti dal bacino fino a sentire una leggera tensione dietro le cosce.",
+        "Risali contraendo i glutei, fermandoti in linea con il corpo."
+      ],
+      "err": "Tirare la schiena oltre la linea del corpo: stress sulla zona lombare.",
+      "adv": "Tieni un disco sul petto o fai la variante con pausa di 2 secondi in alto.",
+      "animNote": "Animazione dello stacco da terra: il movimento è di piegamento dal bacino."
+    },
+    "preacher_curl": {
+      "n": "Curl alla panca Scott",
+      "p": "bi",
+      "m": [
+        "bicipiti"
+      ],
+      "need": "gym",
+      "t": "i",
+      "unit": "kg",
+      "anim": "curl",
+      "lvl": "base",
+      "cue": "Braccia appoggiate alla panca: il bicipite lavora con tutta la escursione.",
+      "steps": [
+        "Appoggia la parte alta del braccio alla panca, impugnatura sotto.",
+        "Sali fino a contrarre il bicipite, senza sollevare i gomiti.",
+        "Scendi lento fino a quasi stendere il braccio."
+      ],
+      "err": "Scendere troppo di colpo e perdere il controllo in basso.",
+      "adv": "Fai la discesa in 4 secondi: è la parte che costruisce di più il muscolo."
+    },
+    "oh_tri": {
+      "n": "Estensione tricipiti sopra la testa al cavo",
+      "p": "tri",
+      "m": [
+        "tricipiti"
+      ],
+      "need": "gym",
+      "t": "i",
+      "unit": "kg",
+      "anim": "french",
+      "lvl": "base",
+      "cue": "Gomiti vicini alla testa, estendi solo l'avambraccio.",
+      "steps": [
+        "Di spalle al cavo, mani sulla corda, gomiti alla testa.",
+        "Estendi le braccia in avanti e in basso senza muovere i gomiti.",
+        "Torna lento fino a sentire lo stiramento del tricipite."
+      ],
+      "err": "Gomiti che si aprono: il lavoro passa alle spalle.",
+      "adv": "Ferma il movimento 1 secondo nella posizione di massima estensione."
+    },
+    "calf_standing": {
+      "n": "Polpacci in piedi alla macchina",
+      "p": "calf",
+      "m": [
+        "polpacci"
+      ],
+      "need": "gym",
+      "t": "i",
+      "unit": "kg",
+      "anim": "calf",
+      "lvl": "base",
+      "cue": "Sali sulla punta, scendi fino a sentire lo stiramento del polpaccio.",
+      "steps": [
+        "Spalle sotto i cuscinetti, avampiedi sulla pedana.",
+        "Sali sulla punta il più in alto possibile.",
+        "Scendi lento sotto il livello della pedana."
+      ],
+      "err": "Rimbalzi in basso: perdi la parte più utile del movimento.",
+      "adv": "Pausa di 2 secondi in basso e in alto: aumenta la forza sul tendine."
+    },
+    "ab_wheel": {
+      "n": "Ruota per addominali",
+      "p": "core",
+      "m": [
+        "core"
+      ],
+      "need": "gym",
+      "t": "c",
+      "unit": "bw",
+      "anim": "plank",
+      "lvl": "adv",
+      "cue": "Fai rotolare la ruota tenendo la schiena dritta: esci solo fino a dove riesci a controllare.",
+      "steps": [
+        "In ginocchio con le mani sulla ruota, schiena dritta.",
+        "Rotola in avanti lentamente, mantenendo il corpo in linea.",
+        "Torna contraendo l'addome, senza far cadere il bacino."
+      ],
+      "err": "Scendere troppo: la schiena si inarca e la zona lombare soffre.",
+      "adv": "Parti da in piedi sulle punte, con la ruota: è la variante completa.",
+      "animNote": "Animazione della plank: la posizione è simile."
+    },
+    "cable_chop": {
+      "n": "Taglio diagonale al cavo",
+      "p": "core",
+      "m": [
+        "core"
+      ],
+      "s": [
+        "obliqui"
+      ],
+      "need": "gym",
+      "t": "i",
+      "unit": "kg",
+      "anim": "pallof",
+      "lvl": "base",
+      "cue": "Ruota il busto e le anche insieme, il braccio guida la maniglia in diagonale.",
+      "steps": [
+        "Di fianco al cavo alto, impugnatura con due mani.",
+        "Ruota il busto portando la maniglia in diagonale verso il basso e il fianco opposto.",
+        "Torna lento, mantenendo le braccia tese."
+      ],
+      "err": "Ruotare solo le braccia: il tronco deve muoversi insieme.",
+      "adv": "Fai la versione a risalire (dal basso verso l'alto) con il tronco che resta fermo nella rotazione."
+    },
+    "smith_squat": {
+      "n": "Squat alla Smith",
+      "p": "squat",
+      "m": [
+        "quadricipiti",
+        "glutei"
+      ],
+      "st": [
+        "knee",
+        "back"
+      ],
+      "need": "gym",
+      "t": "c",
+      "unit": "kg",
+      "anim": "squat",
+      "lvl": "base",
+      "cue": "Piedi leggermente avanti rispetto alla barra, scendi con il petto alto.",
+      "steps": [
+        "Posiziona la barra sui trapezi, piedi un po' avanti.",
+        "Scendi piegando anche e ginocchia insieme fino al parallelo o sotto.",
+        "Risali spingendo dai talloni, con il petto alto."
+      ],
+      "err": "Piedi troppo vicini alla barra: le ginocchia si spostano in avanti in modo eccessivo.",
+      "adv": "Usa una pausa di 1 secondo in basso e tempo di discesa di 3 secondi."
+    },
+    "t_bar_row": {
+      "n": "Rematore a T",
+      "p": "hpull",
+      "m": [
+        "dorso",
+        "bicipiti"
+      ],
+      "st": [
+        "back"
+      ],
+      "need": "gym",
+      "t": "c",
+      "unit": "kg",
+      "anim": "cablerow",
+      "lvl": "base",
+      "cue": "Schiena piatta, porta il manubrio verso l'addome portando i gomiti indietro.",
+      "steps": [
+        "Piegati sulle anche con la schiena piatta, ginocchia leggermente flesse.",
+        "Tira il manubrio verso l'addome, gomiti vicini al corpo.",
+        "Abbassa lento fino a stendere le braccia."
+      ],
+      "err": "Schiena che si arrotonda: riduci il carico e tieni il busto fermo.",
+      "adv": "Pausa di 1 secondo con la maniglia a contatto con l'addome."
+    },
+    "pec_deck": {
+      "n": "Pec deck",
+      "p": "fly",
+      "m": [
+        "petto"
+      ],
+      "st": [
+        "shoulder"
+      ],
+      "need": "gym",
+      "t": "i",
+      "unit": "kg",
+      "anim": "fly",
+      "lvl": "base",
+      "cue": "Gomiti a una altezza leggermente più bassa delle spalle, chiudi le braccia davanti al petto.",
+      "steps": [
+        "Siediti con la schiena appoggiata, avambracci sui cuscinetti.",
+        "Chiudi le braccia davanti al petto contraendo il petto.",
+        "Torna lento fino a sentire lo stiramento."
+      ],
+      "err": "Spingere con le mani invece di chiudere con il petto.",
+      "adv": "Pausa di 2 secondi con le braccia chiuse davanti al petto."
+    },
+    "good_morning": {
+      "n": "Good morning con bilanciere",
+      "p": "hinge",
+      "m": [
+        "femorali",
+        "glutei"
+      ],
+      "st": [
+        "back"
+      ],
+      "need": "gym",
+      "t": "c",
+      "unit": "kg",
+      "anim": "hinge",
+      "lvl": "adv",
+      "cue": "Bilanciere sulla schiena, piega dal bacino con la schiena dritta fino al parallelo col busto.",
+      "steps": [
+        "Bilanciere sui trapezi, piedi alla larghezza delle spalle.",
+        "Piega il busto dal bacino mantenendo la schiena dritta.",
+        "Torna su contraendo glutei e femorali."
+      ],
+      "err": "Arrotondare la schiena: scendi solo finché la schiena resta dritta.",
+      "adv": "Con carico moderato: tempo di discesa di 3 secondi e pausa in basso di 1 secondo.",
+      "animNote": "Animazione dello stacco rumeno: il movimento è simile."
+    },
+    "sumo_dl": {
+      "n": "Stacco sumo",
+      "p": "hinge",
+      "m": [
+        "glutei",
+        "femorali",
+        "adduttori"
+      ],
+      "st": [
+        "back"
+      ],
+      "need": "gym",
+      "t": "c",
+      "unit": "kg",
+      "anim": "deadlift",
+      "lvl": "adv",
+      "cue": "Piedi larghi, punte fuori, schiena dritta: spingi il pavimento con i piedi.",
+      "steps": [
+        "Piedi larghi, punte fuori, impugnatura nel mezzo delle gambe.",
+        "Spingi il pavimento con i piedi mantenendo la schiena dritta.",
+        "Chiudi in piedi contraendo i glutei, senza inarcare."
+      ],
+      "err": "Schiena che si piega in avanti prima che il bilanciere salga.",
+      "adv": "Usa lo stacco con pausa di 2 secondi a terra (dead stop) per perdere lo slancio."
+    },
+    "dip_weight": {
+      "n": "Dip zavorrato",
+      "p": "vpush",
+      "m": [
+        "petto",
+        "tricipiti"
+      ],
+      "st": [
+        "shoulder"
+      ],
+      "need": "gym",
+      "t": "c",
+      "unit": "kg",
+      "anim": "dip",
+      "lvl": "adv",
+      "cue": "Un disco o una cintura con peso: stessa tecnica del dip, con più carico.",
+      "steps": [
+        "Impugnature alle parallele, corpo leggermente inclinato in avanti.",
+        "Scendi fino a 90° di gomito, spalle lontane dalle orecchie.",
+        "Spingi su senza bloccare i gomiti."
+      ],
+      "err": "Scendere troppo: le spalle soffrono.",
+      "adv": "Aggiungi carico solo quando fai 3 serie da 8 con tecnica pulita."
+    },
+    "weighted_pullup": {
+      "n": "Trazioni zavorrate",
+      "p": "vpull",
+      "m": [
+        "dorso",
+        "bicipiti"
+      ],
+      "st": [
+        "shoulder"
+      ],
+      "need": "gym",
+      "t": "c",
+      "unit": "kg",
+      "anim": "pullup",
+      "lvl": "adv",
+      "cue": "Cintura con disco o manubrio tra le gambe: stessa tecnica della trazione, con più carico.",
+      "steps": [
+        "Cintura con il peso fissato, presa leggermente più larga delle spalle.",
+        "Tira il petto verso la sbarra senza oscillare.",
+        "Scendi lento fino a braccia tese."
+      ],
+      "err": "Oscillare o dondolare per salire: il carico va sollevato con i muscoli, non con lo slancio.",
+      "adv": "Pausa di 2 secondi con il mento sopra la sbarra; aumenta il peso di 1-2,5 kg solo con 6 ripetizioni pulite."
+    },
+    "front_squat": {
+      "n": "Front squat con bilanciere",
+      "p": "squat",
+      "m": [
+        "quadricipiti",
+        "glutei"
+      ],
+      "st": [
+        "knee",
+        "back"
+      ],
+      "need": "gym",
+      "t": "c",
+      "unit": "kg",
+      "anim": "squat",
+      "lvl": "adv",
+      "cue": "Bilanciere appoggiato sulle spalle anteriori, gomiti alti: il busto resta più verticale dello squat classico.",
+      "steps": [
+        "Bilanciere sulle spalle anteriori, gomiti alti e davanti.",
+        "Scendi con il busto verticale fino a sotto il parallelo.",
+        "Risali spingendo dai talloni, gomiti sempre alti."
+      ],
+      "err": "Gomiti che cadono: il bilanciere scivola e il busto si piega in avanti.",
+      "adv": "Tempo di 3 secondi in discesa e pausa di 1 secondo in basso."
+    },
+    "rack_pull": {
+      "n": "Rack pull",
+      "p": "hinge",
+      "m": [
+        "dorso",
+        "glutei",
+        "femorali"
+      ],
+      "st": [
+        "back"
+      ],
+      "need": "gym",
+      "t": "c",
+      "unit": "kg",
+      "anim": "deadlift",
+      "lvl": "adv",
+      "cue": "Bilanciere parte dai supporti del rack, a altezza delle ginocchia: il lavoro è più in alto dello stacco classico.",
+      "steps": [
+        "Bilanciere sui supporti del rack, a metà coscia.",
+        "Spingi con le gambe mantenendo la schiena dritta.",
+        "Chiudi in piedi contraendo i glutei."
+      ],
+      "err": "Tirare con la schiena: il carico deve salire con le gambe e i glutei.",
+      "adv": "Usa supporti più bassi per aumentare il carico, o più alti per allenare la parte alta."
+    },
+    "pendlay_row": {
+      "n": "Rematore Pendlay",
+      "p": "hpull",
+      "m": [
+        "dorso",
+        "bicipiti"
+      ],
+      "st": [
+        "back"
+      ],
+      "need": "gym",
+      "t": "c",
+      "unit": "kg",
+      "anim": "cablerow",
+      "lvl": "adv",
+      "cue": "Busto parallelo al pavimento, il bilanciere riparte da terra ad ogni ripetizione.",
+      "steps": [
+        "Busto parallelo al pavimento, bilanciere a terra.",
+        "Tira esplosivo fino all'addome, gomiti indietro.",
+        "Riporta il bilanciere a terra in controllo, senza rimbalzo."
+      ],
+      "err": "Alzare il busto a ogni ripetizione: il lavoro cambia da remata a stacco.",
+      "adv": "Fai le ripetizioni da fermo a terra: ogni ripetizione parte dallo zero."
+    },
+    "standing_ohp": {
+      "n": "Military press in piedi con bilanciere",
+      "p": "vpush",
+      "m": [
+        "spalle",
+        "tricipiti"
+      ],
+      "st": [
+        "shoulder",
+        "back"
+      ],
+      "need": "gym",
+      "t": "c",
+      "unit": "kg",
+      "anim": "ohp",
+      "lvl": "adv",
+      "cue": "Glutei e addome contratti, bilanciere che sale in linea verticale sopra la testa.",
+      "steps": [
+        "Bilanciere alle clavicole, piedi alla larghezza delle spalle.",
+        "Spingi sopra la testa, con la testa che si sposta un po' indietro.",
+        "Torna alle clavicole in controllo."
+      ],
+      "err": "Arcuare la schiena per spingere: il bilanciere sale nella zona lombare.",
+      "adv": "Usa la spinta con le gambe (push press) solo come variante dopo che la versione pulita è solida."
+    },
+    "incline_bb": {
+      "n": "Panca inclinata con bilanciere",
+      "p": "hpush",
+      "m": [
+        "petto",
+        "spalle"
+      ],
+      "st": [
+        "shoulder"
+      ],
+      "need": "gym",
+      "t": "c",
+      "unit": "kg",
+      "anim": "incline",
+      "lvl": "base",
+      "cue": "Panca a 30°, bilanciere alla linea delle clavicole: il petto alto lavora di più.",
+      "steps": [
+        "Panca a 30°, bilanciere sopra le clavicole.",
+        "Scendi lento fino a sfiorare il petto alto.",
+        "Spingi su senza staccare i glutei dalla panca."
+      ],
+      "err": "Panca troppo inclinata: il lavoro passa alle spalle.",
+      "adv": "Pausa di 1 secondo sul petto prima di spingere."
+    }
+  }
+}
