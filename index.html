@@ -253,7 +253,7 @@ ol.how li::before{content:counter(how);grid-row:span 2;width:26px;height:26px;bo
 @media (prefers-reduced-motion:reduce){#splash{display:none}}
 
 /* Libreria esercizi */
-.segm{display:grid;grid-template-columns:1fr 1fr;background:var(--sunk);border-radius:12px;padding:4px;gap:4px}
+.segm{display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));background:var(--sunk);border-radius:12px;padding:4px;gap:4px}
 .segm button{background:transparent;padding:10px;border-radius:9px;font-weight:650;color:var(--muted)}
 .segm button[aria-selected="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
 .lib-chips{flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
@@ -303,6 +303,32 @@ details.drill-prev .drill{border-color:var(--bg)}
 .file-btn{display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-weight:650;padding:12px 16px;border-radius:12px}
 @media (max-width:380px){ h1{font-size:1.8rem} .grid3{grid-template-columns:repeat(2,minmax(0,1fr))} .sets{gap:4px} }
 @supports (-webkit-touch-callout:none){ .sheet-card{padding-bottom:calc(32px + env(safe-area-inset-bottom,0px))} }
+
+/* Sfide 30 giorni */
+.ch-list{display:flex;flex-direction:column;gap:10px}
+.ch-card{display:flex;gap:12px;align-items:center;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:10px;width:100%;color:var(--ink)}
+.ch-thumb{width:84px;height:76px;flex:none;border-radius:12px;background:var(--sunk);overflow:hidden;display:grid;place-items:center}
+.ch-thumb>*{width:100%;height:100%;object-fit:contain}
+.ch-body{display:flex;flex-direction:column;gap:3px;min-width:0;flex:1}
+.ch-body .pill{align-self:flex-start}
+.ch-bar{height:6px;border-radius:3px;background:var(--sunk);overflow:hidden;margin-top:4px}.ch-bar i{display:block;height:100%;background:var(--accent);border-radius:3px}
+.ch-title{font-size:1.9rem;letter-spacing:-.02em;text-transform:uppercase;font-weight:800;line-height:1}
+.ch-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px}
+.ch-day{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;min-height:68px;padding:18px 2px 6px;border-radius:8px;background:var(--surface);border:1px solid var(--line);font-size:.78rem;line-height:1.15;color:var(--ink);text-align:center}
+.ch-day i{position:absolute;top:0;left:0;font-style:normal;font-size:.68rem;font-weight:700;background:var(--sunk);color:var(--muted);padding:2px 6px;border-radius:7px 0 7px 0}
+.ch-day small{color:var(--muted);font-size:.68rem}
+.ch-day .ch-sets{font-weight:750;color:var(--warn,#d0342c);font-size:.72rem}
+.ch-day .ch-rest{color:var(--muted)}
+.ch-day .ch-t{font-size:.72rem;font-weight:650}
+.ch-day.done{background:color-mix(in srgb,var(--accent) 12%,var(--surface))}.ch-day.done i{background:var(--accent);color:#fff}
+.ch-day.cur{border:2px solid var(--accent)}
+.ch-day.sel{box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 35%,transparent)}
+.ch-ex{display:flex;gap:12px;align-items:center;padding:8px 0;border-top:1px solid var(--line)}
+.ch-exth{width:76px;height:68px;flex:none;border-radius:10px;background:var(--sunk);overflow:hidden}
+.ch-exth>*{width:100%;height:100%;object-fit:contain}
+.ch-fb button{min-height:48px}
+.ch-today{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;width:100%;background:var(--sunk);border-radius:12px;padding:12px 14px;color:var(--ink)}
+@media (max-width:380px){ .ch-day{min-height:60px;font-size:.7rem} }
 /* Transizioni tra viste */
 #view{view-transition-name:view}
 ::view-transition-old(root),::view-transition-new(root){animation:none}
@@ -417,6 +443,17 @@ const LIB = {
   burpee:{n:"Burpee",p:"metcon",impact:1,m:["quadricipiti","petto"],s:["core","spalle"],need:"bw",t:"i",unit:"bw",only:["cali","casa","mil"],cue:"Ritmo costante dall'inizio alla fine: è un esercizio di condizionamento."},
   mtn_climber:{n:"Mountain climber",p:"metcon",m:["core"],s:["spalle"],need:"bw",t:"i",unit:"s",only:["cali","casa","mil"],cue:"Bacino in linea, ginocchia al petto alternate."},
   squat_jump:{n:"Squat jump",p:"jump",impact:1,m:["quadricipiti","glutei"],s:["polpacci"],need:"bw",st:["knee"],t:"c",unit:"bw",only:["cali","casa","mil"],cue:"Atterraggio morbido e silenzioso: è la qualità dell'atterraggio che protegge le ginocchia."},
+  bridge2:{n:"Ponte glutei",p:"hinge",m:["glutei","femorali"],need:"bw",t:"i",unit:"bw",only:["sfida"],cue:"Piedi vicino ai glutei, spingi dai talloni e stringi i glutei in alto, senza inarcare la schiena."},
+  bridge_hold:{n:"Ponte glutei in tenuta",p:"hinge",m:["glutei"],need:"bw",t:"i",unit:"s",only:["sfida"],cue:"Sali in ponte e resta in alto contando lentamente, glutei sempre contratti."},
+  cross_crunch:{n:"Crunch incrociato",p:"core",m:["core"],need:"bw",t:"i",unit:"bw",only:["sfida"],cue:"Porta la spalla verso il ginocchio opposto, alternando i lati."},
+  rev_crunch:{n:"Crunch inverso",p:"core",m:["core"],need:"bw",t:"i",unit:"bw",only:["sfida"],cue:"Ginocchia piegate a 90°, arrotola il bacino verso il petto staccandolo appena da terra."},
+  floor_lr:{n:"Sollevamento gambe a terra",p:"core",m:["core"],need:"bw",t:"i",unit:"bw",only:["sfida"],cue:"Schiena bassa schiacciata a terra, gambe tese che salgono a 90° e scendono lente."},
+  hollow:{n:"Hollow body",p:"core",m:["core"],need:"bw",t:"i",unit:"s",only:["sfida"],cue:"Zona lombare incollata a terra, spalle e gambe staccate. Più facile con ginocchia piegate."},
+  incl_pu:{n:"Piegamenti con mani rialzate",p:"hpush",m:["petto","tricipiti"],need:"bw",t:"c",unit:"bw",only:["sfida"],cue:"Mani su panca o tavolo: più alto il rialzo, più facile. Corpo sempre in linea."},
+  neg_pull:{n:"Trazioni negative",p:"vpull",m:["dorso","bicipiti"],need:"bar",t:"c",unit:"bw",only:["sfida"],cue:"Sali con un salto o una sedia e scendi in 3–5 secondi fino a braccia tese."},
+  dead_hang:{n:"Appeso alla sbarra",p:"vpull",m:["dorso","avambracci"],need:"bar",t:"i",unit:"s",only:["sfida"],cue:"Presa salda, spalle attive (non incassate), respira con calma."},
+  bench_dip:{n:"Dip su panca",p:"vpush",m:["tricipiti","petto"],need:"bw",st:["shoulder"],t:"i",unit:"bw",only:["sfida"],cue:"Mani sul bordo di una panca o sedia stabile, scendi fino a 90° di gomito, spalle lontane dalle orecchie."},
+  air_squat:{n:"Squat a corpo libero",p:"squat",m:["quadricipiti","glutei"],need:"bw",t:"c",unit:"bw",only:["sfida"],cue:"Piedi larghezza spalle, scendi con il petto alto e risali spingendo dai talloni."},
   crunch:{n:"Crunch",p:"core",m:["core"],need:"bw",t:"i",unit:"bw",cue:"Arrotola la parte alta della schiena, il collo resta rilassato."},
   wall_sit:{n:"Sedia al muro",p:"core",m:["quadricipiti"],need:"bw",st:["knee"],t:"i",unit:"s",cue:"Schiena al muro, cosce quasi parallele al pavimento, respira normalmente. Fra gli isometrici è il più efficace sulla pressione a riposo."},
   plank:{n:"Plank",p:"core",m:["core"],need:"bw",t:"i",unit:"s",cue:"Gomiti sotto le spalle, glutei contratti, respira."},
@@ -567,6 +604,9 @@ const ANIM = {
   mtnclimb:{walk:1,dur:.8,cap:"Porta le ginocchia al petto alternando, bacino basso",f:[P({root:"hip",x:100,y:140,to:60,th:40,sh:-100,th2:-60,sh2:-60,hx:143,hy:178,eb:"r"}), P({root:"hip",x:100,y:140,to:60,th:-60,sh:-60,th2:40,sh2:-100,hx:143,hy:178,eb:"r"})]},
   squatjump:{dur:1.9,caps:["In piedi, piedi alla larghezza delle spalle","Scendi in squat caricando le braccia","Esplodi verso l'alto e atterra morbido"],
     f:[P({root:"hip",x:100,y:102,hx:103,hy:106,eb:"r",stance:6}), P({root:"hip",x:84,y:140,th:82,sh:-36,to:38,hx:72,hy:128,eb:"r",stance:6}), P({root:"hip",x:100,y:84,th:2,sh:6,hx:104,hy:-14,eb:"r",stance:6})]},
+  revcrunch:{cap:"Arrotola il bacino verso il petto, scendi lento",f:[P({root:"hip",x:110,y:174,th:172,sh:90,to:-90,ua:88,fa:90}), P({root:"hip",x:114,y:162,th:222,sh:150,to:-80,ua:88,fa:90})]},
+  floorlr:{cap:"Gambe tese su a 90°, schiena bassa a terra",f:[P({root:"hip",x:110,y:174,th:96,sh:96,to:-90,ua:88,fa:90}), P({root:"hip",x:110,y:174,th:178,sh:178,to:-90,ua:88,fa:90})]},
+  hollow:{breathe:1,cap:"Lombari a terra, spalle e gambe sollevate",f:[P({root:"hip",x:110,y:172,th:104,sh:104,to:-104,ua:-76,fa:-76}), P({root:"hip",x:110,y:172,th:106,sh:106,to:-106,ua:-78,fa:-78})]},
   crunch:{f:[P({root:"hip",x:110,y:174,th:150,sh:26,to:-90,hf:4,hu:-14,eb:"d"}), P({root:"hip",x:110,y:174,th:150,sh:26,to:-58,hf:4,hu:-14,eb:"d"})]},
   run:{walk:1,dur:.72,cap:"Passo corto e leggero, braccia a 90°, respiro regolare",f:[P({root:"hip",x:100,y:100,to:8,th:35,sh:5,th2:-25,sh2:-85,ua:-35,fa:55,ua2:35,fa2:120}), P({root:"hip",x:100,y:100,to:8,th:-25,sh:-85,th2:35,sh2:5,ua:35,fa:120,ua2:-35,fa2:55})]},
   ruck:{walk:1,dur:1.4,pack:1,cap:"Passo regolare, schiena dritta, zaino aderente",f:[P({root:"hip",x:100,y:103,to:6,th:22,sh:8,th2:-20,sh2:-32,ua:-18,fa:10,ua2:22,fa2:45}), P({root:"hip",x:100,y:103,to:6,th:-20,sh:-32,th2:22,sh2:8,ua:22,fa:45,ua2:-18,fa2:10})]},
@@ -595,6 +635,7 @@ const ANIM_OF = {back_squat:"squat",leg_press:"legpress",goblet_squat:"goblet",b
   pallof:"pallof",dead_bug:"deadbug",plank:"plank",side_plank:"plank",bird_dog:"birddog",farmer:"farmer",suitcase:"farmer",curl_db:"curl",hammer:"curl",cable_curl:"cablecurl",
   pushdown:"pushdown",french_db:"french",close_pu:"pushup",lat_raise:"latraise",face_pull:"facepull",rear_fly:"rearfly",calf:"calf",z2:"walk",intervals:"walk",
   leg_curl:"legcurl",nordic:"nordic",leg_ext:"legext",cable_fly:"fly",wall_sit:"wallsit",swing_db:"swing",sl_rdl:"slrdl",
+  bridge2:"bridge",bridge_hold:"bridge",cross_crunch:"crunch",rev_crunch:"revcrunch",floor_lr:"floorlr",hollow:"hollow",incl_pu:"pushup",neg_pull:"pullup",dead_hang:"hang",bench_dip:"dip",air_squat:"boxsquat",
   jumping_jack:"jack",high_knees:"hknees",step_aero:"stepaero",kick_punch:"kick",sun_salute:"sunsal",warrior1:"warrior",child_pose:"child",cat_cow:"catcow",tree_pose:"tree",
   dip:"dip",leg_raise:"legraise",pistol:"pistol",burpee:"burpee",mtn_climber:"mtnclimb",squat_jump:"squatjump",crunch:"crunch",chinup:"pullup",run:"run",run_int:"run",ruck:"ruck"};
 /* Passi per principianti: [posizione di partenza, movimento, errore da evitare] */
@@ -800,6 +841,7 @@ function phaseAt(key, sec){
 function seqPose(D, k){ const n = D.f.length, x = ((k % 1) + 1) % 1 * n, i = Math.floor(x) % n, u = x - Math.floor(x);
   return lerpPose(D.f[i], D.f[(i+1) % n], -(Math.cos(Math.PI*u)-1)/2); }
 const framesOf = D => D.f.length > 2 ? D.f : [D.f[0], lerpPose(D.f[0], D.f[1], .5), D.f[1]];
+ANIM.hang = {...ANIM.pullup, breathe:1, cap:"Appeso a braccia tese, spalle attive", caps:null, f:[ANIM.pullup.f[0], ANIM.pullup.f[0]]};
 function poseAt(key, t){
   const D = ANIM[key] || ANIM.walk;
   const k = typeof t==="object" ? t.k : t;
@@ -1817,6 +1859,7 @@ function renderToday(){
       <button class="btn-ghost btn-wide" data-act="recovery">Solo recupero attivo</button></div>
     </section>
     ${eventBox()}
+    ${challengeToday()}
     ${renderIntent()}`;
 }
 function renderIntent(){
@@ -1986,8 +2029,9 @@ function renderLibrary(){
 }
 function renderPlan(){
   const tab = ui.planTab || "mine";
-  const seg = `<div class="segm" role="tablist"><button role="tab" aria-selected="${tab==="mine"}" data-act="plan-tab" data-t="mine">La mia scheda</button><button role="tab" aria-selected="${tab==="lib"}" data-act="plan-tab" data-t="lib">Libreria esercizi</button></div>`;
+  const seg = `<div class="segm" role="tablist"><button role="tab" aria-selected="${tab==="mine"}" data-act="plan-tab" data-t="mine">La mia scheda</button><button role="tab" aria-selected="${tab==="lib"}" data-act="plan-tab" data-t="lib">Esercizi</button><button role="tab" aria-selected="${tab==="ch"}" data-act="plan-tab" data-t="ch">Sfide 30 giorni</button></div>`;
   if (tab==="lib") return `<div><h1>Esercizi</h1></div>${seg}${renderLibrary()}`;
+  if (tab==="ch") return `<div><h1>Sfide 30 giorni</h1></div>${seg}${renderChallenges()}`;
   const v = weeklySets(), L = lens(), max = 24;
   const band = S.profile.level==="principiante" ? [6,12] : S.profile.level==="intermedio" ? [10,16] : [12,20];
   return `<div><span class="label">${PROGRAMS[S.profile.prog||"pesi"].n}, ${S.plan.days} giorni a settimana, obiettivo ${GOALS[S.profile.goal].toLowerCase()}</span><h1>La tua scheda</h1></div>${seg}
@@ -2104,6 +2148,115 @@ function renderProfile(){
       ${ui.wipeAsk ? `<div class="banner stop"><div class="grow"><b>Cancellare profilo, scheda e ${SESS.length} sedute?</b> Non si può annullare.</div><div class="row"><button class="btn-sm btn-ghost" data-act="wipe-no">No</button><button class="btn-sm btn-danger" data-act="wipe-yes">Sì, cancella</button></div></div>` : ""}</section>`;
 }
 
+
+/* ---------- Sfide 30 giorni ---------- */
+const CH = {
+  glutei:{n:"Ponte di ferro", tag:"Glutei", lvl:"Tutti i livelli", need:"bw", d:"Ponti e tenute alternati: la sfida più semplice per glutei e schiena bassa, da fare a terra in 5 minuti.",
+    A:[["bridge2",10,30]], B:[["bridge_hold",15,40,"s"]], C:[["bridge2",10,30],["bridge_hold",20,40,"s"]], mixFrom:14, sets:[3,4], rest:30,
+    why:"Il ponte attiva bene il grande gluteo e si carica facilmente: quando diventa facile passa al ponte su una gamba o all'hip thrust."},
+  addome:{n:"Addome a terra", tag:"Addome", lvl:"Tutti i livelli", need:"bw", d:"Due giorni che si alternano: crunch e crunch incrociati, poi sollevamenti gambe e crunch inversi.",
+    A:[["crunch",10,24],["cross_crunch",10,24]], B:[["floor_lr",8,20],["rev_crunch",8,20]], sets:[2,5], rest:30,
+    why:"Alternare flessione del busto e del bacino distribuisce il lavoro e lascia recuperare i muscoli tra un giorno e l'altro."},
+  push:{n:"Piegamenti da zero", tag:"Calisthenics", lvl:"Principiante", need:"bw", test:"push", d:"Dai piegamenti con le mani rialzate ai piegamenti completi, con serie più facili ogni tanto per recuperare.",
+    A:[["incl_pu",6,16]], B:[["pushup",3,14]], C:[["pushup",4,16],["incl_pu",8,14]], mixFrom:10, sets:[3,4], rest:60,
+    why:"Studio controllato: 4 settimane di piegamenti progressivi danno aumenti di forza e spessore muscolare simili alla panca piana."},
+  pull:{n:"Trazioni da zero", tag:"Calisthenics", lvl:"Principiante", need:"bar", d:"Appeso, rematore inverso e trazioni negative per arrivare alla prima trazione completa.",
+    A:[["dead_hang",15,45,"s"],["inv_row",5,12]], B:[["neg_pull",2,6],["dead_hang",15,40,"s"]], C:[["neg_pull",3,6],["inv_row",6,12],["pullup",1,3]], mixFrom:20, sets:[3,4], rest:90,
+    why:"La fase di discesa lenta costruisce forza in fretta e con poco rischio: è la porta d'ingresso classica alla trazione completa."},
+  armstrong:{n:"Programma Armstrong", tag:"Militare", lvl:"Chi fa già almeno 5 trazioni", need:"bar", test:"pull", armstrong:1,
+    d:"Il programma del maggiore dei Marines Charles Armstrong: 5 giorni a settimana, ogni giorno uno schema diverso, più piegamenti al mattino.",
+    why:"Molta pratica a ripetizioni sotto il massimo: un approccio diffuso nei corpi militari per aumentare il numero di trazioni in vista dei test."},
+  core:{n:"Core di pietra", tag:"Calisthenics", lvl:"Intermedio", need:"bw", d:"Tenute isometriche: plank, hollow body e plank laterale, con tempi che crescono a onde.",
+    A:[["plank",20,60,"s"],["hollow",10,30,"s"]], B:[["side_plank",15,40,"s"],["dead_bug",8,14]], sets:[2,4], rest:45,
+    why:"Le tenute insegnano a stabilizzare il tronco, cosa che serve in tutti gli altri esercizi a corpo libero."},
+  gambe:{n:"Gambe a corpo libero", tag:"Calisthenics", lvl:"Tutti i livelli", need:"bw", d:"Squat, affondi e sedia al muro, verso il pistol squat assistito nell'ultima settimana.",
+    A:[["air_squat",12,30],["wall_sit",20,60,"s"]], B:[["rev_lunge",6,14],["calf",12,25]], C:[["pistol",2,5],["air_squat",15,30]], mixFrom:21, sets:[3,4], rest:60,
+    why:"Serie più lunghe a corpo libero, portate vicino all'esaurimento, fanno crescere forza e massa anche senza pesi."},
+  dip:{n:"Dip progressivi", tag:"Calisthenics", lvl:"Intermedio", need:"bw", d:"Dip su panca e piegamenti stretti, poi dip alle parallele se hai una stazione.",
+    A:[["bench_dip",6,18]], B:[["close_pu",4,12]], C:[["bench_dip",10,18],["dip",1,5]], mixFrom:18, sets:[3,4], rest:75,
+    why:"Il dip su panca prepara spalle e tricipiti al carico del dip completo, che è molto più impegnativo."},
+  tabata:{n:"Tabata a corpo libero", tag:"Cardio", lvl:"Intermedio", need:"bw", tabata:1, d:"20 secondi a tutta e 10 di pausa, 8 volte. 3 giorni su 7, gli altri giorni camminata.",
+    why:"Studio controllato su allievi della Gendarmeria: 5 settimane di Tabata a corpo libero migliorano resistenza, forza e potenza quanto il Tabata di corsa."},
+  sedia:{n:"Spezza la sedia", tag:"Lavoro d'ufficio", lvl:"Tutti i livelli", need:"bw", snack:1, d:"Per chi sta seduto tante ore: piccoli blocchi da 8 ripetizioni distribuiti nella giornata lavorativa.",
+    why:"Studio pilota: 4 settimane di brevi blocchi di esercizi durante l'orario di lavoro hanno aumentato forza delle cosce ed equilibrio in adulti sedentari."}
+};
+const CH_SRC = {
+  push:["Kotarsky et al. (2018), J Strength Cond Res","https://doi.org/10.1519/JSC.0000000000002345"],
+  tabata:["Cin e Cabuk (2025), J Strength Cond Res","https://doi.org/10.1519/JSC.0000000000005118"],
+  sedia:["Mear et al. (2022), Int J Environ Res Public Health","https://doi.org/10.3390/ijerph192114597"],
+  glutei:["Collings et al. (2023), Med Sci Sports Exerc","https://doi.org/10.1249/MSS.0000000000003091"],
+  gambe:["Li e Huang (2025), RCT calisthenics 12 settimane","https://doi.org/10.1002/ccd.70361"],
+  armstrong:["Armstrong Pull-up Program (USMC)","https://spotterup.com/increase-your-numbers-with-the-armstrong-pull-ups-plan/"]
+};
+// onde settimanali: giorno 7 di ogni settimana è leggero, il 4 un po' più facile
+const WAVE = [0.85, 0.95, 1, 0.8, 1.02, 1.05, 0.6];
+const TEST_MAX = {pull:{"0":0,"1-4":3,"5-9":7,"10+":12}, push:{"0-5":4,"6-15":10,"16-30":22,"30+":35}};
+function chState(id){ const all = S.ch || (S.ch = {}); return all[id]; }
+function chCur(id){ const st = chState(id); if (!st) return 0; for (let i=0;i<30;i++) if (!st.log[i]) return i; return 30; }
+function chScale(id){ const c = CH[id], st = chState(id); let k = st?.k || 1;
+  if (c.test==="push"){ const m = TEST_MAX.push[S.profile.det?.push]; if (m) k *= m <= 5 ? 0.85 : m >= 22 ? 1.35 : 1; }
+  if (id==="pull"){ const m = TEST_MAX.pull[S.profile.det?.pull]; if (m >= 5) k *= 1.3; }
+  if (S.profile.level==="principiante") k *= 0.95; return k; }
+function chDay(id, i){
+  const c = CH[id], w = WAVE[i % 7], f = i/29, k = chScale(id), light = w <= 0.8;
+  if (c.armstrong){
+    const max = TEST_MAX.pull[S.profile.det?.pull] || 6, tr = Math.max(2, Math.round(max * 0.45 * (1 + f*0.35) * (chState(id)?.k || 1)));
+    const pos = i % 7;
+    if (pos >= 5) return {off:1, txt:"Riposo: sabato e domenica liberi, come nel programma originale."};
+    const pu = {ex:"pushup", txt:"Al mattino: 3 serie di piegamenti al massimo"};
+    return [{items:[pu,{ex:"pullup",txt:"5 serie al massimo"}], rest:90, title:"Giorno 1: serie massime"},
+      {items:[pu,{ex:"pullup",txt:"Piramide: 1, 2, 3… fino a quando non completi la serie, poi 1 serie al massimo"}], rest:10, title:"Giorno 2: piramide"},
+      {items:[pu,{ex:"pullup",txt:`9 serie da ${tr}: 3 presa prona, 3 supina (chin-up), 3 prona`}], rest:60, title:"Giorno 3: serie di allenamento"},
+      {items:[pu,{ex:"pullup",txt:`Serie da ${tr} finché riesci a completarle (almeno 9)`}], rest:60, title:"Giorno 4: serie al limite"},
+      {items:[pu,{ex:"pullup",txt:"Ripeti il giorno che ti è sembrato più duro questa settimana"}], rest:60, title:"Giorno 5: il più duro"}][pos];
+  }
+  if (c.tabata){
+    if (![0,2,4].includes(i % 7)) return {off:1, txt:"Recupero attivo: 20–30 minuti di camminata svelta."};
+    const r = 4 + Math.min(4, Math.floor(i/7)) * 1; const ex = [["burpee","squat_jump"],["mtn_climber","high_knees"],["squat_jump","pushup"]][(i % 7)/2];
+    return {items: ex.map(e => ({ex:e, txt:`${r <= 8 ? r : 8} round da 20 s a tutta / 10 s di pausa`})), rest:60, sets:1, title:`Tabata: ${Math.min(r,8)} round per esercizio`, note:"Riposa 1 minuto tra i due esercizi."};
+  }
+  if (c.snack){
+    const blocks = Math.min(8, 3 + Math.floor(i/5)); const pool = ["air_squat","rev_lunge","incl_pu","calf","wall_sit","bridge2"];
+    return {items: pool.slice(i % 2 ? 1 : 0, (i % 2 ? 1 : 0) + 5).map(e => ({ex:e, txt: LIB[e].unit==="s" ? "20 s" : "8 ripetizioni"})), sets:blocks, rest:0, title:`${blocks} blocchi nella giornata`, note:`Un blocco = una volta ciascun esercizio. Fanne ${blocks} tra le 9 e le 17, ad esempio uno ogni ora.`};
+  }
+  const rows = (c.C && i >= (c.mixFrom ?? 99) && i % 3 === 2) ? c.C : (c.B && i % 2) ? c.B : c.A;
+  const sets = Math.round(c.sets[0] + (c.sets[1]-c.sets[0]) * f * (light ? 0.5 : 1));
+  return {items: rows.map(([ex,a,b,u]) => { const v = Math.max(1, Math.round((a + (b-a)*f) * w * k)); return {ex, v, u: u==="s" ? "s" : "rip"}; }),
+    sets: light ? Math.max(2, sets-1) : sets, rest:c.rest, light, title: light ? "Giorno di scarico" : null};
+}
+const chLine = it => it.txt ? it.txt : it.u==="s" ? `${it.v} s` : `${it.v} ripetizioni`;
+function chCell(id, i){ const d = chDay(id, i); if (d.off) return `<span class="ch-rest">Riposo</span>`;
+  if (d.items[0].txt) return `<span class="ch-t">${esc((d.title||"").replace(/^Giorno \d: /,"").replace(/^Tabata: /,"Tabata ").replace(/ per esercizio/,"").replace("serie di allenamento","9 serie").replace(" nella giornata","").replace(/^./, m => m.toUpperCase()))}</span>`;
+  return d.items.slice(0,2).map(it => `<span>${it.u==="s" ? it.v+" s" : it.v}<small> ${esc(LIB[it.ex].n.split(" ")[0].toLowerCase())}</small></span>`).join("") + `<span class="ch-sets">${d.sets}×</span>`; }
+function renderChallenges(){
+  const id = ui.ch;
+  if (!id || !CH[id]) return `<p class="small muted">Programmi brevi a obiettivo singolo, da affiancare alla tua scheda o da fare da soli. Le quantità si adattano al tuo livello e a come ti sono sembrati i giorni precedenti.</p>
+    <div class="ch-list">${Object.entries(CH).map(([k,c]) => { const st = chState(k), cur = chCur(k);
+      return `<button class="ch-card" data-act="ch-open" data-id="${k}"><div class="ch-thumb">${animSVG((c.A||[[c.armstrong?"pullup":c.tabata?"burpee":"air_squat"]])[0][0], {still:1})}</div>
+      <div class="ch-body"><span class="pill ${st?"acc":""}">${esc(c.tag)}</span><b>${esc(c.n)}</b><span class="small muted">${esc(c.lvl)}${c.need==="bar" ? ", serve una sbarra" : ""}</span>
+      ${st ? `<div class="ch-bar"><i style="width:${cur/30*100}%"></i></div><span class="small">${cur>=30 ? "Completata" : `Giorno ${cur+1} di 30`}</span>` : ""}</div></button>`; }).join("")}</div>`;
+  const c = CH[id], st = chState(id), cur = chCur(id), sel = ui.chDay ?? Math.min(cur, 29), d = chDay(id, sel), src = CH_SRC[id];
+  return `<button class="btn-sm btn-ghost" data-act="ch-back">← Tutte le sfide</button>
+  <section class="stack"><span class="label">${esc(c.tag)}, ${esc(c.lvl.toLowerCase())}</span><h2 class="ch-title">${esc(c.n)}</h2><p class="small">${esc(c.d)}</p></section>
+  <div class="ch-grid">${Array.from({length:30}, (_,i) => `<button class="ch-day ${st?.log[i] ? "done" : ""} ${st && i===cur ? "cur" : ""} ${i===sel ? "sel" : ""}" data-act="ch-day" data-i="${i}" aria-label="Giorno ${i+1}"><i>${i+1}</i>${chCell(id,i)}</button>`).join("")}</div>
+  <section class="card stack"><div class="row between"><h3>Giorno ${sel+1}${d.title ? `: ${esc(d.title.replace(/^Giorno \d: /,""))}` : ""}</h3>${st?.log[sel] ? `<span class="pill acc">Fatto</span>` : ""}</div>
+  ${d.off ? `<p>${esc(d.txt)}</p>` : `${d.items.map(it => `<div class="ch-ex"><div class="ch-exth">${animSVG(it.ex,{still:1})}</div><div class="drill-body"><b>${esc(LIB[it.ex].n)}</b><span>${esc(chLine(it))}</span>
+      <span class="row" style="gap:6px;margin-top:4px"><button class="btn-sm btn-ghost" data-act="ex-info" data-id="${it.ex}">Come si fa</button><a class="btn-sm btn-ghost yt-btn" href="${ytUrl(it.ex)}" target="_blank" rel="noopener noreferrer">Video</a></span></div></div>`).join("")}
+    ${d.sets ? `<p class="small"><b>${d.sets} ${c.snack ? "blocchi" : "serie"}</b>${d.rest ? `, ${d.rest} secondi di recupero` : ""}${d.light ? ". Oggi si scarica: fai tutto con calma." : "."}</p>` : ""}
+    ${d.note ? `<p class="small muted">${esc(d.note)}</p>` : ""}`}
+  ${!st ? `<button class="btn-primary btn-wide" data-act="ch-start">Inizia la sfida</button>`
+    : sel===cur && cur<30 ? `<span class="small muted">Com'è andata?</span><div class="grid3 ch-fb">${[["easy","Facile"],["ok","Giusta"],["hard","Dura"]].map(([k,l]) => `<button class="btn-ghost" data-act="ch-done" data-r="${k}">${l}</button>`).join("")}</div>`
+    : cur>=30 ? `<p class="small"><b>Sfida completata.</b> Rifai il test del giorno 1: dovresti notare la differenza.</p>` : ""}
+  </section>
+  <section class="panel stack small"><b>Perché funziona</b><p>${esc(c.why)}</p>${src ? `<a href="${src[1]}" target="_blank" rel="noopener noreferrer">${esc(src[0])}</a>` : ""}
+  <p class="muted">Se un giorno è "Dura", i successivi si riducono di circa il 10%; se è "Facile", crescono del 7%. In caso di dolore articolare fermati.</p></section>
+  ${st ? `<button class="btn-sm btn-ghost" data-act="ch-quit">Abbandona la sfida</button>` : ""}`;
+}
+function challengeToday(){
+  const act = Object.keys(S.ch || {}).filter(k => CH[k] && chCur(k) < 30); if (!act.length) return "";
+  return `<section class="card stack"><h3>Le tue sfide</h3>${act.map(k => { const i = chCur(k), d = chDay(k, i);
+    return `<button class="ch-today" data-act="ch-go" data-id="${k}"><b>${esc(CH[k].n)}, giorno ${i+1}</b><span class="small muted">${d.off ? "Riposo" : esc(d.items.map(it => (it.v ? (it.u==="s" ? it.v+" s " : it.v+" ") : "") + LIB[it.ex].n.toLowerCase()).join(", ")) + (d.sets ? `, ${d.sets} serie` : "")}</span></button>`; }).join("")}</section>`;
+}
 /* ---------- Piano nutrizionale in PDF ---------- */
 const PDFJS = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/";
 function loadPdfJs(){ if (window.pdfjsLib) return Promise.resolve(window.pdfjsLib);
@@ -2325,7 +2478,14 @@ document.addEventListener("click", async ev => {
     logChange({id:"", name:"Scheda", what:"obiettivo", from:"", to:"esercizi rinnovati", why:"Hai chiesto una nuova serie di esercizi: stessi muscoli, varianti diverse.", src:"tu"});
     Store.save(); vt(() => { render(); window.scrollTo(0,0); }, "fade"); toast("Scheda rinnovata con esercizi diversi."); return; }
   if (a==="undo-ex" && S.prevPlan){ S.plan = S.prevPlan; S.prevPlan = null; Store.save(); render(); toast("Scheda precedente ripristinata."); return; }
-  if (a==="plan-tab"){ vt(() => { ui.planTab = b.dataset.t; render(); }, b.dataset.t==="lib" ? "next" : "prev"); return; }
+  if (a==="plan-tab"){ const order = {mine:0,lib:1,ch:2}; const dir = order[b.dataset.t] > order[ui.planTab||"mine"] ? "next" : "prev"; vt(() => { ui.planTab = b.dataset.t; render(); }, dir); return; }
+  if (a==="ch-open" || a==="ch-go"){ if (a==="ch-go"){ ui.planTab = "ch"; location.hash = "#piano"; } vt(() => { ui.ch = b.dataset.id; ui.chDay = null; render(); scrollTo(0,0); }, "next"); return; }
+  if (a==="ch-back"){ vt(() => { ui.ch = null; render(); }, "prev"); return; }
+  if (a==="ch-day"){ ui.chDay = Number(b.dataset.i); render(); return; }
+  if (a==="ch-start"){ (S.ch || (S.ch = {}))[ui.ch] = {start: today(), log:{}, k:1}; ui.chDay = null; Store.save(); render(); toast("Sfida iniziata: giorno 1."); return; }
+  if (a==="ch-done"){ const st = chState(ui.ch), i = chCur(ui.ch); st.log[i] = {r:b.dataset.r, d:today()}; st.k = Math.max(0.6, Math.min(1.6, (st.k||1) * ({easy:1.07, ok:1, hard:0.9}[b.dataset.r]))); ui.chDay = null; Store.save(); render();
+    try { navigator.vibrate && navigator.vibrate(20); } catch(e){} toast(i>=29 ? "Sfida completata. Ottimo lavoro." : `Giorno ${i+1} fatto.`); return; }
+  if (a==="ch-quit"){ delete S.ch[ui.ch]; ui.chDay = null; Store.save(); render(); toast("Sfida abbandonata."); return; }
   if (a==="lib-g"){ ui.libGroup = b.dataset.g; render(); return; }
   if (a==="an-view"){ AN.view = Number(b.dataset.v); V3.forEach(v => { v.dragged = false; }); return; }
   if (a==="an-slow"){ AN.speed = AN.speed<1 ? 1 : 0.45; b.textContent = AN.speed<1 ? "Velocità normale" : "Rallenta"; b.setAttribute("aria-pressed", AN.speed<1); return; }
