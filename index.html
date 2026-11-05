@@ -24,6 +24,7 @@
   --bg:#F1F3F0; --surface:#FFFFFF; --sunk:#E6EAE5; --ink:#191C1A; --muted:#5C655F; --line:#D6DCD5;
   --accent:#2350D0; --accent-ink:#FFFFFF; --accent-soft:#E0E7FB;
   --go:#1E8A50; --go-soft:#DFF1E6; --warn:#946A00; --warn-soft:#F8EDCB; --stop:#C4342C; --stop-soft:#F9E1DE;
+  --work:#E8692E;
   --p25:#D7322C; --p20:#2457D6; --p15:#E8B90F; --p10:#24924F; --p5:#F4F4F2; --p2:#9AA3AE; --steel:#8E978F;
   --f:"Archivo",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   --r:14px; --r-sm:9px;
@@ -32,12 +33,12 @@
   --bg:#131513; --surface:#1B1E1B; --sunk:#242824; --ink:#E8ECE8; --muted:#9AA39C; --line:#2E332E;
   --accent:#7C9BFF; --accent-ink:#0E1430; --accent-soft:#1F2A4C;
   --go:#57C78B; --go-soft:#173222; --warn:#E6B940; --warn-soft:#352F10; --stop:#F27A70; --stop-soft:#3C1A17;
-  --p5:#D9DCDF; --steel:#6E776F; color-scheme:dark }}
+  --p5:#D9DCDF; --steel:#6E776F; --work:#FF8E5C; color-scheme:dark }}
 :root[data-theme="dark"]{
   --bg:#131513; --surface:#1B1E1B; --sunk:#242824; --ink:#E8ECE8; --muted:#9AA39C; --line:#2E332E;
   --accent:#7C9BFF; --accent-ink:#0E1430; --accent-soft:#1F2A4C;
   --go:#57C78B; --go-soft:#173222; --warn:#E6B940; --warn-soft:#352F10; --stop:#F27A70; --stop-soft:#3C1A17;
-  --p5:#D9DCDF; --steel:#6E776F; color-scheme:dark }
+  --p5:#D9DCDF; --steel:#6E776F; --work:#FF8E5C; color-scheme:dark }
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:15.5px;line-height:1.5;font-variant-numeric:tabular-nums;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 104px}
@@ -169,16 +170,21 @@ details summary{cursor:pointer;font-weight:600}
 .fx .fx-prop{fill:var(--sunk);stroke:var(--line);stroke-width:1.5}
 .fx .fx-prop-l{stroke:var(--line);stroke-linecap:round}
 .fx .fx-cable{stroke:var(--muted);stroke-dasharray:3 3}
-.fx g line{stroke-linecap:round;stroke-width:7}
-.fx .fx-near line{stroke:var(--ink)}
-.fx .fx-near .fx-torso{stroke-width:11}
-.fx .fx-far line{stroke:var(--muted);opacity:.5}
+.fx .fx-b{fill:var(--ink)}
+.fx .fx-far .fx-b{fill:var(--muted);opacity:.42}
 .fx .fx-head{fill:var(--ink)}
+.fx .fx-hand{fill:var(--ink)}
+.fx .fx-work{fill:var(--work)}
+.fx .fx-work-far{opacity:.45}
+.fx .fx-trace{fill:none;stroke:var(--accent);stroke-width:2;stroke-dasharray:2 5;stroke-linecap:round;opacity:.55}
+.fx .fx-shadow{fill:var(--ink);opacity:.07}
 .fx .fx-plate{fill:var(--accent)}
 .fx .fx-plate-l{stroke:var(--accent);stroke-linecap:round}
 .fx .fx-hub{fill:var(--surface)}
 .fx-thumb{width:52px;flex:none;background:var(--sunk);border-radius:10px;padding:3px}
-.fx-thumb g line{stroke-width:9}
+.fx-cap{position:absolute;left:10px;top:8px;right:10px;font-size:.8rem;font-weight:650;color:var(--ink);text-align:left;pointer-events:none;min-height:1.2em}
+.lg-work,.lg-trace{display:inline-block;width:12px;height:12px;border-radius:3px;background:var(--work);vertical-align:-1px;margin-right:3px}
+.lg-trace{background:none;border-top:2px dashed var(--accent);height:0;border-radius:0;width:16px;vertical-align:3px}
 .fx-stage{position:relative;display:block;width:100%;background:var(--sunk);border-radius:var(--r);padding:8px 8px 4px}
 .fx-big{max-height:42vh;margin:0 auto}
 .fx-mid{max-height:24vh;margin:0 auto}
@@ -422,7 +428,7 @@ const ANIM = {
   pushup:{f:[P({x:170,sh:65,th:65,to:-65,ua:0,fa:0}), P({x:170,sh:80,th:80,to:-80,ua:75,fa:-47})]},
   ohp:{f:[P({ua:30,fa:170}), P({ua:176,fa:180})], hand:"db"},
   landmine:{f:[P({to:8,ua:30,fa:165,th2:-12,sh2:-12}), P({to:8,ua:120,fa:125,th2:-12,sh2:-12})], cable:{x:212,y:180,w:5}},
-  pike:{f:[P({x:165,sh:30,th:30,to:-155,ua:-64,fa:-64}), P({x:165,sh:30,th:30,to:-168,ua:-40,fa:-115})]},
+  pike:{f:[P({x:168,sh:28,th:28,to:-130,ua:-47,fa:-47}), P({x:168,sh:28,th:28,to:-145,ua:-60,fa:-50})]},
   latpd:{f:[P({root:"hip",x:95,y:140,to:-15,th:85,sh:0,ua:172,fa:172}), P({root:"hip",x:95,y:140,to:-15,th:85,sh:0,ua:-25,fa:165})], hand:"handle", cable:{x:100,y:6,w:2}, props:[...SEAT(95,140),{t:"rect",x:112,y:126,w:20,h:7}]},
   pullup:{f:[P({root:"hip",x:100,y:140,th:8,sh:-20,ua:180,fa:180}), P({root:"hip",x:100,y:104,th:8,sh:-20,ua:-110,fa:110})], props:[{t:"line",x1:58,y1:36,x2:150,y2:36,w:5}]},
   pullover:{f:[P({root:"hip",x:100,y:136,to:-90,th:80,sh:0,ua:-105,fa:-105}), P({root:"hip",x:100,y:136,to:-90,th:80,sh:0,ua:180,fa:180})], hand:"db", props:BENCH},
@@ -523,43 +529,114 @@ function solvePose(Q){
 }
 function lerpPose(a,b,t){ const o={}; for (const k in b){ o[k] = (typeof b[k]==="number" && typeof (a[k] ?? STAND[k])==="number") ? (a[k] ?? STAND[k]) + (b[k]-(a[k] ?? STAND[k]))*t : b[k]; } for (const k in a) if (!(k in o)) o[k]=a[k]; return o; }
 const ln = (p,q) => `x1="${p[0].toFixed(1)}" y1="${p[1].toFixed(1)}" x2="${q[0].toFixed(1)}" y2="${q[1].toFixed(1)}"`;
-function figureSVG(key, J){
+/* Tempi: la fase di ritorno (eccentrica) è lenta, quella di forza (concentrica) decisa. */
+const ECC = new Set(["squat","goblet","boxsquat","hinge","hinge_db","deadlift","lunge","bss","bench","bench_db","incline","pushup","pike","nordic","legpress"]);
+const SLOWBOTH = new Set(["deadbug","birddog"]);
+const WID = {th:[15,11], sh:[11,8], ua:[10,8], fa:[8,6.5]};
+const MUSCLE_SEG = {quadricipiti:"th", femorali:"th", glutei:"glute", polpacci:"sh", petto:"chest", dorso:"chest", spalle:"delt", bicipiti:"ua", tricipiti:"ua", core:"abs"};
+const f1 = v => v.toFixed(1);
+const mix = (p,q,k) => [p[0]+(q[0]-p[0])*k, p[1]+(q[1]-p[1])*k];
+function cap(p, q, w1, w2, cls){
+  const dx=q[0]-p[0], dy=q[1]-p[1], L=Math.hypot(dx,dy)||1, nx=-dy/L, ny=dx/L, a=w1/2, b=w2/2;
+  return `<g class="${cls}"><polygon points="${f1(p[0]+nx*a)},${f1(p[1]+ny*a)} ${f1(q[0]+nx*b)},${f1(q[1]+ny*b)} ${f1(q[0]-nx*b)},${f1(q[1]-ny*b)} ${f1(p[0]-nx*a)},${f1(p[1]-ny*a)}"/><circle cx="${f1(p[0])}" cy="${f1(p[1])}" r="${f1(a)}"/><circle cx="${f1(q[0])}" cy="${f1(q[1])}" r="${f1(b)}"/></g>`;
+}
+const TRACE = new Map();
+function traceOf(key){
+  if (TRACE.has(key)) return TRACE.get(key);
+  const D = ANIM[key]; let out = null;
+  if (!D.walk && !D.breathe){
+    const pts = []; for (let i=0;i<=20;i++){ const J = solvePose(lerpPose(D.f[0], D.f[1], i/20)); pts.push(J); }
+    const pick = D.hand ? "W" : D.foot ? "A" : ["H","Sh","Hd"].find(k => Math.hypot(pts[0][k][0]-pts[20][k][0], pts[0][k][1]-pts[20][k][1]) > 14);
+    if (pick){ const P = pts.map(j => j[pick]); if (Math.hypot(P[0][0]-P[20][0], P[0][1]-P[20][1]) > 8) out = "M" + P.map(p => f1(p[0])+","+f1(p[1])).join(" L"); }
+  }
+  TRACE.set(key, out); return out;
+}
+function figureSVG(key, J, id, opts={}){
   const D = ANIM[key] || ANIM.walk;
-  const props = (D.props||[]).map(p => p.t==="rect" ? `<rect x="${p.x}" y="${p.y}" width="${p.w}" height="${p.h}" rx="2" class="fx-prop"/>` : `<line x1="${p.x1}" y1="${p.y1}" x2="${p.x2}" y2="${p.y2}" class="fx-prop-l" stroke-width="${p.w||5}"/>`).join("");
-  const cable = D.cable ? `<line ${ln([D.cable.x,D.cable.y],J.W)} class="fx-cable" stroke-width="${D.cable.w}"/>${D.cable.w<4?`<circle cx="${D.cable.x}" cy="${D.cable.y}" r="4" class="fx-prop"/>`:""}` : "";
-  const hand = D.hand==="bb" ? `<circle cx="${J.W[0].toFixed(1)}" cy="${J.W[1].toFixed(1)}" r="13" class="fx-plate"/><circle cx="${J.W[0].toFixed(1)}" cy="${J.W[1].toFixed(1)}" r="3.5" class="fx-hub"/>`
-    : D.hand==="db" ? `<rect x="${(J.W[0]-7).toFixed(1)}" y="${(J.W[1]-5).toFixed(1)}" width="14" height="10" rx="3" class="fx-plate"/>`
-    : D.hand==="handle" ? `<circle cx="${J.W[0].toFixed(1)}" cy="${J.W[1].toFixed(1)}" r="4" class="fx-plate"/>` : "";
+  const work = new Set((LIB[id]?.m || []).map(m => MUSCLE_SEG[m]).filter(Boolean));
+  const props = (D.props||[]).map(p => p.t==="rect" ? `<rect x="${p.x}" y="${p.y}" width="${p.w}" height="${p.h}" rx="3" class="fx-prop"/>` : `<line x1="${p.x1}" y1="${p.y1}" x2="${p.x2}" y2="${p.y2}" class="fx-prop-l" stroke-width="${p.w||6}"/>`).join("");
+  const cable = D.cable ? `<line ${ln([D.cable.x,D.cable.y],J.W)} class="fx-cable" stroke-width="${D.cable.w}"/>${D.cable.w<4?`<circle cx="${D.cable.x}" cy="${D.cable.y}" r="4.5" class="fx-prop"/>`:""}` : "";
+  const tr = !opts.thumb && traceOf(key);
+  const shadow = !opts.thumb && Math.max(J.A[1], J.A2[1]) > 168 ? `<ellipse cx="${f1((J.A[0]+J.A2[0])/2)}" cy="${GROUND+1}" rx="38" ry="4" class="fx-shadow"/>` : "";
+  const up = [J.Sh[0]-J.H[0], J.Sh[1]-J.H[1]], ul = Math.hypot(up[0],up[1])||1;
+  const neck = [J.Sh[0]+up[0]/ul*(SEG.ne+2), J.Sh[1]+up[1]/ul*(SEG.ne+2)];
+  const fdir = [J.F[0]-J.A[0], J.F[1]-J.A[1]], heel = [J.A[0]-fdir[0]*0.25, J.A[1]-fdir[1]*0.25];
+  const heel2 = [J.A2[0]-3, J.A2[1]];
+  const leg = (H,K,A,cls) => cap(H,K,WID.th[0],WID.th[1],cls)+cap(K,A,WID.sh[0],WID.sh[1],cls);
+  const arm = (S,E,W,cls) => cap(S,E,WID.ua[0],WID.ua[1],cls)+cap(E,W,WID.fa[0],WID.fa[1],cls);
+  const hl = (seg, far) => {
+    const c = far ? "fx-work fx-work-far" : "fx-work"; let s = "";
+    if (seg==="th") s += cap(far?J.H:J.H, far?J.K2:J.K, WID.th[0]-2, WID.th[1]-2, c);
+    if (seg==="sh") s += cap(far?J.K2:J.K, far?J.A2:J.A, WID.sh[0]-2, WID.sh[1]-2, c);
+    if (seg==="ua") s += cap(J.Sh, far?J.E2:J.E, WID.ua[0]-2, WID.ua[1]-2, c);
+    if (!far && seg==="chest") s += cap(mix(J.H,J.Sh,.5), J.Sh, 17, 19, c);
+    if (!far && seg==="abs") s += cap(J.H, mix(J.H,J.Sh,.55), 15, 17, c);
+    if (!far && seg==="glute") s += `<circle cx="${f1(J.H[0])}" cy="${f1(J.H[1])}" r="9" class="${c}"/>`;
+    if (!far && seg==="delt") s += `<circle cx="${f1(J.Sh[0])}" cy="${f1(J.Sh[1])}" r="7" class="${c}"/>`;
+    return s;
+  };
+  const W = [...work];
+  const hand = D.hand==="bb" ? `<circle cx="${f1(J.W[0])}" cy="${f1(J.W[1])}" r="14" class="fx-plate"/><circle cx="${f1(J.W[0])}" cy="${f1(J.W[1])}" r="4" class="fx-hub"/>`
+    : D.hand==="db" ? `<rect x="${f1(J.W[0]-8)}" y="${f1(J.W[1]-5.5)}" width="16" height="11" rx="3.5" class="fx-plate"/>`
+    : D.hand==="handle" ? `<rect x="${f1(J.W[0]-5)}" y="${f1(J.W[1]-3)}" width="10" height="6" rx="3" class="fx-plate"/>` : "";
   let foot = "";
-  if (D.foot==="sled"){ const s=dd((J._sh??0)); const px=[s[1]*16,-s[0]*16]; foot = `<line x1="${(J.A[0]+px[0]+s[0]*6).toFixed(1)}" y1="${(J.A[1]+px[1]+s[1]*6).toFixed(1)}" x2="${(J.A[0]-px[0]+s[0]*6).toFixed(1)}" y2="${(J.A[1]-px[1]+s[1]*6).toFixed(1)}" class="fx-plate-l" stroke-width="6"/>`; }
-  if (D.foot==="pad") foot = `<circle cx="${J.A[0].toFixed(1)}" cy="${J.A[1].toFixed(1)}" r="6" class="fx-plate"/>`;
-  return `<line x1="4" y1="${GROUND}" x2="216" y2="${GROUND}" class="fx-ground"/>${props}${cable}
-    <g class="fx-far"><line ${ln(J.H,J.K2)}/><line ${ln(J.K2,J.A2)}/><line ${ln(J.A2,J.F2)}/><line ${ln(J.Sh,J.E2)}/><line ${ln(J.E2,J.W2)}/></g>
-    <g class="fx-near"><line ${ln(J.H,J.K)}/><line ${ln(J.K,J.A)}/><line ${ln(J.A,J.F)}/><line ${ln(J.H,J.Sh)} class="fx-torso"/><line ${ln(J.Sh,J.E)}/><line ${ln(J.E,J.W)}/></g>
-    <circle cx="${J.Hd[0].toFixed(1)}" cy="${J.Hd[1].toFixed(1)}" r="${SEG.hr}" class="fx-head"/>${hand}${foot}`;
+  if (D.foot==="sled"){ const s=dd((J._sh??0)); const px=[s[1]*18,-s[0]*18]; foot = `<line x1="${f1(J.A[0]+px[0]+s[0]*7)}" y1="${f1(J.A[1]+px[1]+s[1]*7)}" x2="${f1(J.A[0]-px[0]+s[0]*7)}" y2="${f1(J.A[1]-px[1]+s[1]*7)}" class="fx-plate-l" stroke-width="7"/>`; }
+  if (D.foot==="pad") foot = `<circle cx="${f1(J.A[0])}" cy="${f1(J.A[1])}" r="7" class="fx-plate"/>`;
+  return `<line x1="4" y1="${GROUND}" x2="216" y2="${GROUND}" class="fx-ground"/>${shadow}${props}
+    ${tr ? `<path d="${tr}" class="fx-trace"/>` : ""}${cable}
+    <g class="fx-far">${leg(J.H,J.K2,J.A2,"fx-b")}${cap(heel2,J.F2,7,6,"fx-b")}${arm(J.Sh,J.E2,J.W2,"fx-b")}</g>
+    ${W.map(s => hl(s,true)).join("")}
+    ${cap(J.H, J.Sh, 19, 23, "fx-b")}${cap(J.Sh, neck, 8, 8, "fx-b")}<circle cx="${f1(J.Hd[0])}" cy="${f1(J.Hd[1])}" r="${SEG.hr+1}" class="fx-head"/>
+    ${leg(J.H,J.K,J.A,"fx-b")}${cap(heel,J.F,7.5,6,"fx-b")}
+    ${W.filter(s => s!=="ua").map(s => hl(s,false)).join("")}
+    ${arm(J.Sh,J.E,J.W,"fx-b fx-arm")}${W.includes("ua") ? hl("ua",false) : ""}
+    <circle cx="${f1(J.W[0])}" cy="${f1(J.W[1])}" r="4.2" class="fx-hand"/>${hand}${foot}`;
+}
+function cycleOf(key){
+  const D = ANIM[key] || ANIM.walk;
+  if (D.walk) return {walk:1, dur:1.3};
+  if (D.breathe) return {iso:1, dur:3.6};
+  const both = SLOWBOTH.has(key), ecc = ECC.has(key), slow = 1.7, fast = 0.85, hold = 0.4;
+  const dAB = both ? 1.3 : ecc ? slow : fast, dBA = both ? 1.3 : ecc ? fast : slow;
+  return {dAB, dBA, hold, ecc, both, dur: dAB+dBA+2*hold};
+}
+const easeOut = x => 1-Math.pow(1-x,3), easeInOut = x => -(Math.cos(Math.PI*x)-1)/2;
+function phaseAt(key, sec){
+  const c = cycleOf(key);
+  if (c.walk){ const x = (sec % c.dur)/c.dur; return {k:(1-Math.cos(x*2*Math.PI))/2, cap:"Passo regolare, respiro tranquillo"}; }
+  if (c.iso){ const x = (sec % c.dur)/c.dur; return {k:(1-Math.cos(x*2*Math.PI))/2, cap:"Tieni la posizione e respira"}; }
+  const t = sec % c.dur, SLOW = "Fase lenta: torna controllando, 2–3 secondi", FORCE = "Fase di forza: deciso, circa 1 secondo";
+  const lab = slow => c.both ? (slow ? "Allunga lentamente" : "Torna al centro") : slow ? SLOW : FORCE;
+  if (t < c.hold) return {k:0, cap:"Posizione di partenza"};
+  if (t < c.hold+c.dAB){ const x = (t-c.hold)/c.dAB, slow = c.both || c.ecc; return {k: slow ? easeInOut(x) : easeOut(x), cap: lab(slow)}; }
+  if (t < 2*c.hold+c.dAB) return {k:1, cap: c.ecc ? "Pausa in basso, senza rimbalzare" : "Tieni un attimo"};
+  const x = (t-2*c.hold-c.dAB)/c.dBA, slow = c.both || !c.ecc;
+  return {k: 1-(slow ? easeInOut(x) : easeOut(x)), cap: lab(slow)};
 }
 function poseAt(key, t){
-  const D = ANIM[key] || ANIM.walk; const [a,b] = D.f;
-  let k;
-  if (D.walk) k = (1-Math.cos(t*2*Math.PI))/2;
-  else if (D.breathe) k = (1-Math.cos(t*2*Math.PI))/2;
-  else { const ph = t%1; const e = x => x<.5 ? 4*x*x*x : 1-Math.pow(-2*x+2,3)/2;
-    k = ph<.14 ? 0 : ph<.5 ? e((ph-.14)/.36) : ph<.64 ? 1 : 1-e((ph-.64)/.36); }
-  const Q = lerpPose(a,b,k); const J = solvePose(Q); J._sh = Q.sh; return J;
+  const D = ANIM[key] || ANIM.walk;
+  const k = typeof t==="object" ? t.k : t;
+  const Q = lerpPose(D.f[0], D.f[1], k); const J = solvePose(Q); J._sh = Q.sh; return J;
 }
 function animSVG(id, opts={}){
   const key = ANIM_OF[id] || "walk";
-  const J = poseAt(key, opts.still ? 0.57 : 0);
-  return `<svg class="fx ${opts.cls||""}" viewBox="0 0 220 196" role="img" aria-label="Dimostrazione: ${esc(LIB[id]?.n||"")}" ${opts.still?"":`data-anim="${key}"`}>${figureSVG(key,J)}</svg>`;
+  const J = poseAt(key, opts.still ? (ECC.has(key) ? 0.75 : 0.85) : 0);
+  return `<svg class="fx ${opts.cls||""}" viewBox="0 0 220 196" role="img" aria-label="Dimostrazione: ${esc(LIB[id]?.n||"")}" ${opts.still?"":`data-anim="${key}" data-ex="${id}"`}>${figureSVG(key,J,id,{thumb:opts.still})}</svg>`;
 }
+const AN = {speed:1, paused:false, clock:0, last:null};
 let animRAF = null;
-const ANIM_DUR = 2800;
 function tickAnims(now){
   const els = document.querySelectorAll("svg[data-anim]");
-  if (!els.length){ animRAF = null; return; }
+  if (!els.length){ animRAF = null; AN.last = null; return; }
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  els.forEach(el => { const key = el.dataset.anim, D = ANIM[key]; const dur = D.walk ? 1300 : D.breathe ? 3600 : ANIM_DUR;
-    const t = reduce ? 0.57 : (now % dur)/dur; el.innerHTML = figureSVG(key, poseAt(key, t)); });
+  if (AN.last==null) AN.last = now;
+  const dt = Math.min(0.1, (now-AN.last)/1000); AN.last = now;
+  if (!AN.paused && !reduce) AN.clock += dt*AN.speed;
+  els.forEach(el => { const key = el.dataset.anim;
+    const ph = reduce ? {k:0.85, cap:"Movimento mostrato fermo: hai attivato la riduzione del movimento"} : phaseAt(key, AN.clock);
+    el.innerHTML = figureSVG(key, poseAt(key, ph.k), el.dataset.ex);
+    const capEl = el.parentElement && el.parentElement.querySelector(".fx-cap");
+    if (capEl && capEl.textContent !== ph.cap) capEl.textContent = ph.cap; });
   animRAF = reduce ? null : requestAnimationFrame(tickAnims);
 }
 function startAnims(){ if (!animRAF) animRAF = requestAnimationFrame(tickAnims); }
@@ -587,7 +664,9 @@ function openSheet(id){
     <div class="sheet-card" tabindex="-1">
       <div class="sheet-grip" aria-hidden="true"></div>
       <div class="row between"><h2 class="grow">${esc(L.n)}</h2><button class="btn-sm btn-ghost" data-act="sheet-close" aria-label="Chiudi">Chiudi</button></div>
-      <div class="fx-stage">${animSVG(id,{cls:"fx-big"})}</div>
+      <div class="fx-stage">${animSVG(id,{cls:"fx-big"})}<span class="fx-cap" aria-live="off"></span></div>
+      <div class="row between"><span class="small muted"><span class="lg-work"></span> muscoli che lavorano${traceOf(key) ? ' &nbsp;<span class="lg-trace"></span> percorso del carico' : ""}</span>
+        <span class="row" style="gap:6px"><button class="btn-sm btn-ghost" data-act="an-slow" aria-pressed="${AN.speed<1}">${AN.speed<1?"Velocità normale":"Rallenta"}</button><button class="btn-sm btn-ghost" data-act="an-pause" aria-pressed="${AN.paused}">${AN.paused?"Riprendi":"Pausa"}</button></span></div>
       ${(L.m||[]).length ? `<div class="chips">${L.m.map(m => `<span class="pill">${esc(m)}</span>`).join("")}${(L.s||[]).map(m => `<span class="pill" style="opacity:.7">${esc(m)}</span>`).join("")}</div>` : ""}
       <ol class="how">
         <li><b>Posizione</b><span>${esc(st[0])}</span></li>
@@ -1220,7 +1299,7 @@ function exLog(it, i){
   const L = LIB[it.id], u = unitOf(it.id), r = it.rx;
   const lab = L.rlab || (u==="s"?"sec":u==="min"?"min":"rip");
   return `<section class="ex-focus card">
-    <button class="fx-stage fx-tap" data-act="ex-info" data-id="${it.id}" aria-label="Apri la scheda tecnica di ${esc(L.n)}">${animSVG(it.id,{cls:"fx-mid"})}<span class="fx-hint">Tocca per la scheda tecnica</span></button>
+    <button class="fx-stage fx-tap" data-act="ex-info" data-id="${it.id}" aria-label="Apri la scheda tecnica di ${esc(L.n)}">${animSVG(it.id,{cls:"fx-mid"})}<span class="fx-cap"></span><span class="fx-hint">Scheda tecnica</span></button>
     <div class="stack" style="gap:6px"><h2>${esc(L.n)}</h2>${rxText(r, it.id)}
       ${L.bar && r.load ? `<div>${plateMath(r.load)}</div>` : ""}
       ${it.note.length ? `<div class="small" style="color:var(--warn)">${esc(it.note.join(". "))}</div>` : ""}</div>
@@ -1518,6 +1597,8 @@ document.addEventListener("click", async ev => {
   const b = ev.target.closest("[data-act]"); if (!b) return;
   const a = b.dataset.act;
   if (a==="ex-info"){ openSheet(b.dataset.id); return; }
+  if (a==="an-slow"){ AN.speed = AN.speed<1 ? 1 : 0.45; b.textContent = AN.speed<1 ? "Velocità normale" : "Rallenta"; b.setAttribute("aria-pressed", AN.speed<1); return; }
+  if (a==="an-pause"){ AN.paused = !AN.paused; b.textContent = AN.paused ? "Riprendi" : "Pausa"; b.setAttribute("aria-pressed", AN.paused); return; }
   if (a==="install" && installEvt){ installEvt.prompt(); try { await installEvt.userChoice; } catch(e){} installEvt = null; render(); return; }
   if (a==="sheet-close"){ closeSheet(); return; }
   if (S?.draft && (a==="next" || a==="prev" || a==="goto")){
