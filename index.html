@@ -328,6 +328,10 @@ details.drill-prev .drill{border-color:var(--bg)}
 .motto{margin:0;padding:14px 16px;border-radius:14px;background:var(--sunk);border-left:4px solid var(--accent);display:flex;flex-direction:column;gap:8px}
 .motto blockquote{margin:0;font-size:1.02rem;line-height:1.4;font-style:italic;color:var(--ink)}
 .motto button{align-self:flex-start}
+.music-row{display:flex;flex-direction:column;gap:2px;padding:8px 0;border-top:1px solid var(--line)}
+.music-row:first-of-type{border-top:0}
+.music a.btn-sm{text-decoration:none;color:var(--ink);display:inline-flex;align-items:center;justify-content:center}
+.music .yt-btn{color:var(--ink)}
 /* Sfide 30 giorni */
 .ch-list{display:flex;flex-direction:column;gap:10px}
 .ch-card{display:flex;gap:12px;align-items:center;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:10px;width:100%;color:var(--ink)}
@@ -1868,6 +1872,7 @@ function renderToday(){
       <div class="row"><span class="pill acc" title="${esc(L.why)}">${LENSES[L.id].n}${L.id==="dup"?", giorno di "+DUPCYCLE[S.plan.dupI%3]:""}</span>${doneToday?'<span class="pill go">Oggi fatto</span>':""}</div></div>
     <div class="coach"><b>${c.t}</b><p>${c.b}</p></div>
     <figure class="motto"><blockquote>${esc(motto())}</blockquote><button class="btn-sm btn-ghost" data-act="motto-next">Un'altra frase</button></figure>
+    ${S.profile.prog==="aero" ? musicCard(SESS.filter(x => !x.recovery).length + (ui.musicShift || 0)) : ""}
     ${banners.join("")}
     ${doneToday ? `<p class="muted small">Oggi hai già fatto ${esc(doneToday.name)} (fatica ${doneToday.rpe}/10, ${doneToday.dur} min). Il recupero ora è parte dell'allenamento.</p>` : ""}
     <section class="stack"><h3>In programma</h3><p class="small muted">${esc(L.why)}</p>
@@ -2196,6 +2201,32 @@ async function loadCatalog(){
     const r = await fetch(CAT_URL + "?v=" + Date.now(), {cache:"no-store", signal: ac.signal}); clearTimeout(t);
     if (r.ok){ const c = await r.json(); if ((c.version||0) >= (ui.catVer||0)) applyCatalog(c); } } catch(e){}
 }
+/* ---------- Musica per l'aerobica anni '80/'90 ----------
+   Solo link di ricerca su Spotify e YouTube: l'app non riproduce musica né usa l'API di Spotify. */
+const MUSICA = {
+  caldo:[{t:"Let's Groove",a:"Earth, Wind & Fire",y:1981},{t:"Celebration",a:"Kool & the Gang",y:1980},{t:"Hey Mickey",a:"Toni Basil",y:1982}],
+  centrale:[{t:"Physical",a:"Olivia Newton-John",y:1981},{t:"Pump Up the Jam",a:"Technotronic",y:1989},{t:"Gonna Make You Sweat (Everybody Dance Now)",a:"C+C Music Factory",y:1990},{t:"Vogue",a:"Madonna",y:1990},{t:"Rhythm Is a Dancer",a:"Snap!",y:1992},{t:"Groove Is in the Heart",a:"Deee-Lite",y:1990},{t:"Push It",a:"Salt-N-Pepa",y:1987},{t:"Get Ready for This",a:"2 Unlimited",y:1991},{t:"Footloose",a:"Kenny Loggins",y:1984}],
+  defaticamento:[{t:"Time After Time",a:"Cyndi Lauper",y:1984},{t:"Wind Beneath My Wings",a:"Bette Midler",y:1989}]
+};
+function musicPick(k){
+  const c = MUSICA.caldo, m = MUSICA.centrale, d = MUSICA.defaticamento, n = m.length;
+  return [
+    {fase:"Riscaldamento", ...c[k % c.length]},
+    {fase:"Parte centrale", ...m[(k*2) % n]},
+    {fase:"Parte centrale", ...m[(k*2+1) % n]},
+    {fase:"Defaticamento", ...d[k % d.length]}
+  ];
+}
+const musicQ = t => encodeURIComponent(t.t + " " + t.a);
+function musicCard(k){
+  const tr = musicPick(k);
+  return `<section class="card stack music"><h3>Musica per l'allenamento di oggi</h3>
+    <p class="small muted">Brani degli anni '80 e '90 per l'aerobica. Tocca per cercarli su Spotify o YouTube.</p>
+    ${tr.map(t => `<div class="music-row"><span class="label">${t.fase}</span><b>${esc(t.t)}</b><span class="small muted">${esc(t.a)}, ${t.y}</span>
+      <span class="row" style="gap:6px"><a class="btn-sm btn-ghost" href="https://open.spotify.com/search/${musicQ(t)}" target="_blank" rel="noopener noreferrer">Spotify</a>
+      <a class="btn-sm btn-ghost yt-btn" href="https://www.youtube.com/results?search_query=${musicQ(t)}" target="_blank" rel="noopener noreferrer">YouTube</a></span></div>`).join("")}
+    <button class="btn-sm btn-ghost" data-act="music-next">Altri brani</button></section>`;
+}
 /* ---------- Frase del giorno, in base all'obiettivo ---------- */
 const MOTTI = {
   salute:["Non serve essere perfetti oggi: serve esserci.","Muoverti oggi è un regalo che fai al te di domani.","Dieci minuti sono meglio di zero: si parte da lì.","Ogni seduta è un voto di fiducia verso la tua salute.","La costanza batte l'intensità: anche una seduta corta conta.","Respira, muoviti e torna a casa più leggero di come sei partito.","Il benessere si costruisce con giorni semplici e ripetuti.","Dormi bene, mangia con calma, allenati con gioia.","Oggi la scelta è semplice: fai quello che puoi, bene.","Il tuo corpo ti ringrazia per ogni movimento fatto con cura.","Stare bene diventa normale quando diventa un'abitudine.","Anche un passo in più oggi è una scelta per la tua salute."],
@@ -2399,6 +2430,7 @@ function renderChallenges(){
   return `<button class="btn-sm btn-ghost" data-act="ch-back">← Tutte le sfide</button>
   <section class="stack"><span class="label">${esc(c.tag)}, ${esc(c.lvl.toLowerCase())}</span><h2 class="ch-title">${esc(c.n)}</h2><div class="row" style="gap:10px">${difDots(CH_META[id][0])}<span class="small muted">circa ${CH_META[id][2]} minuti al giorno</span></div><p class="small">${esc(c.d)}</p>
   ${(() => { const r = scoreCh(id); return r.why.length ? `<ul class="ch-why">${r.why.map(w => `<li>${esc(w)}</li>`).join("")}</ul>` : ""; })()}
+  ${c.aero ? musicCard(SESS.filter(x => !x.recovery).length + (ui.musicShift || 0)) : ""}
   ${lowImpact() && (c.tabata || c.aero || c.thunder || c.recomp) ? `<p class="small"><b>Versione a basso impatto attiva</b>: niente salti, come hai indicato nel profilo.</p>` : ""}</section>
   <div class="ch-grid">${Array.from({length:30}, (_,i) => `<button class="ch-day ${st?.log[i] ? "done" : ""} ${st && i===cur ? "cur" : ""} ${i===sel ? "sel" : ""}" data-act="ch-day" data-i="${i}" aria-label="Giorno ${i+1}"><i>${i+1}</i>${chCell(id,i)}</button>`).join("")}</div>
   <section class="card stack"><div class="row between"><h3>Giorno ${sel+1}${d.title ? `: ${esc(d.title.replace(/^Giorno \d: /,""))}` : ""}</h3>${st?.log[sel] ? `<span class="pill acc">Fatto</span>` : ""}</div>
@@ -2748,6 +2780,7 @@ document.addEventListener("click", async ev => {
     try { navigator.vibrate && navigator.vibrate(20); } catch(e){} toast(i>=29 ? "Sfida completata. Ottimo lavoro." : `Giorno ${i+1} fatto.`); return; }
   if (a==="ch-quit"){ delete S.ch[ui.ch]; ui.chDay = null; Store.save(); render(); toast("Sfida abbandonata."); return; }
   if (a==="lib-g"){ ui.libGroup = b.dataset.g; render(); return; }
+  if (a==="music-next"){ ui.musicShift = (ui.musicShift || 0) + 1; render(); return; }
   if (a==="motto-next"){ ui.mottoShift = (ui.mottoShift || 0) + 1; render(); return; }
   if (a==="lib-lv"){ ui.libLvl = b.dataset.v; render(); return; }
   if (a==="an-view"){ AN.view = Number(b.dataset.v); V3.forEach(v => { v.dragged = false; }); return; }
