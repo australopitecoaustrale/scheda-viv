@@ -436,11 +436,11 @@ const BENCH = [{t:"rect",x:30,y:142,w:112,h:8},{t:"rect",x:40,y:150,w:6,h:32},{t
 const SEAT = (x,y) => [{t:"rect",x:x-22,y:y+4,w:44,h:8},{t:"rect",x:x-4,y:y+12,w:8,h:182-y-12}];
 const ANIM = {
   squat:{f:[P({hf:-9,hu:-2,eb:"d",stance:6}), P({sh:-35,th:85,to:40,hf:-9,hu:-2,eb:"d",stance:6})], hand:"bb"},
-  goblet:{f:[P({hf:12,hu:-16,eb:"d",stance:6}), P({sh:-38,th:88,to:28,hf:12,hu:-16,eb:"d",stance:8})], hand:"db"},
+  goblet:{one:1,f:[P({hf:12,hu:-16,eb:"d",stance:6}), P({sh:-38,th:88,to:28,hf:12,hu:-16,eb:"d",stance:8})], hand:"db"},
   boxsquat:{f:[P({ua:85,fa:85}), P({sh:-28,th:80,to:35,ua:85,fa:85})], props:[{t:"rect",x:60,y:146,w:28,h:36}]},
   legpress:{f:[P({root:"hip",x:70,y:128,to:-55,th:120,sh:120,ua:20,fa:60}), P({root:"hip",x:70,y:128,to:-55,th:165,sh:95,ua:20,fa:60})], props:[{t:"rect",x:40,y:132,w:44,h:10},{t:"line",x1:44,y1:134,x2:22,y2:96}], foot:"sled"},
-  hinge:{f:[P({hx:106,hy:108,eb:"d"}), P({sh:-8,th:55,to:78,hx:110,hy:160,eb:"r"})], hand:"bb"},
-  hinge_db:{f:[P({hx:106,hy:108,eb:"d"}), P({sh:-8,th:55,to:78,hx:110,hy:160,eb:"r"})], hand:"db"},
+  hinge:{f:[P({hx:106,hy:108,eb:"d"}), P({sh:-8,th:30,to:62,hx:112,hy:150,eb:"r"})], hand:"bb"},
+  hinge_db:{f:[P({hx:106,hy:108,eb:"d"}), P({sh:-8,th:30,to:62,hx:112,hy:150,eb:"r"})], hand:"db"},
   deadlift:{f:[P({hx:106,hy:108,eb:"d",stance:2}), P({sh:-25,th:65,to:50,hx:106,hy:158,eb:"d",stance:2})], hand:"bb"},
   thrust:{f:[P({x:145,sh:10,th:110,to:-80,ua:90,fa:90}), P({x:145,sh:0,th:90,to:-90,ua:90,fa:90})], hand:"bb", props:[{t:"rect",x:16,y:150,w:38,h:32}]},
   bridge:{f:[P({x:140,sh:35,th:120,th2:120,sh2:120,to:-100,ua:90,fa:90}), P({x:140,sh:35,th:100,th2:100,sh2:100,to:-75,ua:90,fa:90})]},
@@ -456,14 +456,14 @@ const ANIM = {
   landmine:{f:[P({to:8,ua:30,fa:165,th2:-12,sh2:-12}), P({to:8,ua:120,fa:125,th2:-12,sh2:-12})], cable:{x:212,y:180,w:5}},
   pike:{face:-1,f:[P({x:168,sh:28,th:28,to:-130,hx:56,hy:178,eb:"r"}), P({x:168,sh:28,th:28,to:-148,hx:56,hy:178,eb:"r"})]},
   latpd:{f:[P({root:"hip",x:95,y:140,to:-15,th:85,sh:0,ua:172,fa:172}), P({root:"hip",x:95,y:140,to:-15,th:85,sh:0,ua:-25,fa:165})], hand:"handle", cable:{x:100,y:6,w:2}, props:[...SEAT(95,140),{t:"rect",x:112,y:126,w:20,h:7}]},
-  pullup:{f:[P({root:"hip",x:100,y:140,th:8,sh:-20,ua:180,fa:180}), P({root:"hip",x:100,y:104,th:8,sh:-20,ua:-110,fa:110})], props:[{t:"line",x1:58,y1:36,x2:150,y2:36,w:5}]},
-  pullover:{f:[P({root:"hip",x:100,y:136,to:-90,th:80,sh:0,ua:-105,fa:-105}), P({root:"hip",x:100,y:136,to:-90,th:80,sh:0,ua:180,fa:180})], hand:"db", props:BENCH},
-  rowcs:{f:[P({x:60,to:45,th:10,ua:0,fa:0}), P({x:60,to:45,th:10,ua:-65,fa:10})], hand:"db", props:[{t:"line",x1:66,y1:176,x2:132,y2:84,w:7}]},
+  pullup:{f:[P({root:"hip",x:100,y:142,th:8,sh:-20,hx:100,hy:36,eb:"r"}), P({root:"hip",x:100,y:104,th:8,sh:-24,hx:100,hy:36,eb:"r"})], props:[{t:"line",x1:58,y1:36,x2:150,y2:36,w:5}]},
+  pullover:{one:1,f:[P({root:"hip",x:100,y:136,to:-90,th:80,sh:0,ua:-105,fa:-105,stance:10}), P({root:"hip",x:100,y:136,to:-90,th:80,sh:0,ua:-180,fa:-180,stance:10})], hand:"db", props:BENCH},
+  rowcs:{f:[P({x:60,to:45,th:10,ua:0,fa:0}), P({x:60,to:45,th:10,ua:-65,fa:10})], hand:"db", props:[{t:"line",x1:46,y1:122,x2:98,y2:68,w:7},{t:"line",x1:70,y1:97,x2:84,y2:182,w:4}]},
   cablerow:{f:[P({root:"hip",x:70,y:150,to:22,th:78,sh:62,ua:90,fa:90}), P({root:"hip",x:70,y:150,to:-6,th:78,sh:62,ua:-55,fa:90})], hand:"handle", cable:{x:212,y:150,w:2}, props:[{t:"rect",x:44,y:154,w:46,h:8}]},
-  rowdb:{f:[P({x:122,to:80,th:12,sh:-6,ua:0,fa:0}), P({x:122,to:80,th:12,sh:-6,ua:-58,fa:18})], hand:"db", props:[{t:"rect",x:150,y:136,w:52,h:46}]},
+  rowdb:{single:1,f:[P({x:122,to:80,th:12,sh:-6,ua:0,fa:0,ua2:38,fa2:30}), P({x:122,to:80,th:12,sh:-6,ua:-58,fa:18,ua2:38,fa2:30})], hand:"db", props:[{t:"rect",x:150,y:136,w:52,h:46}]},
   invrow:{f:[P({x:180,sh:78,th:78,to:-78,ua:180,fa:180}), P({x:180,sh:70,th:70,to:-70,ua:150,fa:-124})], props:[{t:"line",x1:20,y1:98,x2:96,y2:98,w:5}]},
-  pallof:{f:[P({th2:-6,sh2:-6,ua:20,fa:160}), P({th2:-6,sh2:-6,ua:90,fa:90})], hand:"handle", cable:{x:6,y:92,w:2}},
-  deadbug:{f:[P({root:"hip",x:110,y:172,to:-90,th:180,sh:90,ua:180,fa:180}), P({root:"hip",x:110,y:172,to:-90,th:180,sh:90,ua:-100,fa:-100,ua2:180,fa2:180,th2:100,sh2:100})]},
+  pallof:{f:[P({stance:6,ua:20,fa:160}), P({stance:6,ua:90,fa:90})], hand:"handle", cable:{x:112,y:92,w:2,z:-95}},
+  deadbug:{f:[P({root:"hip",x:110,y:172,to:-90,th:180,sh:90,ua:180,fa:180}), P({root:"hip",x:110,y:172,to:-90,th:180,sh:90,ua:260,fa:260,ua2:180,fa2:180,th2:100,sh2:100})]},
   plank:{face:-1,f:[P({x:180,sh:78,th:78,to:-78,ua:0,fa:-90}), P({x:180,sh:77,th:77,to:-77,ua:0,fa:-90})], breathe:1},
   birddog:{face:-1,f:[P({root:"knee",x:130,y:178,th:0,sh:90,to:-90,ua:-35,fa:-35}), P({root:"knee",x:130,y:178,th:0,sh:90,to:-90,ua:-90,fa:-90,ua2:-35,fa2:-35,th2:90,sh2:90})]},
   farmer:{f:[P({root:"hip",x:100,y:103,th:22,sh:8,th2:-20,sh2:-32}), P({root:"hip",x:100,y:103,th:-20,sh:-32,th2:22,sh2:8})], hand:"db", walk:1},
@@ -471,7 +471,7 @@ const ANIM = {
   curl:{f:[P({ua:4,fa:10}), P({ua:8,fa:150})], hand:"db"},
   cablecurl:{f:[P({ua:0,fa:12}), P({ua:6,fa:160})], hand:"handle", cable:{x:150,y:180,w:2}},
   pushdown:{f:[P({ua:6,fa:150}), P({ua:6,fa:8})], hand:"handle", cable:{x:120,y:6,w:2}},
-  french:{f:[P({ua:172,fa:-12}), P({ua:172,fa:178})], hand:"db"},
+  french:{one:1,f:[P({ua:172,fa:-12}), P({ua:172,fa:178})], hand:"db"},
   latraise:{f:[P({to:6,ua:8,fa:12,ab:12,stance:2}), P({to:6,ua:14,fa:14,ab:84,fb:80,stance:2})], hand:"db"},
   facepull:{f:[P({th2:-6,sh2:-6,ua:100,fa:100,ab:8}), P({th2:-6,sh2:-6,ua:92,fa:160,ab:72,fb:10})], hand:"handle", cable:{x:212,y:40,w:2}},
   rearfly:{f:[P({sh:-8,th:25,to:70,ua:4,fa:4,ab:6}), P({sh:-8,th:25,to:70,ua:-6,fa:-4,ab:82,fb:78})], hand:"db"},
@@ -479,9 +479,9 @@ const ANIM = {
   legcurl:{f:[P({root:"hip",x:90,y:140,to:-12,th:88,sh:88}), P({root:"hip",x:90,y:140,to:-12,th:88,sh:-8})], foot:"pad", props:[...SEAT(90,140),{t:"line",x1:80,y1:140,x2:72,y2:90}]},
   legext:{f:[P({root:"hip",x:90,y:140,to:-12,th:88,sh:2}), P({root:"hip",x:90,y:140,to:-12,th:88,sh:86})], foot:"pad", props:[...SEAT(90,140),{t:"line",x1:80,y1:140,x2:72,y2:90}]},
   nordic:{f:[P({root:"knee",x:100,y:178,th:0,sh:-90,to:0,ua:10,fa:30}), P({root:"knee",x:100,y:178,th:-55,sh:-90,to:55,ua:70,fa:75})], props:[{t:"rect",x:50,y:166,w:12,h:16}]},
-  fly:{f:[P({th2:-10,sh2:-10,to:8,ua:84,fa:92,ab:72,fb:62}), P({th2:-10,sh2:-10,to:8,ua:92,fa:98,ab:10,fb:2})], hand:"db"},
+  fly:{f:[P({th2:-14,sh2:-14,to:10,ua:84,fa:92,ab:72,fb:62}), P({th2:-14,sh2:-14,to:10,ua:96,fa:100,ab:12,fb:4})], hand:"handle", cables:[{x:92,y:46,z:82},{x:92,y:46,z:-82}]},
   wallsit:{f:[P({x:122,sh:0,th:88,to:0,ua:40,fa:95}), P({x:122,sh:0,th:87,to:0,ua:40,fa:95})], breathe:1, props:[{t:"rect",x:58,y:24,w:9,h:158}]},
-  swing:{f:[P({sh:-14,th:55,to:72,ua:-18,fa:-30,stance:6}), P({sh:2,th:-4,to:-6,ua:88,fa:88,stance:6})], hand:"db"},
+  swing:{one:1,f:[P({sh:-14,th:55,to:72,ua:-18,fa:-30,stance:6}), P({sh:2,th:-4,to:-6,ua:88,fa:88,stance:6})], hand:"db"},
   slrdl:{f:[P({x:108,ua:6,fa:6,th2:-6,sh2:-6}), P({x:108,sh:-6,th:32,to:82,ua:-4,fa:-4,th2:-82,sh2:-86})], hand:"db"}
 };
 const ANIM_OF = {back_squat:"squat",leg_press:"legpress",goblet_squat:"goblet",box_squat:"boxsquat",rdl_bb:"hinge",trapbar:"deadlift",hip_thrust:"thrust",rdl_db:"hinge_db",
@@ -804,11 +804,13 @@ function make3D(svg, opts={}){
     [-7.5,7.5].forEach(z => { const p = cyl(5.8,4,"plate"); p.rotation.x = Math.PI/2; p.position.z = z; g.add(p); }); return g; };
   let barG = null, dbR = null, dbL = null, handle = null;
   if (D.hand==="bb"){ barG = mkBar(); gear.add(barG); }
-  if (D.hand==="db"){ dbR = mkDb(); dbL = mkDb(); gear.add(dbR, dbL); }
-  if (D.hand==="handle"){ handle = cyl(2,26,"dark"); handle.rotation.x = Math.PI/2; gear.add(handle); }
-  const cable = D.cable ? limb(.7,.7,"dark") : null, anchor = D.cable ? ball(3.5,"dark") : null;
+  if (D.hand==="db"){ dbR = mkDb(); gear.add(dbR); if (!D.one && !D.single){ dbL = mkDb(); gear.add(dbL); } }
+  if (D.hand==="handle" && !D.cables){ handle = cyl(2,26,"dark"); handle.rotation.x = Math.PI/2; gear.add(handle); }
+  const lm = D.cable && D.cable.w >= 4;
+  const cable = D.cable ? limb(lm ? 1.8 : .7, lm ? 1.8 : .7, lm ? "steel" : "dark") : null, anchor = D.cable ? ball(lm ? 4 : 3.5, lm ? "steel" : "dark") : null;
+  const cables2 = (D.cables||[]).map(() => ({l:limb(.7,.7,"dark"), a:ball(3.5,"dark")}));
   let sled = null, pad = null;
-  if (D.foot==="sled"){ sled = add(new T.Mesh(new T.BoxGeometry(5, 40, 46), M.plate)); }
+  if (D.foot==="sled"){ sled = add(new T.Mesh(new T.BoxGeometry(5, 40, 46), M.pad)); }
   if (D.foot==="pad"){ pad = cyl(6, 34, "plate"); pad.rotation.x = Math.PI/2; }
   // Cornice: limiti del movimento
   let mnx=1e9,mxx=-1e9,mny=1e9,mxy=-1e9;
@@ -822,16 +824,19 @@ function make3D(svg, opts={}){
     if (p.t==="rect"){ const wall = p.h > 120, leg = p.w <= 8 && p.h > 12;
       m = new T.Mesh(new T.BoxGeometry(p.w, p.h, wall ? 120 : leg ? 6 : 40), wall ? M.prop : leg ? M.steel : M.pad); m.position.set(p.x+p.w/2-cx, GROUND-(p.y+p.h/2), 0);
       if (leg){ const m2 = m.clone(); m.position.z = 14; m2.position.z = -14; add(m2); } }
-    else { const a = V([p.x1,p.y1]), b = V([p.x2,p.y2]); const len = a.distanceTo(b); m = new T.Mesh(new T.BoxGeometry(len, (p.w||5)+2, p.w && p.w<4 ? 4 : 38), M.pad);
+    else { const a = V([p.x1,p.y1]), b = V([p.x2,p.y2]); const len = a.distanceTo(b); const thin = p.w && p.w <= 4; m = new T.Mesh(new T.BoxGeometry(len, thin ? p.w : (p.w||5)+2, thin ? 5 : 38), thin ? M.steel : M.pad);
       m.position.copy(a).add(b).multiplyScalar(.5); m.rotation.z = Math.atan2(b.y-a.y, b.x-a.x);
       if (p.w && p.w<=5 && p.y1===p.y2){ m.geometry.dispose(); m.geometry = new T.CylinderGeometry(1.8,1.8,130,16); m.material = M.steel; m.rotation.set(Math.PI/2,0,0); } }
     add(m);
   });
   // Strutture da palestra: stazione cavi con colonna pesi, rack per lo squat, castello per le trazioni
   const box = (w,h,d,mat,x,y,z) => { const b = add(new T.Mesh(new T.BoxGeometry(w,h,d), M[mat])); b.position.set(x,y,z); return b; };
-  if (D.cable && D.cable.w < 4){ const ax = D.cable.x - cx, ay = GROUND - D.cable.y, back = D.cable.x > 150 ? 10 : D.cable.x < 60 ? -10 : 30, tx = ax + back;
-    [-16,16].forEach(z => box(5, 205, 5, "steel", tx, 102.5, z)); box(5, 5, 37, "steel", tx, 205, 0);
-    box(16, 46, 26, "pad", tx, 23, 0); box(3, 150, 3, "steel", tx, 120, 0); box(10, 6, 10, "steel", ax, ay, 0); }
+  const tower = (ax, ay, az, side) => { const tx = ax + (side ? 0 : (ax + cx > 150 ? 10 : ax + cx < 60 ? -10 : 30)), tz = az + (side ? Math.sign(az)*8 : 0);
+    [-16,16].forEach(o => side ? box(5, 205, 5, "steel", tx + o, 102.5, tz) : box(5, 205, 5, "steel", tx, 102.5, tz + o));
+    side ? box(37, 5, 5, "steel", tx, 205, tz) : box(5, 5, 37, "steel", tx, 205, tz);
+    box(side ? 26 : 16, 46, side ? 16 : 26, "pad", tx, 23, tz); box(3, 150, 3, "steel", tx, 120, tz); box(10, 6, 10, "steel", ax, ay, az); };
+  if (D.cable && !lm) tower(D.cable.x - cx, GROUND - D.cable.y, D.cable.z || 0, !!D.cable.z);
+  (D.cables||[]).forEach(c => tower(c.x - cx, GROUND - c.y, c.z, true));
   if (key==="squat"){ const bx = solvePose(D.f[0]).W[0] - cx + 4, ghost = new T.MeshStandardMaterial({color:0x9AA39C, roughness:.3, metalness:.6, transparent:true, opacity:.28, depthWrite:false});
     [-68,68].forEach(z => { const u = new T.Mesh(new T.BoxGeometry(5, 190, 5), ghost); u.position.set(bx, 95, z); scene.add(u);
       const h = new T.Mesh(new T.BoxGeometry(10, 4, 6), ghost); h.position.set(bx+4, GROUND-solvePose(D.f[0]).W[1]-6, z); scene.add(h); }); }
@@ -854,10 +859,11 @@ function make3D(svg, opts={}){
       const toe = {R:V([J.A[0]+fR[0]*1.0, J.A[1]+fR[1]*1.0], az2+2), L:V([J.A2[0]+11, J.A2[1]], -az2-2)};
       const heel = {R:V([J.A[0]-fR[0]*.3, J.A[1]-fR[1]*.3], az2+1), L:V([J.A2[0]-3.5, J.A2[1]], -az2-1)};
       const mid = [(J.H[0]+J.Sh[0])/2, (J.H[1]+J.Sh[1])/2];
-      const grip = D.hand==="bb" ? 21 : D.hand==="handle" ? 7 : 15;
+      const grip = D.hand==="bb" ? 21 : D.hand==="handle" ? 7 : D.one ? 5 : 15;
       const shz = 15;
       const elb = {R:V(J.E, shz + J.ez), L:V(J.E2, -(shz + J.ez2))};
-      const wr = {R:V(J.W, J.wz ? shz + J.wz : (D.hand==="bb"||D.hand==="handle" ? grip : shz)), L:V(J.W2, J.wz2 ? -(shz + J.wz2) : -(D.hand==="bb"||D.hand==="handle" ? grip : shz))};
+      const narrow = D.hand==="bb" || D.hand==="handle" || D.one;
+      const wr = {R:V(J.W, J.wz ? shz + J.wz : (narrow ? grip : shz)), L:V(J.W2, J.wz2 ? -(shz + J.wz2) : -(narrow ? grip : shz))};
       const shp = {R:V(J.Sh, shz), L:V(J.Sh, -shz)};
       const up = [J.Sh[0]-J.H[0], J.Sh[1]-J.H[1]], ul = Math.hypot(up[0],up[1]) || 1, un = [up[0]/ul, up[1]/ul];
       const to = Math.atan2(up[0], -up[1]), fs = D.face || 1;
@@ -876,9 +882,15 @@ function make3D(svg, opts={}){
       P.jaw.position.copy(hc).addScaledVector(fwd, 3.2).add(new T.Vector3(-un[0]*5.2, un[1]*5.2, 0)); P.jaw.scale.set(.95, .8, .9);
       P.nose.position.copy(hc).addScaledVector(fwd, 8.6).add(new T.Vector3(-un[0]*.5, un[1]*.5, 0));
       if (barG) barG.position.copy(V(J.W));
-      if (dbR){ dbR.position.copy(wr.R); dbL.position.copy(wr.L); }
+      // Manubri: manico perpendicolare all'avambraccio; se il braccio è aperto di lato il manico punta avanti
+      const orient = (g, e, w) => { const fd = new T.Vector3().subVectors(w, e).normalize(); const ax = Math.abs(fd.z) > .55 ? new T.Vector3(1,0,0) : new T.Vector3(0,0,1);
+        g.quaternion.setFromUnitVectors(new T.Vector3(0,0,1), ax); };
+      if (dbR){ if (D.one){ dbR.position.copy(wr.R).add(wr.L).multiplyScalar(.5); dbR.quaternion.set(0,0,0,1); dbR.rotation.set(Math.PI/2,0,0); }
+        else { dbR.position.copy(wr.R); orient(dbR, elb.R, wr.R); } }
+      if (dbL){ dbL.position.copy(wr.L); orient(dbL, elb.L, wr.L); }
+      cables2.forEach((c, i) => { const d = D.cables[i]; const a = V([d.x, d.y], d.z); setLimb(c.l, a, i ? wr.L : wr.R); c.a.position.copy(a); });
       if (handle) handle.position.copy(V(J.W));
-      if (cable){ const a = V([D.cable.x, D.cable.y]); setLimb(cable, a, V(J.W)); anchor.position.copy(a); }
+      if (cable){ const a = V([D.cable.x, D.cable.y], D.cable.z || 0); setLimb(cable, a, lm ? wr.R.clone().add(wr.L).multiplyScalar(.5) : V(J.W)); anchor.position.copy(a); }
       if (sled){ sled.position.copy(V(J.A)); sled.rotation.z = -rad(J._sh ?? 0); }
       if (pad){ pad.position.copy(V(J.A)); }
       // Telecamera: leggera oscillazione per percepire la profondità, trascinabile nella scheda tecnica
