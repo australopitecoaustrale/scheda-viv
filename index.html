@@ -188,6 +188,9 @@ details summary{cursor:pointer;font-weight:600}
 .lg-trace{background:none;border-top:2px dashed var(--accent);height:0;border-radius:0;width:16px;vertical-align:3px}
 .fx-stage{position:relative;display:block;width:100%;background:var(--sunk);border-radius:var(--r);padding:8px 8px 4px}
 .fx-big{max-height:42vh;margin:0 auto}
+canvas.fx3{display:block;width:100%;aspect-ratio:220/196;margin:0 auto;border-radius:10px}
+canvas.fx3.fx-big{max-height:44vh;width:auto;max-width:100%}
+canvas.fx3.fx-mid{max-height:28vh;width:auto;max-width:100%}
 .fx-mid{max-height:24vh;margin:0 auto}
 button.fx-tap{border-radius:var(--r)}
 .fx-hint{position:absolute;right:10px;bottom:8px;font-size:.74rem;font-weight:600;color:var(--muted);background:var(--surface);padding:3px 8px;border-radius:999px}
@@ -283,6 +286,7 @@ if ("serviceWorker" in navigator && location.protocol === "https:") {
   <div class="stack"><p class="muted">Sto aprendo il tuo spazio privato di allenamento.</p></div>
 </div>
 <div id="timer"></div>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <nav class="tabs" id="tabs" hidden></nav>
 
 <script>
@@ -319,7 +323,9 @@ const LIB = {
   trapbar:{n:"Stacco con trap bar",p:"hinge",m:["glutei","femorali","quadricipiti"],need:"gym",st:["back"],t:"c",inc:5,cue:"Spingi il pavimento, petto alto, chiudi con i glutei senza inarcare."},
   hip_thrust:{n:"Hip thrust",p:"hinge",m:["glutei","femorali"],need:"db",t:"c",inc:2.5,cue:"Scapole sulla panca, mento basso, estendi l'anca e tieni un secondo in alto."},
   rdl_db:{n:"Stacco rumeno con manubri",p:"hinge",m:["femorali","glutei"],need:"db",st:["back"],t:"c",inc:2,cue:"Manubri lungo le cosce, anche indietro finché senti tirare i femorali."},
+  swing_db:{n:"Swing con manubrio",p:"hinge",m:["glutei","femorali"],s:["core"],need:"db",st:["back"],t:"c",inc:2,cue:"È una spinta delle anche, non un sollevamento con le braccia: il manubrio sale fino al petto per lo slancio."},
   glute_bridge:{n:"Ponte glutei su una gamba",p:"hinge",m:["glutei","femorali"],need:"bw",t:"c",unit:"bw",cue:"Un piede a terra, spingi dal tallone, bacino parallelo al pavimento."},
+  sl_rdl:{n:"Stacco rumeno su una gamba",p:"single",m:["femorali","glutei"],s:["core"],need:"db",t:"c",inc:2,cue:"Bacino parallelo al pavimento, la gamba libera sale dietro in linea con il busto. Ottimo per l'equilibrio."},
   rev_lunge:{n:"Affondi indietro",p:"single",m:["quadricipiti","glutei"],need:"bw",st:["knee"],t:"c",inc:2,cue:"Passo indietro ampio, ginocchio dietro vicino a terra, spinta dal piede davanti."},
   step_up:{n:"Step-up su panca",p:"single",m:["quadricipiti","glutei"],need:"bw",t:"c",inc:2,cue:"Tutto il piede sul rialzo, sali senza spingere con la gamba a terra."},
   bss:{n:"Split squat bulgaro",p:"single",m:["quadricipiti","glutei"],need:"bw",st:["knee"],t:"c",inc:2,cue:"Piede dietro sulla panca, scendi in verticale; busto un po' avanti per i glutei."},
@@ -340,6 +346,7 @@ const LIB = {
   inv_row:{n:"Rematore inverso",p:"hpull",m:["dorso","bicipiti"],need:"bw",t:"c",unit:"bw",cue:"Sotto un tavolo robusto o a una sbarra bassa; più sei orizzontale, più è duro."},
   pallof:{n:"Pallof press",p:"core",m:["core"],need:"gym",t:"i",inc:2.5,cue:"Al cavo o con elastico: spingi avanti e resisti alla rotazione."},
   dead_bug:{n:"Dead bug",p:"core",m:["core"],need:"bw",t:"i",unit:"bw",cue:"Zona lombare schiacciata a terra, estendi braccio e gamba opposti lentamente."},
+  wall_sit:{n:"Sedia al muro",p:"core",m:["quadricipiti"],need:"bw",st:["knee"],t:"i",unit:"s",cue:"Schiena al muro, cosce quasi parallele al pavimento, respira normalmente. Fra gli isometrici è il più efficace sulla pressione a riposo."},
   plank:{n:"Plank",p:"core",m:["core"],need:"bw",t:"i",unit:"s",cue:"Gomiti sotto le spalle, glutei contratti, respira."},
   side_plank:{n:"Plank laterale",p:"core",m:["core"],need:"bw",t:"i",unit:"s",cue:"Corpo in linea, fianco alto. Tempo indicato per lato."},
   farmer:{n:"Camminata del contadino",p:"carry",m:["core","dorso"],need:"db",t:"i",inc:2,rlab:"passi",cue:"Manubri pesanti, spalle basse, passi corti e controllati."},
@@ -410,24 +417,24 @@ const P = o => Object.assign({}, STAND, o);
 const BENCH = [{t:"rect",x:30,y:142,w:112,h:8},{t:"rect",x:40,y:150,w:6,h:32},{t:"rect",x:126,y:150,w:6,h:32}];
 const SEAT = (x,y) => [{t:"rect",x:x-22,y:y+4,w:44,h:8},{t:"rect",x:x-4,y:y+12,w:8,h:182-y-12}];
 const ANIM = {
-  squat:{f:[P({hf:-9,hu:-2,eb:"d"}), P({sh:-35,th:85,to:40,hf:-9,hu:-2,eb:"d"})], hand:"bb"},
-  goblet:{f:[P({rel:1,ua:25,fa:165}), P({rel:1,sh:-35,th:85,to:30,ua:25,fa:165})], hand:"db"},
+  squat:{f:[P({hf:-9,hu:-2,eb:"d",stance:6}), P({sh:-35,th:85,to:40,hf:-9,hu:-2,eb:"d",stance:6})], hand:"bb"},
+  goblet:{f:[P({hf:12,hu:-16,eb:"d",stance:6}), P({sh:-38,th:88,to:28,hf:12,hu:-16,eb:"d",stance:8})], hand:"db"},
   boxsquat:{f:[P({ua:85,fa:85}), P({sh:-28,th:80,to:35,ua:85,fa:85})], props:[{t:"rect",x:60,y:146,w:28,h:36}]},
   legpress:{f:[P({root:"hip",x:70,y:128,to:-55,th:120,sh:120,ua:20,fa:60}), P({root:"hip",x:70,y:128,to:-55,th:165,sh:95,ua:20,fa:60})], props:[{t:"rect",x:40,y:132,w:44,h:10},{t:"line",x1:44,y1:134,x2:22,y2:96}], foot:"sled"},
-  hinge:{f:[P({ua:10,fa:10}), P({sh:-8,th:25,to:75,ua:4,fa:4})], hand:"bb"},
-  hinge_db:{f:[P({ua:10,fa:10}), P({sh:-8,th:25,to:75,ua:4,fa:4})], hand:"db"},
-  deadlift:{f:[P({ua:8,fa:8}), P({sh:-25,th:65,to:50,ua:12,fa:12})], hand:"bb"},
+  hinge:{f:[P({hx:106,hy:108,eb:"d"}), P({sh:-8,th:55,to:78,hx:110,hy:160,eb:"r"})], hand:"bb"},
+  hinge_db:{f:[P({hx:106,hy:108,eb:"d"}), P({sh:-8,th:55,to:78,hx:110,hy:160,eb:"r"})], hand:"db"},
+  deadlift:{f:[P({hx:106,hy:108,eb:"d",stance:2}), P({sh:-25,th:65,to:50,hx:106,hy:158,eb:"d",stance:2})], hand:"bb"},
   thrust:{f:[P({x:145,sh:10,th:110,to:-80,ua:90,fa:90}), P({x:145,sh:0,th:90,to:-90,ua:90,fa:90})], hand:"bb", props:[{t:"rect",x:16,y:150,w:38,h:32}]},
   bridge:{f:[P({x:140,sh:35,th:120,th2:120,sh2:120,to:-100,ua:90,fa:90}), P({x:140,sh:35,th:100,th2:100,sh2:100,to:-75,ua:90,fa:90})]},
   lunge:{f:[P({x:115,th2:0,sh2:0,ua:4,fa:4}), P({x:115,sh:-10,th:80,to:5,th2:-25,sh2:-80,ua:4,fa:4})], hand:"db"},
   stepup:{f:[P({x:128,y:150,sh:-20,th:70,to:15,th2:-5,sh2:-5}), P({x:128,y:150,th2:60,sh2:-10})], hand:"db", props:[{t:"rect",x:108,y:150,w:46,h:32}]},
   bss:{f:[P({x:128,th:15,to:5,th2:-35,sh2:-70}), P({x:128,sh:-15,th:75,to:15,th2:-8,sh2:-124})], hand:"db", props:[{t:"rect",x:22,y:150,w:42,h:32}]},
-  bench:{f:[P({root:"hip",x:100,y:136,to:-90,th:80,sh:0,ua:180,fa:180}), P({root:"hip",x:100,y:136,to:-90,th:80,sh:0,ua:60,fa:180})], hand:"bb", props:BENCH},
-  bench_db:{f:[P({root:"hip",x:100,y:136,to:-90,th:80,sh:0,ua:180,fa:180}), P({root:"hip",x:100,y:136,to:-90,th:80,sh:0,ua:60,fa:180})], hand:"db", props:BENCH},
-  incline:{f:[P({root:"hip",x:100,y:140,to:-60,th:85,sh:0,ua:180,fa:180}), P({root:"hip",x:100,y:140,to:-60,th:85,sh:0,ua:35,fa:170})], hand:"db", props:[{t:"rect",x:80,y:144,w:40,h:8},{t:"line",x1:96,y1:146,x2:52,y2:116},{t:"rect",x:96,y:152,w:6,h:30}]},
+  bench:{f:[P({root:"hip",x:100,y:136,to:-90,th:80,sh:0,hx:54,hy:84,eb:"d",stance:10}), P({root:"hip",x:100,y:136,to:-90,th:80,sh:0,hx:73,hy:116,eb:"d",stance:10})], hand:"bb", props:BENCH},
+  bench_db:{f:[P({root:"hip",x:100,y:136,to:-90,th:80,sh:0,hx:52,hy:84,eb:"d",stance:10}), P({root:"hip",x:100,y:136,to:-90,th:80,sh:0,hx:66,hy:120,eb:"d",ab:28,stance:10})], hand:"db", props:BENCH},
+  incline:{f:[P({root:"hip",x:100,y:140,to:-60,th:85,sh:0,hx:60,hy:62,eb:"d",stance:10}), P({root:"hip",x:100,y:140,to:-60,th:85,sh:0,hx:72,hy:100,eb:"d",stance:10})], hand:"db", props:[{t:"rect",x:80,y:144,w:40,h:8},{t:"line",x1:96,y1:146,x2:52,y2:116},{t:"rect",x:96,y:152,w:6,h:30}]},
   chestpress:{f:[P({root:"hip",x:90,y:140,to:-10,th:85,sh:0,ua:-60,fa:90}), P({root:"hip",x:90,y:140,to:-10,th:85,sh:0,ua:88,fa:90})], hand:"db", props:[...SEAT(90,140),{t:"line",x1:80,y1:140,x2:72,y2:88}]},
   pushup:{face:-1,f:[P({x:170,sh:65,th:65,to:-65,hx:54,hy:178,eb:"r"}), P({x:170,sh:80,th:80,to:-80,hx:54,hy:178,eb:"r"})]},
-  ohp:{f:[P({ua:40,fa:172}), P({ua:172,fa:178})], hand:"db"},
+  ohp:{f:[P({hx:107,hy:52,eb:"r",stance:2}), P({hx:103,hy:0,eb:"r",stance:2})], hand:"db"},
   landmine:{f:[P({to:8,ua:30,fa:165,th2:-12,sh2:-12}), P({to:8,ua:120,fa:125,th2:-12,sh2:-12})], cable:{x:212,y:180,w:5}},
   pike:{face:-1,f:[P({x:168,sh:28,th:28,to:-130,hx:56,hy:178,eb:"r"}), P({x:168,sh:28,th:28,to:-148,hx:56,hy:178,eb:"r"})]},
   latpd:{f:[P({root:"hip",x:95,y:140,to:-15,th:85,sh:0,ua:172,fa:172}), P({root:"hip",x:95,y:140,to:-15,th:85,sh:0,ua:-25,fa:165})], hand:"handle", cable:{x:100,y:6,w:2}, props:[...SEAT(95,140),{t:"rect",x:112,y:126,w:20,h:7}]},
@@ -447,21 +454,24 @@ const ANIM = {
   cablecurl:{f:[P({ua:0,fa:12}), P({ua:6,fa:160})], hand:"handle", cable:{x:150,y:180,w:2}},
   pushdown:{f:[P({ua:6,fa:150}), P({ua:6,fa:8})], hand:"handle", cable:{x:120,y:6,w:2}},
   french:{f:[P({ua:172,fa:-12}), P({ua:172,fa:178})], hand:"db"},
-  latraise:{f:[P({ua:6,fa:6}), P({ua:82,fa:86})], hand:"db"},
-  facepull:{f:[P({th2:-6,sh2:-6,ua:105,fa:105}), P({th2:-6,sh2:-6,ua:-88,fa:150})], hand:"handle", cable:{x:212,y:40,w:2}},
-  rearfly:{f:[P({sh:-8,th:25,to:70,ua:0,fa:0}), P({sh:-8,th:25,to:70,ua:-72,fa:-72})], hand:"db"},
+  latraise:{f:[P({to:6,ua:8,fa:12,ab:12,stance:2}), P({to:6,ua:14,fa:14,ab:84,fb:80,stance:2})], hand:"db"},
+  facepull:{f:[P({th2:-6,sh2:-6,ua:100,fa:100,ab:8}), P({th2:-6,sh2:-6,ua:92,fa:160,ab:72,fb:10})], hand:"handle", cable:{x:212,y:40,w:2}},
+  rearfly:{f:[P({sh:-8,th:25,to:70,ua:4,fa:4,ab:6}), P({sh:-8,th:25,to:70,ua:-6,fa:-4,ab:82,fb:78})], hand:"db"},
   calf:{f:[P({ft:90}), P({y:171,ft:52})], props:[{t:"rect",x:86,y:180,w:44,h:4}]},
   legcurl:{f:[P({root:"hip",x:90,y:140,to:-12,th:88,sh:88}), P({root:"hip",x:90,y:140,to:-12,th:88,sh:-8})], foot:"pad", props:[...SEAT(90,140),{t:"line",x1:80,y1:140,x2:72,y2:90}]},
   legext:{f:[P({root:"hip",x:90,y:140,to:-12,th:88,sh:2}), P({root:"hip",x:90,y:140,to:-12,th:88,sh:86})], foot:"pad", props:[...SEAT(90,140),{t:"line",x1:80,y1:140,x2:72,y2:90}]},
   nordic:{f:[P({root:"knee",x:100,y:178,th:0,sh:-90,to:0,ua:10,fa:30}), P({root:"knee",x:100,y:178,th:-55,sh:-90,to:55,ua:70,fa:75})], props:[{t:"rect",x:50,y:166,w:12,h:16}]},
-  fly:{f:[P({th2:-6,sh2:-6,ua:-30,fa:-10}), P({th2:-6,sh2:-6,ua:92,fa:96})], hand:"handle"}
+  fly:{f:[P({th2:-10,sh2:-10,to:8,ua:84,fa:92,ab:72,fb:62}), P({th2:-10,sh2:-10,to:8,ua:92,fa:98,ab:10,fb:2})], hand:"db"},
+  wallsit:{f:[P({x:122,sh:0,th:88,to:0,ua:40,fa:95}), P({x:122,sh:0,th:87,to:0,ua:40,fa:95})], breathe:1, props:[{t:"rect",x:58,y:24,w:9,h:158}]},
+  swing:{f:[P({sh:-14,th:55,to:72,ua:-18,fa:-30,stance:6}), P({sh:2,th:-4,to:-6,ua:88,fa:88,stance:6})], hand:"db"},
+  slrdl:{f:[P({x:108,ua:6,fa:6,th2:-6,sh2:-6}), P({x:108,sh:-6,th:32,to:82,ua:-4,fa:-4,th2:-82,sh2:-86})], hand:"db"}
 };
 const ANIM_OF = {back_squat:"squat",leg_press:"legpress",goblet_squat:"goblet",box_squat:"boxsquat",rdl_bb:"hinge",trapbar:"deadlift",hip_thrust:"thrust",rdl_db:"hinge_db",
   glute_bridge:"bridge",rev_lunge:"lunge",step_up:"stepup",bss:"bss",bench_bb:"bench",chest_press:"chestpress",bench_db:"bench_db",incline_db:"incline",pushup:"pushup",
   landmine:"landmine",ohp_db:"ohp",pike:"pike",lat_pd:"latpd",pullup:"pullup",db_pullover:"pullover",cs_row:"rowcs",cable_row:"cablerow",row_db:"rowdb",inv_row:"invrow",
   pallof:"pallof",dead_bug:"deadbug",plank:"plank",side_plank:"plank",bird_dog:"birddog",farmer:"farmer",suitcase:"farmer",curl_db:"curl",hammer:"curl",cable_curl:"cablecurl",
   pushdown:"pushdown",french_db:"french",close_pu:"pushup",lat_raise:"latraise",face_pull:"facepull",rear_fly:"rearfly",calf:"calf",z2:"walk",intervals:"walk",
-  leg_curl:"legcurl",nordic:"nordic",leg_ext:"legext",cable_fly:"fly"};
+  leg_curl:"legcurl",nordic:"nordic",leg_ext:"legext",cable_fly:"fly",wall_sit:"wallsit",swing_db:"swing",sl_rdl:"slrdl"};
 /* Passi per principianti: [posizione di partenza, movimento, errore da evitare] */
 const STEPS = {
   squat:["Bilanciere sulla parte alta della schiena, mani poco più larghe delle spalle, piedi a larghezza spalle con le punte un po' aperte.","Inspira, porta il bacino indietro e in basso come per sederti, con le ginocchia che seguono le punte. Risali spingendo il pavimento.","Talloni che si staccano o ginocchia che collassano verso l'interno: riduci il carico e la profondità finché restano stabili."],
@@ -508,6 +518,9 @@ const STEPS = {
   legcurl:["Seduto alla macchina, cuscinetto sopra le caviglie e cosce bloccate.","Piega le ginocchia fino in fondo portando i talloni sotto la seduta, poi torna su lentamente.","Staccare il bacino dal sedile per tirare di più."],
   legext:["Seduto con la schiena appoggiata, cuscinetto davanti alle caviglie.","Stendi le ginocchia completamente, tieni un attimo, poi scendi lento fino a 90°.","Scendere di colpo: la fase di discesa va controllata."],
   nordic:["In ginocchio su un tappetino, talloni bloccati da un compagno o sotto un supporto.","Con il corpo dritto, scendi in avanti il più lentamente possibile e frena con i femorali; nel finale aiutati con le mani.","Piegarsi alle anche: anca e busto restano in linea."],
+  wallsit:["Schiena appoggiata al muro, piedi avanti circa due piedi di distanza, larghi come le anche.","Scivola giù finché le cosce sono quasi parallele al pavimento e tieni la posizione respirando con calma.","Trattenere il fiato: respira sempre, soprattutto se hai la pressione alta."],
+  swing:["Manubrio tenuto con due mani davanti a te, piedi un po' più larghi delle spalle.","Porta le anche indietro facendo passare il manubrio tra le gambe, poi spingi le anche in avanti con forza: il manubrio sale fino all'altezza del petto.","Accosciarsi come in uno squat o alzare il peso con le braccia: è un movimento d'anca."],
+  slrdl:["In piedi su una gamba, ginocchio morbido, manubrio nella mano opposta.","Inclina il busto in avanti mentre la gamba libera sale dietro, finché senti allungare il femorale; poi torna su.","Bacino che ruota verso l'esterno: tieni le anche parallele al pavimento. All'inizio appoggia una mano al muro."],
   fly:["Tra i due cavi, una maniglia per mano, braccia aperte con i gomiti leggermente piegati.","Chiudi le mani davanti al petto con un movimento ad arco, poi apri lentamente fino a sentire l'allungamento.","Piegare e stendere i gomiti: l'angolo resta fisso."]
 };
 const rad = d => d*Math.PI/180;
@@ -521,8 +534,11 @@ function solvePose(Q){
   const Sh=[H[0]+up[0]*SEG.to, H[1]+up[1]*SEG.to];
   const Hd=[Sh[0]+up[0]*(SEG.ne+SEG.hr), Sh[1]+up[1]*(SEG.ne+SEG.hr)];
   const off = Q.rel ? -Q.to : 0;
-  const arm = (ua,fa) => { const u=dd(ua+off), f=dd(fa+off); const E=[Sh[0]+u[0]*SEG.ua, Sh[1]+u[1]*SEG.ua]; return [E,[E[0]+f[0]*SEG.fa, E[1]+f[1]*SEG.fa]]; };
-  let [E,W] = arm(Q.ua, Q.fa), [E2,W2] = arm(Q.ua2 ?? Q.ua, Q.fa2 ?? Q.fa);
+  // Abduzione (ab/fb, gradi): il braccio esce di lato; nel 2D si vede accorciato, nel 3D va in profondità
+  const arm = (ua,fa,bu=0,bf=bu) => { const u=dd(ua+off), f=dd(fa+off), cu=Math.cos(rad(bu)), cf=Math.cos(rad(bf));
+    const E=[Sh[0]+u[0]*SEG.ua*cu, Sh[1]+u[1]*SEG.ua*cu]; const ez=Math.sin(rad(bu))*SEG.ua;
+    return [E,[E[0]+f[0]*SEG.fa*cf, E[1]+f[1]*SEG.fa*cf], ez, ez+Math.sin(rad(bf))*SEG.fa]; };
+  let [E,W,ez,wz] = arm(Q.ua, Q.fa, Q.ab||0, Q.fb ?? Q.ab ?? 0), [E2,W2,ez2,wz2] = arm(Q.ua2 ?? Q.ua, Q.fa2 ?? Q.fa, Q.ab2 ?? Q.ab ?? 0, Q.fb2 ?? Q.fb ?? Q.ab2 ?? Q.ab ?? 0);
   // Mani vincolate a un punto (cinematica inversa): assoluto (hx,hy) o relativo al busto (hf avanti, hu su)
   if (Q.hx != null || Q.hf != null){
     const fs = Q.fs || 1, fw = [Math.cos(rad(Q.to))*fs, Math.sin(rad(Q.to))*fs];
@@ -533,18 +549,19 @@ function solvePose(Q){
     const e1 = [Sh[0]+a*Math.cos(ang+c), Sh[1]+a*Math.sin(ang+c)], e2 = [Sh[0]+a*Math.cos(ang-c), Sh[1]+a*Math.sin(ang-c)];
     const pickE = {d:(p,q)=>p[1]>q[1], u:(p,q)=>p[1]<q[1], l:(p,q)=>p[0]<q[0], r:(p,q)=>p[0]>q[0]}[Q.eb || "d"];
     E = pickE(e1,e2) ? e1 : e2; const u = Math.hypot(T[0]-E[0], T[1]-E[1]) || 1;
-    W = [E[0]+(T[0]-E[0])/u*b, E[1]+(T[1]-E[1])/u*b]; E2 = E; W2 = W;
+    W = [E[0]+(T[0]-E[0])/u*b, E[1]+(T[1]-E[1])/u*b]; E2 = E; W2 = W; ez = wz = ez2 = wz2 = 0;
   }
   const t2=dd(Q.th2 ?? Q.th), s2=dd(Q.sh2 ?? Q.sh);
   const K2=[H[0]+t2[0]*SEG.th, H[1]+t2[1]*SEG.th], A2=[K2[0]+s2[0]*SEG.sh, K2[1]+s2[1]*SEG.sh];
   const fdir=dd(Q.ft ?? 90), F=[A[0]+fdir[0]*12, A[1]+fdir[1]*12], F2=[A2[0]+12, A2[1]];
-  return {A,K,H,Sh,Hd,E,W,E2,W2,K2,A2,F,F2};
+  return {A,K,H,Sh,Hd,E,W,E2,W2,K2,A2,F,F2,ez,wz,ez2,wz2};
 }
 function lerpPose(a,b,t){ const o={}; for (const k in b){ o[k] = (typeof b[k]==="number" && typeof (a[k] ?? STAND[k])==="number") ? (a[k] ?? STAND[k]) + (b[k]-(a[k] ?? STAND[k]))*t : b[k]; } for (const k in a) if (!(k in o)) o[k]=a[k]; return o; }
 const ln = (p,q) => `x1="${p[0].toFixed(1)}" y1="${p[1].toFixed(1)}" x2="${q[0].toFixed(1)}" y2="${q[1].toFixed(1)}"`;
 /* Tempi: la fase di ritorno (eccentrica) è lenta, quella di forza (concentrica) decisa. */
 const ECC = new Set(["squat","goblet","boxsquat","hinge","hinge_db","deadlift","lunge","bss","bench","bench_db","incline","pushup","pike","nordic","legpress"]);
 const SLOWBOTH = new Set(["deadbug","birddog"]);
+const BALLISTIC = new Set(["swing"]);
 const WID = {th:[15,11], sh:[11,8], ua:[10,8], fa:[8,6.5]};
 const MUSCLE_SEG = {quadricipiti:"th", femorali:"th", glutei:"glute", polpacci:"sh", petto:"chest", dorso:"chest", spalle:"delt", bicipiti:"ua", tricipiti:"ua", core:"abs"};
 const f1 = v => v.toFixed(1);
@@ -615,6 +632,7 @@ function cycleOf(key){
   const D = ANIM[key] || ANIM.walk;
   if (D.walk) return {walk:1, dur:1.3};
   if (D.breathe) return {iso:1, dur:3.6};
+  if (BALLISTIC.has(key)) return {dAB:0.55, dBA:0.6, hold:0.05, ecc:false, both:false, ball:1, dur:1.25};
   const both = SLOWBOTH.has(key), ecc = ECC.has(key), slow = 1.7, fast = 0.85, hold = 0.4;
   const dAB = both ? 1.3 : ecc ? slow : fast, dBA = both ? 1.3 : ecc ? fast : slow;
   return {dAB, dBA, hold, ecc, both, dur: dAB+dBA+2*hold};
@@ -624,6 +642,7 @@ function phaseAt(key, sec){
   const c = cycleOf(key);
   if (c.walk){ const x = (sec % c.dur)/c.dur; return {k:(1-Math.cos(x*2*Math.PI))/2, cap:"Passo regolare, respiro tranquillo"}; }
   if (c.iso){ const x = (sec % c.dur)/c.dur; return {k:(1-Math.cos(x*2*Math.PI))/2, cap:"Tieni la posizione e respira"}; }
+  if (c.ball){ const x = (sec % c.dur)/c.dur; return {k:(1-Math.cos(x*2*Math.PI))/2, cap: x<.5 ? "Spinta esplosiva delle anche: il manubrio sale da solo" : "Lascia scendere e porta le anche indietro"}; }
   const t = sec % c.dur, SLOW = "Fase lenta: torna controllando, 2–3 secondi", FORCE = "Fase di forza: deciso, circa 1 secondo";
   const lab = slow => c.both ? (slow ? "Allunga lentamente" : "Torna al centro") : slow ? SLOW : FORCE;
   if (t < c.hold) return {k:0, cap:"Posizione di partenza"};
@@ -635,14 +654,14 @@ function phaseAt(key, sec){
 function poseAt(key, t){
   const D = ANIM[key] || ANIM.walk;
   const k = typeof t==="object" ? t.k : t;
-  const Q = lerpPose(D.f[0], D.f[1], k); const J = solvePose(Q); J._sh = Q.sh; return J;
+  const Q = lerpPose(D.f[0], D.f[1], k); const J = solvePose(Q); J._sh = Q.sh; J._Q = Q; return J;
 }
 function animSVG(id, opts={}){
   const key = ANIM_OF[id] || "walk";
   const J = poseAt(key, opts.still ? (ECC.has(key) ? 0.75 : 0.85) : 0);
   return `<svg class="fx ${opts.cls||""}" viewBox="0 0 220 196" role="img" aria-label="Dimostrazione: ${esc(LIB[id]?.n||"")}" ${opts.still?"":`data-anim="${key}" data-ex="${id}"`}>${figureSVG(key,J,id,{thumb:opts.still})}</svg>`;
 }
-const AN = {speed:1, paused:false, clock:0, last:null};
+const AN = {speed:1, paused:false, clock:0, last:null, view:null};
 let animRAF = null;
 function tickAnims(now){
   const els = document.querySelectorAll("svg[data-anim]");
@@ -651,14 +670,155 @@ function tickAnims(now){
   if (AN.last==null) AN.last = now;
   const dt = Math.min(0.1, (now-AN.last)/1000); AN.last = now;
   if (!AN.paused && !reduce) AN.clock += dt*AN.speed;
+  V3.forEach(v => { if (!v.svg.isConnected) v.dispose(); });
   els.forEach(el => { const key = el.dataset.anim;
     const ph = reduce ? {k:0.85, cap:"Movimento mostrato fermo: hai attivato la riduzione del movimento"} : phaseAt(key, AN.clock);
-    el.innerHTML = figureSVG(key, poseAt(key, ph.k), el.dataset.ex);
+    const J = poseAt(key, ph.k);
+    if (window.THREE && el._v3 === undefined && el.closest(".fx-stage")) el._v3 = make3D(el) || null;
+    if (el._v3) el._v3.update(J, AN.clock, reduce); else el.innerHTML = figureSVG(key, J, el.dataset.ex);
     const capEl = el.parentElement && el.parentElement.querySelector(".fx-cap");
     if (capEl && capEl.textContent !== ph.cap) capEl.textContent = ph.cap; });
   animRAF = reduce ? null : requestAnimationFrame(tickAnims);
 }
+window.addEventListener("load", () => { if (window.THREE) startAnims(); });
 function startAnims(){ if (!animRAF) animRAF = requestAnimationFrame(tickAnims); }
+
+/* ================= Vista 3D (three.js) =================
+   Lo stesso modello di posa del 2D, esteso in profondità: lato destro z+, sinistro z−, abduzione delle braccia (ab/fb).
+   Se three.js o WebGL non sono disponibili resta la figura 2D. */
+const V3 = new Set();
+const CAM_OF = {latraise:72, fly:58, rearfly:60, facepull:52, pallof:62, ohp:38, birddog:30, squat:32, goblet:36, wallsit:28};
+function make3D(svg){
+  const T = window.THREE; if (!T) return null;
+  const key = svg.dataset.anim, id = svg.dataset.ex, D = ANIM[key] || ANIM.walk;
+  const canvas = document.createElement("canvas");
+  canvas.className = "fx3 " + [...svg.classList].filter(c => c!=="fx").join(" ");
+  let R; try { R = new T.WebGLRenderer({canvas, antialias:true, alpha:true}); } catch(e){ return null; }
+  R.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
+  R.shadowMap.enabled = true; R.shadowMap.type = T.PCFSoftShadowMap;
+  const root = document.documentElement;
+  const dark = root.dataset.theme==="dark" || (root.dataset.theme!=="light" && matchMedia("(prefers-color-scheme: dark)").matches);
+  const C = dark ? {body:0x8E9890, work:0xF07A44, plate:0x5F84F0, prop:0x353B36, ground:0x2B302B, sky:0xffffff, gnd:0x161916}
+                 : {body:0xC3CAC4, work:0xE2622A, plate:0x2350D0, prop:0xAEB7B0, ground:0xDDE2DC, sky:0xffffff, gnd:0x8F9890};
+  const scene = new T.Scene();
+  scene.add(new T.HemisphereLight(C.sky, C.gnd, dark ? 0.7 : 0.85));
+  const sun = new T.DirectionalLight(0xffffff, dark ? 0.85 : 0.8); sun.position.set(110, 260, 170); sun.castShadow = true;
+  sun.shadow.mapSize.set(1024,1024); Object.assign(sun.shadow.camera, {left:-180,right:180,top:180,bottom:-180,near:10,far:700}); sun.shadow.bias = -0.0006; sun.shadow.radius = 4;
+  scene.add(sun, sun.target);
+  const fill = new T.DirectionalLight(0xffffff, 0.3); fill.position.set(-160, 90, -140); scene.add(fill);
+  const std = (c, r=.6, m=.04) => new T.MeshStandardMaterial({color:c, roughness:r, metalness:m});
+  const M = {body:std(C.body), work:std(C.work,.55), plate:std(C.plate,.42,.12), steel:std(0x9AA39C,.28,.75), prop:std(C.prop,.85), dark:std(dark?0x111411:0x2A302B,.5)};
+  const ground = new T.Mesh(new T.CircleGeometry(220, 56), new T.ShadowMaterial({opacity: dark ? .45 : .16})); ground.rotation.x = -Math.PI/2; ground.receiveShadow = true; scene.add(ground);
+  const floor = new T.Mesh(new T.RingGeometry(0, 120, 64), new T.MeshBasicMaterial({color: C.ground, transparent:true, opacity:.55})); floor.rotation.x = -Math.PI/2; floor.position.y = -.2; scene.add(floor);
+  const work = new Set((LIB[id]?.m || []).map(m => MUSCLE_SEG[m]).filter(Boolean));
+  const Yup = new T.Vector3(0,1,0), tmp = new T.Vector3();
+  const add = m => { m.castShadow = true; m.receiveShadow = true; scene.add(m); return m; };
+  const ball = (r, mk) => add(new T.Mesh(new T.SphereGeometry(r, 18, 14), M[mk]));
+  const limb = (r1, r2, mk, sx=1, sz=1) => ({m:add(new T.Mesh(new T.CylinderGeometry(r2, r1, 1, 18, 1, true), M[mk])), a:ball(r1, mk), b:ball(r2, mk), sx, sz});
+  const setLimb = (L, p, q) => { tmp.subVectors(q, p); const len = tmp.length() || 0.01; L.m.position.copy(p).addScaledVector(tmp, .5);
+    L.m.scale.set(L.sx, len, L.sz); L.m.quaternion.setFromUnitVectors(Yup, tmp.normalize()); L.a.position.copy(p); L.b.position.copy(q);
+    L.a.scale.set(L.sx,1,L.sz); L.b.scale.set(L.sx,1,L.sz); };
+  const mk = s => work.has(s) ? "work" : "body";
+  const P = {
+    thR:limb(7.4,5.6,mk("th")), thL:limb(7.4,5.6,mk("th")), shR:limb(5.6,4,mk("sh")), shL:limb(5.6,4,mk("sh")),
+    ftR:limb(3.4,3,"body"), ftL:limb(3.4,3,"body"),
+    uaR:limb(5,4.1,mk("ua")), uaL:limb(5,4.1,mk("ua")), faR:limb(4.1,3.2,"body"), faL:limb(4.1,3.2,"body"),
+    hdR:ball(3.7,"body"), hdL:ball(3.7,"body"),
+    toLo:limb(9.5,10.5,mk("abs"),.74,1.38), toUp:limb(10.5,11.5,mk("chest"),.72,1.42), neck:limb(4.2,4.2,"body"),
+    head:ball(9.6,"body"), nose:ball(2.8,"body"),
+    glR:ball(7.2,mk("glute")), glL:ball(7.2,mk("glute")), dlR:ball(5.6,mk("delt")), dlL:ball(5.6,mk("delt"))
+  };
+  // Attrezzi
+  const cyl = (r, len, m) => add(new T.Mesh(new T.CylinderGeometry(r, r, len, 24), M[m]));
+  const gear = new T.Group(); scene.add(gear);
+  const mkBar = () => { const g = new T.Group(); const bar = cyl(1.6, 160, "steel"); bar.rotation.x = Math.PI/2; g.add(bar);
+    [[-52,15,4.5],[-57.5,11,3.5],[52,15,4.5],[57.5,11,3.5]].forEach(([z,r,t]) => { const p = cyl(r,t,"plate"); p.rotation.x = Math.PI/2; p.position.z = z; g.add(p); }); return g; };
+  const mkDb = () => { const g = new T.Group(); const h = cyl(1.5, 15, "steel"); h.rotation.x = Math.PI/2; g.add(h);
+    [-7.5,7.5].forEach(z => { const p = cyl(5.8,4,"plate"); p.rotation.x = Math.PI/2; p.position.z = z; g.add(p); }); return g; };
+  let barG = null, dbR = null, dbL = null, handle = null;
+  if (D.hand==="bb"){ barG = mkBar(); gear.add(barG); }
+  if (D.hand==="db"){ dbR = mkDb(); dbL = mkDb(); gear.add(dbR, dbL); }
+  if (D.hand==="handle"){ handle = cyl(2,26,"dark"); handle.rotation.x = Math.PI/2; gear.add(handle); }
+  const cable = D.cable ? limb(.7,.7,"dark") : null, anchor = D.cable ? ball(3.5,"dark") : null;
+  let sled = null, pad = null;
+  if (D.foot==="sled"){ sled = add(new T.Mesh(new T.BoxGeometry(5, 40, 46), M.plate)); }
+  if (D.foot==="pad"){ pad = cyl(6, 34, "plate"); pad.rotation.x = Math.PI/2; }
+  // Cornice: limiti del movimento
+  let mnx=1e9,mxx=-1e9,mny=1e9,mxy=-1e9;
+  [0,.5,1].forEach(k => { const J = solvePose(lerpPose(D.f[0], D.f[1], k)); ["A","A2","K","H","Sh","Hd","W","W2","E"].forEach(n => { const p = J[n]; mnx=Math.min(mnx,p[0]); mxx=Math.max(mxx,p[0]); mny=Math.min(mny,p[1]); mxy=Math.max(mxy,p[1]); }); });
+  (D.props||[]).forEach(p => { if (p.t==="rect"){ mnx=Math.min(mnx,p.x); mxx=Math.max(mxx,p.x+p.w); mny=Math.min(mny,p.y); } else { mnx=Math.min(mnx,p.x1,p.x2); mxx=Math.max(mxx,p.x1,p.x2); mny=Math.min(mny,p.y1,p.y2); } });
+  mny = Math.min(mny - 22, GROUND - 40); mxy = GROUND + 6;
+  const cx = (mnx+mxx)/2, cy = GROUND - (mny+mxy)/2, size = Math.max(mxx-mnx+50, mxy-mny+36, 120);
+  const V = (p, z=0) => new T.Vector3(p[0]-cx, GROUND-p[1], z);
+  (D.props||[]).forEach(p => {
+    let m;
+    if (p.t==="rect"){ m = new T.Mesh(new T.BoxGeometry(p.w, p.h, 42), M.prop); m.position.set(p.x+p.w/2-cx, GROUND-(p.y+p.h/2), 0); }
+    else { const a = V([p.x1,p.y1]), b = V([p.x2,p.y2]); const len = a.distanceTo(b); m = new T.Mesh(new T.BoxGeometry(len, (p.w||5)+1, p.w && p.w<4 ? 4 : 38), M.prop);
+      m.position.copy(a).add(b).multiplyScalar(.5); m.rotation.z = Math.atan2(b.y-a.y, b.x-a.x);
+      if (p.w && p.w<=5 && p.y1===p.y2){ m.geometry.dispose(); m.geometry = new T.CylinderGeometry(1.8,1.8,130,16); m.material = M.steel; m.rotation.set(Math.PI/2,0,0); } }
+    add(m);
+  });
+  // Traccia del carico
+  let trace = null;
+  if (D.hand && !D.walk){ const pts = []; for (let i=0;i<=24;i++){ const J = solvePose(lerpPose(D.f[0], D.f[1], i/24)); pts.push(V(J.W, D.hand==="bb" ? 0 : 0)); }
+    const g = new T.BufferGeometry().setFromPoints(pts); trace = new T.Line(g, new T.LineDashedMaterial({color:C.plate, dashSize:3, gapSize:4, transparent:true, opacity:.6})); trace.computeLineDistances(); scene.add(trace); }
+  const cam = new T.PerspectiveCamera(30, 1.12, 5, 2000);
+  const fov = 30*Math.PI/180, dist = size/2/Math.tan(fov/2)*1.1;
+  const target = new T.Vector3(0, cy, 0);
+  const view = {svg, canvas, R, scene, cam, az:(CAM_OF[key] ?? 34), el:12, dragged:false, w:0, h:0,
+    update(J, clock, reduce){
+      const Q = J._Q || {}, st = (Q.stance || 0)/2, s = {R:1, L:-1};
+      const hz = 9 + st*.3, az2 = 9 + st;
+      const hip = {R:V(J.H, hz), L:V(J.H, -hz)}, knee = {R:V(J.K, az2), L:V(J.K2, -az2)}, ank = {R:V(J.A, az2+1), L:V(J.A2, -az2-1)};
+      const fR = [J.F[0]-J.A[0], J.F[1]-J.A[1]];
+      const toe = {R:V([J.A[0]+fR[0]*1.0, J.A[1]+fR[1]*1.0], az2+2), L:V([J.A2[0]+11, J.A2[1]], -az2-2)};
+      const heel = {R:V([J.A[0]-fR[0]*.3, J.A[1]-fR[1]*.3], az2+1), L:V([J.A2[0]-3.5, J.A2[1]], -az2-1)};
+      const mid = [(J.H[0]+J.Sh[0])/2, (J.H[1]+J.Sh[1])/2];
+      const grip = D.hand==="bb" ? 21 : D.hand==="handle" ? 7 : 15;
+      const shz = 15;
+      const elb = {R:V(J.E, shz + J.ez), L:V(J.E2, -(shz + J.ez2))};
+      const wr = {R:V(J.W, J.wz ? shz + J.wz : (D.hand==="bb"||D.hand==="handle" ? grip : shz)), L:V(J.W2, J.wz2 ? -(shz + J.wz2) : -(D.hand==="bb"||D.hand==="handle" ? grip : shz))};
+      const shp = {R:V(J.Sh, shz), L:V(J.Sh, -shz)};
+      setLimb(P.thR, hip.R, knee.R); setLimb(P.thL, hip.L, knee.L); setLimb(P.shR, knee.R, ank.R); setLimb(P.shL, knee.L, ank.L);
+      setLimb(P.ftR, heel.R, toe.R); setLimb(P.ftL, heel.L, toe.L);
+      setLimb(P.toLo, V(J.H), V(mid)); setLimb(P.toUp, V(mid), V(J.Sh));
+      const up = [J.Sh[0]-J.H[0], J.Sh[1]-J.H[1]], ul = Math.hypot(up[0],up[1]) || 1;
+      setLimb(P.neck, V(J.Sh), V([J.Sh[0]+up[0]/ul*(SEG.ne+3), J.Sh[1]+up[1]/ul*(SEG.ne+3)]));
+      P.head.position.copy(V(J.Hd));
+      const to = Math.atan2(up[0], -up[1]), fs = D.face || 1;
+      P.nose.position.copy(V([J.Hd[0]+Math.cos(to)*fs*9.5, J.Hd[1]+Math.sin(to)*fs*9.5]));
+      setLimb(P.uaR, shp.R, elb.R); setLimb(P.uaL, shp.L, elb.L); setLimb(P.faR, elb.R, wr.R); setLimb(P.faL, elb.L, wr.L);
+      P.hdR.position.copy(wr.R); P.hdL.position.copy(wr.L);
+      P.glR.position.copy(V([J.H[0]-Math.cos(to)*3, J.H[1]-Math.sin(to)*3], 6)); P.glL.position.copy(V([J.H[0]-Math.cos(to)*3, J.H[1]-Math.sin(to)*3], -6));
+      P.dlR.position.copy(shp.R); P.dlL.position.copy(shp.L);
+      if (barG) barG.position.copy(V(J.W));
+      if (dbR){ dbR.position.copy(wr.R); dbL.position.copy(wr.L); }
+      if (handle) handle.position.copy(V(J.W));
+      if (cable){ const a = V([D.cable.x, D.cable.y]); setLimb(cable, a, V(J.W)); anchor.position.copy(a); }
+      if (sled){ sled.position.copy(V(J.A)); sled.rotation.z = -rad(J._sh ?? 0); }
+      if (pad){ pad.position.copy(V(J.A)); }
+      // Telecamera: leggera oscillazione per percepire la profondità, trascinabile nella scheda tecnica
+      const baseAz = AN.view ?? this.az;
+      const azd = baseAz + (reduce || this.dragged ? 0 : 9*Math.sin(clock*0.45));
+      const a = rad(azd), e = rad(this.el);
+      cam.position.set(target.x + dist*Math.sin(a)*Math.cos(e), target.y + dist*Math.sin(e), target.z + dist*Math.cos(a)*Math.cos(e));
+      cam.lookAt(target);
+      const w = canvas.clientWidth, h = canvas.clientHeight;
+      if (w && h && (w!==this.w || h!==this.h)){ this.w = w; this.h = h; R.setSize(w, h, false); cam.aspect = w/h; cam.updateProjectionMatrix(); }
+      R.render(scene, cam);
+    },
+    dispose(){ try { scene.traverse(o => { o.geometry && o.geometry.dispose(); }); Object.values(M).forEach(m => m.dispose()); R.dispose(); R.forceContextLoss && R.forceContextLoss(); } catch(e){} V3.delete(this); }
+  };
+  svg.parentElement.insertBefore(canvas, svg); svg.style.display = "none";
+  if (svg.closest(".sheet")){
+    canvas.style.touchAction = "none"; let px = null, py = null;
+    canvas.addEventListener("pointerdown", e => { px = e.clientX; py = e.clientY; canvas.setPointerCapture(e.pointerId); view.dragged = true; });
+    canvas.addEventListener("pointermove", e => { if (px==null) return; if (AN.view!=null){ view.az = AN.view; AN.view = null; }
+      view.az -= (e.clientX-px)*0.5; view.el = clamp(view.el + (e.clientY-py)*0.3, -5, 60); px = e.clientX; py = e.clientY; });
+    const end = () => { px = null; }; canvas.addEventListener("pointerup", end); canvas.addEventListener("pointercancel", end);
+  }
+  V3.add(view); return view;
+}
 
 /* ================= Transizioni tra viste ================= */
 function vt(fn, dir){
@@ -683,9 +843,9 @@ function openSheet(id){
     <div class="sheet-card" tabindex="-1">
       <div class="sheet-grip" aria-hidden="true"></div>
       <div class="row between"><h2 class="grow">${esc(L.n)}</h2><button class="btn-sm btn-ghost" data-act="sheet-close" aria-label="Chiudi">Chiudi</button></div>
-      <div class="fx-stage">${animSVG(id,{cls:"fx-big"})}<span class="fx-cap" aria-live="off"></span></div>
+      <div class="fx-stage">${animSVG(id,{cls:"fx-big"})}<span class="fx-cap" aria-live="off"></span>${window.THREE ? '<span class="fx-hint">Trascina per ruotare</span>' : ""}</div>
       <div class="row between"><span class="small muted"><span class="lg-work"></span> muscoli che lavorano${traceOf(key) ? ' &nbsp;<span class="lg-trace"></span> percorso del carico' : ""}</span>
-        <span class="row" style="gap:6px"><button class="btn-sm btn-ghost" data-act="an-slow" aria-pressed="${AN.speed<1}">${AN.speed<1?"Velocità normale":"Rallenta"}</button><button class="btn-sm btn-ghost" data-act="an-pause" aria-pressed="${AN.paused}">${AN.paused?"Riprendi":"Pausa"}</button></span></div>
+        <span class="row" style="gap:6px">${window.THREE ? `<button class="btn-sm btn-ghost" data-act="an-view" data-v="0">Lato</button><button class="btn-sm btn-ghost" data-act="an-view" data-v="35">3/4</button><button class="btn-sm btn-ghost" data-act="an-view" data-v="90">Fronte</button>` : ""}<button class="btn-sm btn-ghost" data-act="an-slow" aria-pressed="${AN.speed<1}">${AN.speed<1?"Velocità normale":"Rallenta"}</button><button class="btn-sm btn-ghost" data-act="an-pause" aria-pressed="${AN.paused}">${AN.paused?"Riprendi":"Pausa"}</button></span></div>
       ${(L.m||[]).length ? `<div class="chips">${L.m.map(m => `<span class="pill">${esc(m)}</span>`).join("")}${(L.s||[]).map(m => `<span class="pill" style="opacity:.7">${esc(m)}</span>`).join("")}</div>` : ""}
       <ol class="how">
         <li><b>Posizione</b><span>${esc(st[0])}</span></li>
@@ -697,7 +857,7 @@ function openSheet(id){
       <a class="yt" href="https://www.youtube.com/results?search_query=${q}" target="_blank" rel="noopener noreferrer">Guarda video dimostrativi su YouTube</a>
     </div>`;
   document.body.appendChild(el);
-  sheetPrevFocus = document.activeElement;
+  sheetPrevFocus = document.activeElement; AN.view = null;
   requestAnimationFrame(() => { el.classList.add("open"); el.querySelector(".sheet-card").focus(); });
   document.body.style.overflow = "hidden";
   startAnims();
@@ -1444,6 +1604,9 @@ const SOURCES = [
   ["Maeo et al. (2021). Leg curl da seduto contro da prono: più ipertrofia dei femorali allenandoli in allungamento. Med Sci Sports Exerc.","10.1249/MSS.0000000000002523","Per questo la scheda preferisce il leg curl da seduto."],
   ["Cholp, Zemková (2025). Volume alto e basso di Nordic curl: meta-analisi. Front Physiol.","10.3389/fphys.2025.1631205","2–3 serie da 8–12 migliorano forza eccentrica e lunghezza dei fascicoli dei femorali."],
   ["Pecci et al. (2025). Variabili di allenamento e Nordic curl sull'architettura del bicipite femorale. Sports Health.","10.1177/19417381251331607","Il Nordic allunga i fascicoli con volume sufficiente e due sedute a settimana."],
+  ["Edwards et al. (2023). Esercizio e pressione a riposo: meta-analisi a rete di 270 studi. Br J Sports Med.","10.1136/bjsports-2022-106503","L'allenamento isometrico, in particolare la sedia al muro, è risultato il più efficace sulla pressione sistolica."],
+  ["Yan et al. (2026). Allenamento isometrico e pressione: meta-analisi di 40 studi randomizzati. Front Public Health.","10.3389/fpubh.2026.1774541","Sedia al muro tre volte a settimana per più di 8 settimane: le riduzioni maggiori."],
+  ["Artiom, Ayelet (2026). Stacco rumeno su una gamba ed equilibrio dinamico. Int J Exerc Sci.","10.70252/IJES2026102","Base per lo stacco rumeno su una gamba nella libreria."],
   ["Morton et al. (2018). Proteine e guadagni da allenamento: meta-analisi. Br J Sports Med.","10.1136/bjsports-2017-097608","Riferimento di circa 1,6 g/kg/giorno mostrato nel profilo."],
   ["Mifflin et al. (1990). Equazione del metabolismo basale. Am J Clin Nutr.","10.1093/ajcn/51.2.241","Stima del metabolismo a riposo nel profilo."],
   ["Bull et al. (2020). Linee guida OMS su attività fisica e sedentarietà. Br J Sports Med.","10.1136/bjsports-2020-102955","Minimo di 2 giorni di forza e 150–300 minuti di attività aerobica a settimana."],
@@ -1616,6 +1779,7 @@ document.addEventListener("click", async ev => {
   const b = ev.target.closest("[data-act]"); if (!b) return;
   const a = b.dataset.act;
   if (a==="ex-info"){ openSheet(b.dataset.id); return; }
+  if (a==="an-view"){ AN.view = Number(b.dataset.v); V3.forEach(v => { v.dragged = false; }); return; }
   if (a==="an-slow"){ AN.speed = AN.speed<1 ? 1 : 0.45; b.textContent = AN.speed<1 ? "Velocità normale" : "Rallenta"; b.setAttribute("aria-pressed", AN.speed<1); return; }
   if (a==="an-pause"){ AN.paused = !AN.paused; b.textContent = AN.paused ? "Riprendi" : "Pausa"; b.setAttribute("aria-pressed", AN.paused); return; }
   if (a==="install" && installEvt){ installEvt.prompt(); try { await installEvt.userChoice; } catch(e){} installEvt = null; render(); return; }
