@@ -325,6 +325,9 @@ details.drill-prev .drill{border-color:var(--bg)}
 .wp-day.sel{box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 35%,transparent)}
 .wp-card .ch-body{gap:4px}
 .segm button{font-size:.92rem;padding:10px 4px}
+.motto{margin:0;padding:14px 16px;border-radius:14px;background:var(--sunk);border-left:4px solid var(--accent);display:flex;flex-direction:column;gap:8px}
+.motto blockquote{margin:0;font-size:1.02rem;line-height:1.4;font-style:italic;color:var(--ink)}
+.motto button{align-self:flex-start}
 /* Sfide 30 giorni */
 .ch-list{display:flex;flex-direction:column;gap:10px}
 .ch-card{display:flex;gap:12px;align-items:center;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:10px;width:100%;color:var(--ink)}
@@ -1864,6 +1867,7 @@ function renderToday(){
       <h1>${esc(ses.name)}</h1>
       <div class="row"><span class="pill acc" title="${esc(L.why)}">${LENSES[L.id].n}${L.id==="dup"?", giorno di "+DUPCYCLE[S.plan.dupI%3]:""}</span>${doneToday?'<span class="pill go">Oggi fatto</span>':""}</div></div>
     <div class="coach"><b>${c.t}</b><p>${c.b}</p></div>
+    <figure class="motto"><blockquote>${esc(motto())}</blockquote><button class="btn-sm btn-ghost" data-act="motto-next">Un'altra frase</button></figure>
     ${banners.join("")}
     ${doneToday ? `<p class="muted small">Oggi hai già fatto ${esc(doneToday.name)} (fatica ${doneToday.rpe}/10, ${doneToday.dur} min). Il recupero ora è parte dell'allenamento.</p>` : ""}
     <section class="stack"><h3>In programma</h3><p class="small muted">${esc(L.why)}</p>
@@ -2191,6 +2195,20 @@ async function loadCatalog(){
   try { const ac = new AbortController(), t = setTimeout(() => ac.abort(), 4000);
     const r = await fetch(CAT_URL + "?v=" + Date.now(), {cache:"no-store", signal: ac.signal}); clearTimeout(t);
     if (r.ok){ const c = await r.json(); if ((c.version||0) >= (ui.catVer||0)) applyCatalog(c); } } catch(e){}
+}
+/* ---------- Frase del giorno, in base all'obiettivo ---------- */
+const MOTTI = {
+  salute:["Non serve essere perfetti oggi: serve esserci.","Muoverti oggi è un regalo che fai al te di domani.","Dieci minuti sono meglio di zero: si parte da lì.","Ogni seduta è un voto di fiducia verso la tua salute.","La costanza batte l'intensità: anche una seduta corta conta.","Respira, muoviti e torna a casa più leggero di come sei partito.","Il benessere si costruisce con giorni semplici e ripetuti.","Dormi bene, mangia con calma, allenati con gioia.","Oggi la scelta è semplice: fai quello che puoi, bene.","Il tuo corpo ti ringrazia per ogni movimento fatto con cura.","Stare bene diventa normale quando diventa un'abitudine.","Anche un passo in più oggi è una scelta per la tua salute."],
+  forza:["La forza nasce dai carichi che la settimana prima sembravano impossibili.","Ogni serie pulita è un passo verso la prossima.","Oggi non cerchi un record: cerchi la ripetizione giusta.","La forza è pazienza che sembra fatica.","Spingi come sai fare, non come vorresti.","Sei più forte di quanto pensi: il tuo diario lo sa già.","Riposa bene: è lì che la forza cresce.","Un chilo in più è un chilo di lavoro in più: prima la tecnica.","Ogni serie conta, anche quella che ti costa di più.","La forza si misura con la costanza, non con un giorno solo.","Il bilanciere non ti giudica: ti chiede solo attenzione.","Concentrati sulla prossima ripetizione, il resto viene da sé."],
+  ipertrofia:["Il muscolo cresce con una fatica ben fatta, non con quella brutale.","Controlla la discesa: è lì che lavora il muscolo.","Il corpo risponde al tempo: settimana dopo settimana.","Ogni ripetizione ha uno scopo: falla con intenzione.","Il muscolo nasce dalla somma di allenamento, cibo e sonno.","Non contare solo le ripetizioni: conta quanto le senti giuste.","Fermati un attimo tra una serie e l'altra: è lì che ti prepari.","Costruire muscolo è un lavoro lento e preciso.","Oggi la qualità conta più del peso sul bilanciere.","Tieni il ritmo: i risultati arrivano alle serie che non hai mollato.","Stai costruendo qualcosa che resta: una serie alla volta.","Il progresso è piccolo ogni giorno, enorme dopo qualche mese."],
+  ricomposizione:["Il cambiamento del corpo arriva piano, poi all'improvviso.","La bilancia racconta una parte della storia: guarda anche come ti senti.","Stai costruendo muscolo mentre ti muovi: il corpo cambia davvero.","Conta l'allenamento che fai oggi, non quello che hai saltato ieri.","Ogni passo verso il tuo obiettivo è un passo verso di te.","Pazienza: più muscolo significa un corpo che lavora meglio.","La costanza è più potente di qualsiasi dieta improvvisata.","Oggi ti alleni per come ti senti domani, non solo per come ti vedi.","Un giorno buono non cancella quello storto: si va avanti.","Il corpo impara dalla ripetizione: continua così.","Ricomporre vuol dire crescere in forza e in equilibrio.","Dimagrire senza perdere forza è un obiettivo che si conquista ogni settimana."],
+  resistenza:["Il fiato si allena un respiro alla volta.","Non correre più forte: corri più a lungo.","La resistenza è la capacità di fare un passo in più.","Ritmo costante e respiro regolare: ci siamo.","Ogni minuto in più è una vittoria che senti solo tu.","Il traguardo è vicino: vai con calma e con fiducia.","Un passo dopo l'altro, il corpo si abitua alla distanza.","Non è una gara con gli altri: è una gara con il tuo ieri.","Quando il fiato si fa pesante, rallenta e respira: poi riparti.","Ogni allenamento aggiunge una riserva che non perdi più.","Costruisci la resistenza con pazienza: arriverà da sola.","Oggi allunga di un poco quello che sai fare."],
+  generale:["Oggi basta iniziare.","Un allenamento alla volta.","Il progresso si vede nelle abitudini, non nei giorni perfetti.","Ascolta il corpo e fai quello che è giusto per te oggi.","Ogni scelta fatta bene oggi è un mattone per domani.","Non devi essere al top: devi solo tornare.","Piccoli passi, sempre nella direzione giusta.","Quello che fai oggi resta: il corpo se lo ricorda.","Allenarti è il modo più semplice per prendersi cura di sé.","Anche la seduta più leggera è una seduta fatta.","Tu sei la ragione per cui ci sei: vai avanti.","Oggi è un buon giorno per costruire qualcosa di tuo."]
+};
+function motto(){
+  const g = MOTTI[S.profile.goal] ? S.profile.goal : "generale", arr = MOTTI[g];
+  const day = Math.floor(Date.parse(today() + "T00:00:00Z") / 864e5);
+  return arr[(day + (ui.mottoShift || 0)) % arr.length];
 }
 /* ---------- Sfide 30 giorni ---------- */
 const CH = {
@@ -2730,6 +2748,7 @@ document.addEventListener("click", async ev => {
     try { navigator.vibrate && navigator.vibrate(20); } catch(e){} toast(i>=29 ? "Sfida completata. Ottimo lavoro." : `Giorno ${i+1} fatto.`); return; }
   if (a==="ch-quit"){ delete S.ch[ui.ch]; ui.chDay = null; Store.save(); render(); toast("Sfida abbandonata."); return; }
   if (a==="lib-g"){ ui.libGroup = b.dataset.g; render(); return; }
+  if (a==="motto-next"){ ui.mottoShift = (ui.mottoShift || 0) + 1; render(); return; }
   if (a==="lib-lv"){ ui.libLvl = b.dataset.v; render(); return; }
   if (a==="an-view"){ AN.view = Number(b.dataset.v); V3.forEach(v => { v.dragged = false; }); return; }
   if (a==="an-slow"){ AN.speed = AN.speed<1 ? 1 : 0.45; b.textContent = AN.speed<1 ? "Velocità normale" : "Rallenta"; b.setAttribute("aria-pressed", AN.speed<1); return; }
