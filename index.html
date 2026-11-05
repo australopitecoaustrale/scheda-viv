@@ -222,18 +222,34 @@ ol.how{margin:0;padding:0;list-style:none;counter-reset:how;display:flex;flex-di
 ol.how li{counter-increment:how;display:grid;grid-template-columns:30px minmax(0,1fr);gap:2px 10px}
 ol.how li::before{content:counter(how);grid-row:span 2;width:26px;height:26px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-weight:800;font-size:.85rem}
 .yt{display:block;text-align:center;padding:12px;border-radius:12px;box-shadow:inset 0 0 0 1px var(--line);color:var(--ink);font-weight:650;text-decoration:none}
+
+/* Apertura */
+#splash{position:fixed;inset:0;z-index:50;background:var(--bg);display:grid;place-items:center;transition:opacity .45s ease,visibility .45s}
+#splash.out{opacity:0;visibility:hidden}
+#splash .sp-in{display:flex;flex-direction:column;align-items:center;gap:10px;transition:transform .45s cubic-bezier(.4,0,.2,1)}
+#splash.out .sp-in{transform:scale(.96) translateY(-8px)}
+.sp-bar{width:min(240px,64vw)}
+.sp-rod{fill:var(--steel);transform-origin:center;animation:sp-rod .5s cubic-bezier(.2,.8,.2,1) both}
+.sp-pl{fill:var(--accent);transform-box:fill-box;transform-origin:center;animation:sp-plate .42s cubic-bezier(.3,1.5,.5,1) both;animation-delay:calc(.25s + var(--d)*.12s)}
+.sp-pl2{opacity:.75}
+.sp-name{font-size:1.9rem;font-weight:850;font-stretch:125%;letter-spacing:-.015em;animation:sp-up .5s .5s cubic-bezier(.2,.8,.2,1) both}
+.sp-tag{color:var(--muted);font-size:.95rem;animation:sp-up .5s .62s cubic-bezier(.2,.8,.2,1) both}
+@keyframes sp-rod{from{transform:scaleX(0)}}
+@keyframes sp-plate{from{transform:scaleY(.1);opacity:0}}
+@keyframes sp-up{from{opacity:0;transform:translateY(10px)}}
+@media (prefers-reduced-motion:reduce){#splash{display:none}}
 /* Transizioni tra viste */
 #view{view-transition-name:view}
 ::view-transition-old(root),::view-transition-new(root){animation:none}
 ::view-transition-group(view){animation:none}
-::view-transition-old(view){animation:vt-fade-out .16s ease both}
-::view-transition-new(view){animation:vt-fade-in .3s cubic-bezier(.2,.8,.2,1) both}
-html[data-vt="next"]::view-transition-old(view){animation:vt-out-l .24s cubic-bezier(.4,0,.2,1) both}
-html[data-vt="next"]::view-transition-new(view){animation:vt-in-r .34s cubic-bezier(.2,.8,.2,1) both}
-html[data-vt="prev"]::view-transition-old(view){animation:vt-out-r .24s cubic-bezier(.4,0,.2,1) both}
-html[data-vt="prev"]::view-transition-new(view){animation:vt-in-l .34s cubic-bezier(.2,.8,.2,1) both}
-@keyframes vt-fade-in{from{opacity:0;transform:translateY(10px)}}
-@keyframes vt-fade-out{to{opacity:0}}
+::view-transition-old(view){animation:vt-fade-out .14s cubic-bezier(.4,0,1,1) both}
+::view-transition-new(view){animation:vt-fade-in .42s cubic-bezier(.16,1,.3,1) .04s both}
+html[data-vt="next"]::view-transition-old(view){animation:vt-out-l .18s cubic-bezier(.4,0,1,1) both}
+html[data-vt="next"]::view-transition-new(view){animation:vt-in-r .44s cubic-bezier(.16,1,.3,1) both}
+html[data-vt="prev"]::view-transition-old(view){animation:vt-out-r .18s cubic-bezier(.4,0,1,1) both}
+html[data-vt="prev"]::view-transition-new(view){animation:vt-in-l .44s cubic-bezier(.16,1,.3,1) both}
+@keyframes vt-fade-in{from{opacity:0;transform:translateY(14px) scale(.985)}}
+@keyframes vt-fade-out{to{opacity:0;transform:scale(.99)}}
 @keyframes vt-out-l{to{opacity:0;transform:translateX(-18%)}}
 @keyframes vt-in-r{from{opacity:0;transform:translateX(22%)}}
 @keyframes vt-out-r{to{opacity:0;transform:translateX(18%)}}
@@ -250,6 +266,11 @@ if ("serviceWorker" in navigator && location.protocol === "https:") {
 <body>
 
 
+<div id="splash" aria-hidden="true"><div class="sp-in">
+  <svg viewBox="0 0 320 100" class="sp-bar"><rect class="sp-rod" x="6" y="46" width="308" height="8" rx="4"/>
+    <rect class="sp-pl" style="--d:0" x="77" y="13" width="12" height="74" rx="3"/><rect class="sp-pl" style="--d:0" x="231" y="13" width="12" height="74" rx="3"/>
+    <rect class="sp-pl sp-pl2" style="--d:1" x="62" y="21" width="12" height="58" rx="3"/><rect class="sp-pl sp-pl2" style="--d:1" x="246" y="21" width="12" height="58" rx="3"/></svg>
+  <b class="sp-name">Scheda Viva</b><span class="sp-tag">La scheda che cambia con te</span></div></div>
 <div class="app" id="app">
   <header class="top"><div class="brand"><div class="brand-mark" aria-hidden="true"></div><b>Scheda Viva</b></div><span class="pill">Caricamento…</span></header>
   <div class="stack"><p class="muted">Sto aprendo il tuo spazio privato di allenamento.</p></div>
@@ -935,7 +956,7 @@ function loadDemo(){
   }
   SESS.sort((a,b) => b.d.localeCompare(a.d));
   S.body.sort((a,b) => a.d.localeCompare(b.d));
-  ui.route = "oggi"; location.hash = "oggi";
+  ui.route = "oggi"; history.replaceState(null, "", "#oggi");
   render();
 }
 
@@ -955,7 +976,7 @@ function header(extra){
 }
 function render(){
   const app = $("#app"), tabs = $("#tabs");
-  if (!S || !S.plan || ui.editing){ tabs.hidden = true; app.innerHTML = header('<span class="pill">Nuovo profilo</span>') + renderOnboarding(); bindOnboarding(); return; }
+  if (!S || !S.plan || ui.editing){ tabs.hidden = true; app.innerHTML = header('<span class="pill">Nuovo profilo</span>') + `<div id="view">${renderOnboarding()}</div>`; bindOnboarding(); return; }
   tabs.hidden = false;
   tabs.innerHTML = `<div class="in">${TABS.map(([k,l]) => `<a href="#${k}" ${ui.route===k?'aria-current="page"':""}>${ICON[k]}<span>${l}</span></a>`).join("")}</div>`;
   const view = {oggi:renderToday, piano:renderPlan, progressi:renderProgress, metodo:renderMethod, profilo:renderProfile}[ui.route] || renderToday;
@@ -1505,10 +1526,10 @@ document.addEventListener("click", async ev => {
     if (to===c) return;
     vt(() => { S.draft.cur = to; Store.save(); render(); window.scrollTo(0,0); }, to>c ? "next" : "prev"); return;
   }
-  if (a==="ob-next"){ const err = validateStep(); if (err){ toast(err); return; } ui.step++; render(); window.scrollTo(0,0); return; }
-  if (a==="ob-back"){ ui.step = Math.max(0, ui.step-1); render(); return; }
+  if (a==="ob-next"){ const err = validateStep(); if (err){ toast(err); return; } vt(() => { ui.step++; render(); window.scrollTo(0,0); }, "next"); return; }
+  if (a==="ob-back"){ vt(() => { ui.step = Math.max(0, ui.step-1); render(); window.scrollTo(0,0); }, "prev"); return; }
   if (a==="ob-cancel"){ ui.ob = null; ui.step = 0; ui.route = "profilo"; ui.editing = false; render(); return; }
-  if (a==="demo"){ loadDemo(); return; }
+  if (a==="demo"){ vt(() => loadDemo(), "fade"); return; }
   if (a==="exit-demo"){ ui.demo = false; S = null; SESS = []; ui.ob = blankProfile(); ui.step = 1; await Store.init(); if (S && S.plan){ render(); return; } S = null; render(); return; }
   if (a==="ob-finish"){
     const p = ui.ob; const old = S?.plan;
@@ -1516,7 +1537,7 @@ document.addEventListener("click", async ev => {
     else { S.profile = p; }
     S.plan = buildPlan(p, old);
     if (old) logChange({id:"", name:"Scheda", what:"obiettivo", from:"", to:"ricostruita", why:"Hai aggiornato il profilo: struttura ricalcolata, carichi già registrati mantenuti.", src:"tu"});
-    ui.ob = null; ui.step = 0; ui.editing = false; ui.route = "oggi"; location.hash = "oggi"; Store.save(); render(); window.scrollTo(0,0); return;
+    ui.ob = null; ui.step = 0; ui.editing = false; ui.route = "oggi"; Store.save(); vt(() => { history.replaceState(null, "", "#oggi"); render(); window.scrollTo(0,0); }, "fade"); return;
   }
   if (!S || !S.plan) return;
   if (a==="start" || a==="start-short"){
@@ -1544,14 +1565,14 @@ document.addEventListener("click", async ev => {
   if (a==="rest"){ startTimer(Number(b.dataset.s)); return; }
   if (a==="t-add"){ if (ui.timer) ui.timer.end += 30000; return; }
   if (a==="t-stop"){ ui.timer = null; clearInterval(timerInt); renderTimer(); return; }
-  if (a==="to-fb"){ const any = S.draft.items.some(it => it.sets.some(s => s.done)); if (!any){ toast("Spunta almeno una serie fatta, oppure annulla la seduta."); return; } S.draft.stage = "fb"; ui.timer = null; Store.save(); render(); window.scrollTo(0,0); return; }
+  if (a==="to-fb"){ const any = S.draft.items.some(it => it.sets.some(s => s.done)); if (!any){ toast("Spunta almeno una serie fatta, oppure annulla la seduta."); return; } S.draft.stage = "fb"; ui.timer = null; Store.save(); vt(() => { render(); window.scrollTo(0,0); }, "next"); return; }
   if (a==="back-log"){ S.draft.stage = "log"; render(); return; }
   if (a==="abort"){ S.draft = null; Store.save(); render(); toast("Seduta annullata. La scheda resta com'era."); return; }
   if (a==="save-session"){
     const d = S.draft; const res = finishSession(d); S.draft = null;
-    ui.summary = res; ui.claude = null; Store.save(); await Store.saveSession(res.rec); render(); window.scrollTo(0,0); return;
+    ui.summary = res; ui.claude = null; Store.save(); Store.saveSession(res.rec); vt(() => { render(); window.scrollTo(0,0); }, "next"); return;
   }
-  if (a==="close-summary"){ ui.summary = null; ui.claude = null; render(); window.scrollTo(0,0); return; }
+  if (a==="close-summary"){ vt(() => { ui.summary = null; ui.claude = null; render(); window.scrollTo(0,0); }, "fade"); return; }
   if (a==="ask-claude"){ askClaude(); return; }
   if (a==="stop-claude"){ claudeCtl?.abort(); return; }
   if (a==="apply-claude"){ applyClaude(); return; }
@@ -1561,7 +1582,7 @@ document.addEventListener("click", async ev => {
     if (!nid){ toast("Nessuna alternativa disponibile con la tua attrezzatura."); return; } replaceEx(id, nid, "Sostituito da te.", "tu"); Store.save(); render(); toast(`${LIB[nid].n} al posto di ${LIB[id].n}.`); return; }
   if (a==="add-bw"){ const v = Number(String($("#bw-in").value).replace(",", ".")); if (!(v>=35 && v<=250)){ toast("Inserisci un peso tra 35 e 250 kg."); return; }
     S.body = S.body.filter(x => x.d!==today()); S.body.push({d:today(), kg:v}); S.body.sort((x,y) => x.d.localeCompare(y.d)); S.body = S.body.slice(-400); Store.save(); render(); toast("Peso registrato."); return; }
-  if (a==="edit-profile"){ ui.ob = JSON.parse(JSON.stringify(S.profile)); ui.step = 1; ui.editing = true; render(); window.scrollTo(0,0); return; }
+  if (a==="edit-profile"){ ui.ob = JSON.parse(JSON.stringify(S.profile)); ui.step = 1; ui.editing = true; vt(() => { render(); window.scrollTo(0,0); }, "next"); return; }
   if (a==="export"){ const filename = `scheda-viva-${today()}.json`, data = JSON.stringify({profilo:S.profile, scheda:S.plan, corpo:S.body, sedute:SESS}, null, 2);
     if (ui.downloads){ try { await ui.downloads.save({filename, data}); } catch(e){ if (e?.code!=="cancelled") toast("Esportazione non completata."); } return; }
     const url = URL.createObjectURL(new Blob([data], {type:"application/json"})); const l = document.createElement("a"); l.href = url; l.download = filename; document.body.appendChild(l); l.click(); l.remove(); setTimeout(() => URL.revokeObjectURL(url), 2000); return; }
@@ -1578,8 +1599,14 @@ function route(){
 }
 window.addEventListener("hashchange", () => { vt(() => { route(); window.scrollTo(0,0); }, "fade"); });
 
+function hideSplash(){ const el = $("#splash"); if (!el) return; el.classList.add("out"); setTimeout(() => el.remove(), 500); }
 (async function boot(){
+  const t0 = Date.now(); let seen = false;
+  try { seen = sessionStorage.getItem("sv-splash")==="1"; sessionStorage.setItem("sv-splash","1"); } catch(e){}
+  if (seen || matchMedia("(prefers-reduced-motion: reduce)").matches) $("#splash")?.remove();
+  else setTimeout(hideSplash, 4000);
   await Store.init();
+  setTimeout(hideSplash, Math.max(0, 1250 - (Date.now()-t0)));
   const h = location.hash.replace("#","");
   ui.route = TABS.some(t => t[0]===h) ? h : "oggi";
   render();
