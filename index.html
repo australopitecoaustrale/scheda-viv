@@ -1536,6 +1536,7 @@ const TIPS = [
   ["La costanza batte l'intensità", "Due sedute brevi fatte valgono più di una perfetta saltata."],
   ["Scegli tu", "Puoi sostituire qualunque esercizio: la scheda si adatta a te, non il contrario."],
   ["Per la forza, ripeti i fondamentali", "Le meta-analisi più recenti indicano che allenare lo stesso movimento 2–3 volte a settimana aiuta la forza, mentre per la massa conta soprattutto il totale delle serie."],
+  ["Le serie classiche bastano", "Drop set, cluster, eccentriche rinforzate: una meta-analisi a rete del 2026 non le trova migliori delle serie normali per forza, potenza e massa. Usale solo se ti piacciono, non perché servono."],
   ["Muoviti anche nei giorni liberi", "Una camminata di 20–30 minuti accelera il recupero e conta per la salute del cuore."]
 ];
 function coachLine(){
@@ -1549,7 +1550,7 @@ function coachLine(){
   if (gap >= 5){
     const b = p.motiv.barriers;
     const extra = b.includes("tempo") ? " Se hai poco tempo, la versione da 25 minuti qui sotto vale comunque." : b.includes("motivazione") ? " Non serve la voglia per iniziare: serve solo il primo esercizio." : "";
-    return {t:"Ripartire conta più del recupero", b:`Sono passati ${gap} giorni. Nessuna seduta da recuperare: si riprende da dove sei.${extra}`};
+    return {t:"Ripartire conta più del recupero", b:`Sono passati ${gap} giorni. Nessuna seduta da recuperare: si riprende da dove sei. Una pausa breve non cancella il lavoro fatto, molti benefici restano per settimane.${extra}`};
   }
   const wk = weeksStreak();
   if (wk >= 2) return {t:`${wk} settimane di fila`, b:`Hai rispettato il tuo obiettivo di ${p.days} sedute per ${wk} settimane consecutive. È questo che costruisce i risultati.`};
@@ -2138,12 +2139,14 @@ const SOURCES = [
   ["Schoenfeld, Ogborn, Krieger (2017). Relazione dose-risposta tra serie settimanali e ipertrofia. J Sports Sci.","10.1080/02640414.2016.1210197","Ogni serie in più a settimana aumenta la crescita muscolare: guida il volume per muscolo e le serie aggiunte quando un esercizio è facile."],
   ["Schoenfeld, Grgic, Krieger (2019). Quante volte a settimana allenare un muscolo. J Sports Sci.","10.1080/02640414.2018.1555906","A parità di volume la frequenza conta poco: per questo puoi scegliere da 2 a 6 giorni senza perdere efficacia."],
   ["Pelland et al. (2025). Dose-risposta dell'allenamento: volume e frequenza settimanali per ipertrofia e forza, meta-regressioni su 67 studi. Sports Med.","10.1007/s40279-025-02344-w","Più serie danno più risultati ma con rendimenti decrescenti, molto più marcati per la forza; la frequenza conta poco per la massa ma aiuta la forza. Per questo il volume cresce a piccoli passi e, se l'obiettivo è la forza, conviene ripetere i movimenti principali più volte a settimana."],
+  ["Cowley et al. (2026). Metodi avanzati di allenamento contro allenamento tradizionale: revisione sistematica e meta-analisi a rete bayesiana. Sports Med.","10.1007/s40279-026-02428-1","Drop set, cluster, eccentriche rinforzate e altri metodi avanzati non hanno dato adattamenti di forza, potenza o massa migliori delle serie tradizionali in persone non allenate o moderatamente allenate: per questo la scheda usa serie classiche e il consiglio «Le serie classiche bastano»."],
   ["Robinson et al. (2024). Vicinanza al cedimento, forza e ipertrofia. Sports Med.","10.1007/s40279-024-02069-2","L'ipertrofia cresce avvicinandosi al cedimento, la forza no: i RIR obiettivo cambiano con l'obiettivo."],
   ["Wu et al. (2026). Allenamento lontano dal cedimento contro fino al cedimento: meta-analisi di 20 studi randomizzati. BMC Sports Sci Med Rehabil.","10.1186/s13102-026-01861-z","Fermarsi prima del cedimento è risultato efficace quanto arrivarci per massa, resistenza e potenza, con un piccolo vantaggio nella forza dinamica: per questo l'app lascia sempre qualche ripetizione di riserva."],
   ["Graham, Cleather (2021). L'autoregolazione con RIR batte il carico fisso in 12 settimane. J Strength Cond Res.","10.1519/JSC.0000000000003164","Base della lente “Autoregolazione RIR”."],
   ["Helms et al. (2016). Applicazione della scala RPE basata sulle ripetizioni di riserva. Strength Cond J.","10.1519/SSC.0000000000000218","Come stimare il RIR e usarlo per regolare il carico."],
   ["Mansfield et al. (2023). La velocità non stima bene il RIR. Eur J Sport Sci.","10.1080/17461391.2023.2235314","Per questo l'app usa il RIR percepito e non dati di velocità."],
   ["ACSM (2009). Modelli di progressione nell'allenamento con sovraccarichi. Med Sci Sports Exerc.","10.1249/MSS.0b013e3181915670","Range di ripetizioni, recuperi e incrementi per obiettivo e livello."],
+  ["Zhang, Zhu, Zhao et al. (2026). Effetti dello stop dall'allenamento su composizione corporea e salute cardiometabolica: meta-analisi di 86 studi randomizzati. Front Physiol.","10.3389/fphys.2026.1891899","Dopo lo stop molti benefici (peso, girovita, capacità aerobica, pressione) restano sopra i valori di partenza per settimane o mesi, mentre la massa magra cala: per questo, dopo una pausa, l'app invita a ripartire senza recuperi e ricorda che il lavoro fatto non è perso."],
   ["Foster et al. (2001). Monitoraggio dell'allenamento con la RPE di seduta. J Strength Cond Res.","10.1519/00124278-200102000-00019","La scala CR-10 a fine seduta alimenta il controllo della fatica e lo scarico."],
   ["Williams et al. (2017). Variabilità cardiaca, carichi e rischio di sovraccarico. J Sports Sci Med.","PMC5721172","Indicatori di prontezza e carichi elevati insieme predicono i problemi: base del check giornaliero."],
   ["Maeo et al. (2021). Leg curl da seduto contro da prono: più ipertrofia dei femorali allenandoli in allungamento. Med Sci Sports Exerc.","10.1249/MSS.0000000000002523","Per questo la scheda preferisce il leg curl da seduto."],
@@ -2167,7 +2170,7 @@ function renderMethod(){
     <section class="stack"><h3>Quattro modi di pensare la scheda</h3>${Object.entries(LENSES).map(([k,l]) => `<div class="panel small"><b>${l.n}</b><p>${l.d}</p></div>`).join("")}
       <p class="small muted">In automatico: aderenza se stress, tempo o motivazione sono critici; doppia progressione da principiante; ondulata per obiettivo forza o livello avanzato; RIR negli altri casi.</p></section>
     <section class="stack"><h3>Fonti scientifiche</h3><p class="small muted">Articoli consultati su PubMed e linee guida di riferimento.</p>
-      <div class="divide">${SOURCES.map(([t,doi,w]) => `<div class="src"><b>${esc(t)}</b><div class="muted">${esc(w)}</div><a href="${doi.startsWith("PMC")?"https://www.ncbi.nlm.nih.gov/pmc/articles/"+doi+"/":"https://doi.org/"+doi}" target="_blank" rel="noopener">${doi.startsWith("PMC")?doi:"doi.org/"+doi}</a></div>`).join("")}</div></section>
+      <div class="divide">${SOURCES.map(([t,doi,w]) => `<div class="src"><b>${esc(t)}</b><div class="muted">${esc(w)}</div><a href="${doi.startsWith("http")?doi:doi.startsWith("PMC")?"https://www.ncbi.nlm.nih.gov/pmc/articles/"+doi+"/":"https://doi.org/"+doi}" target="_blank" rel="noopener">${doi.startsWith("http")?esc(new URL(doi).hostname):doi.startsWith("PMC")?doi:"doi.org/"+doi}</a></div>`).join("")}</div></section>
     <section class="panel stack small"><h3>Privacy</h3>
       <p>${Store.mode==="cloud" ? "I tuoi dati sono salvati nel tuo spazio personale di questa pagina: è privato per ogni persona, e nemmeno chi ha creato la pagina può leggerlo. Li ritrovi su ogni dispositivo con lo stesso account." : "I tuoi dati sono salvati solo nella memoria di questo browser."} Nessun sistema di tracciamento, nessun annuncio. Claude riceve i dati solo quando premi “Chiedi a Claude”, e usa il tuo account.</p>
       <p>Dal Profilo puoi esportare tutto o cancellare tutto in qualsiasi momento.</p></section>
