@@ -1,6 +1,6 @@
 {
-  "version": 1,
-  "updated": "2026-11-05",
+  "version": 2,
+  "updated": "2026-11-19",
   "note": "Esercizi da palestra aggiunti dall'autore. L'app li legge all'apertura: basta pubblicare questo file su GitHub Pages.",
   "exercises": {
     "cable_crunch": {
@@ -494,6 +494,50 @@
       ],
       "err": "Panca troppo inclinata: il lavoro passa alle spalle.",
       "adv": "Pausa di 1 secondo sul petto prima di spingere."
+    },
+    "lat_pd_v": {
+      "n": "Lat machine con maniglia a V (presa neutra)",
+      "p": "vpull",
+      "m": [
+        "dorso",
+        "bicipiti"
+      ],
+      "need": "gym",
+      "t": "c",
+      "unit": "kg",
+      "anim": "latpd",
+      "lvl": "base",
+      "cue": "Palmi uno di fronte all'altro, petto in alto: porta i gomiti verso i fianchi e la maniglia al petto.",
+      "steps": [
+        "Siediti con le cosce bloccate sotto i cuscinetti e impugna la maniglia a V a braccia tese.",
+        "Inclina appena il busto indietro, petto in alto, e porta i gomiti verso i fianchi finché la maniglia arriva al petto.",
+        "Risali lento fino a braccia tese, senza far partire il peso con uno strappo."
+      ],
+      "err": "Tirare con le braccia e dondolare il busto: il movimento deve partire dai gomiti che scendono, con il busto fermo.",
+      "adv": "Pausa di 1 secondo con la maniglia al petto e discesa controllata di 3 secondi; aumenta il carico solo con tutte le serie pulite.",
+      "animNote": "Animazione della lat machine: il movimento è lo stesso, cambia solo la presa."
+    },
+    "lat_pd_par": {
+      "n": "Lat machine con presa parallela larga",
+      "p": "vpull",
+      "m": [
+        "dorso",
+        "bicipiti"
+      ],
+      "need": "gym",
+      "t": "c",
+      "unit": "kg",
+      "anim": "latpd",
+      "lvl": "base",
+      "cue": "Maniglie parallele larghe, palmi uno di fronte all'altro: tira i gomiti in basso e verso i fianchi.",
+      "steps": [
+        "Siediti con le cosce bloccate e impugna le maniglie parallele larghe a braccia tese.",
+        "Porta i gomiti in basso e un po' indietro, con il petto che va verso le maniglie.",
+        "Risali lento a braccia tese, lasciando salire le spalle senza perdere il controllo."
+      ],
+      "err": "Spalle che salgono verso le orecchie e collo in avanti: abbassa le spalle prima di tirare.",
+      "adv": "Scegli la presa più comoda per le spalle e mantienila per tutta la serie; aumenta il carico di 2,5-5 kg quando completi tutte le serie.",
+      "animNote": "Animazione della lat machine: il movimento è lo stesso, cambia solo la presa."
     }
   }
 }

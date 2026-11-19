@@ -1,5 +1,12 @@
 # Registro delle modifiche
 
+## 2026-11-19 — Due nuove varianti di lat machine
+
+- **Catalogo (v2):** aggiunti «Lat machine con maniglia a V (presa neutra)» e «Lat machine con presa parallela larga», livello base, stessa animazione della lat machine.
+- **Evidenze (PubMed):** la larghezza della presa cambia poco l'attivazione del gran dorsale ([Andersen et al. 2014, 10.1097/JSC.0000000000000232](https://doi.org/10.1097/JSC.0000000000000232)); a parità di larghezza la presa prona attiva il dorsale più della supina ([Lusk et al. 2010, 10.1519/JSC.0b013e3181ddb0ab](https://doi.org/10.1519/JSC.0b013e3181ddb0ab)); l'unico studio con barra anteriore larga trova più dorsale rispetto a presa stretta, supina e posteriore ([Signorile et al. 2002, PMID 12423182](https://pubmed.ncbi.nlm.nih.gov/12423182/)). La presa neutra non è stata confrontata direttamente: le due varianti sono proposte per comfort delle spalle, non come più efficaci. La rassegna del 2026 conferma che l'effetto della presa è incoerente ([Di Fonza et al. 2026, 10.3390/jfmk11030315](https://doi.org/10.3390/jfmk11030315)).
+- Cache del service worker portata a `scheda-viva-v19`.
+- Nessuna modifica alla struttura dei dati salvati.
+
 ## 2026-11-16 — Aggiornamento scientifico settimanale
 
 - **Nuova fonte (Metodo):** Cowley et al. (2026), revisione sistematica e meta-analisi a rete bayesiana: i metodi avanzati (drop set, cluster/rest redistribution, eccentriche rinforzate, flywheel ecc.) non danno adattamenti di forza, potenza o massa migliori dell'allenamento tradizionale in persone non allenate o moderatamente allenate. DOI: [10.1007/s40279-026-02428-1](https://doi.org/10.1007/s40279-026-02428-1)
