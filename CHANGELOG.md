@@ -1,5 +1,13 @@
 # Registro delle modifiche
 
+## 2026-11-19 — Nuovo programma «Core con un solo disco»
+
+- **Nuovo programma:** «Core con un solo disco» (3 sedute: A rotazioni, B stabilità e forza, C circuito), selezionabile alla creazione del profilo. Serve solo un disco da bilanciere (5-15 kg bastano).
+- **5 nuovi esercizi con disco**, usati solo da questo programma: taglio diagonale da mezzo inginocchiato, rotazione del busto al petto, squat con disco al petto, spinta sopra la testa, raccolta da terra. Insieme a plank, plank laterale, dead bug e bird dog già presenti.
+- **Origine e limiti:** ispirato a un reel con un circuito di core con un disco. Il reel è di 14 secondi, senza audio né testi di tecnica, quindi i passaggi sono stati scritti da movimenti standard e non copiati dal video. Il carico è libero e va scelto con prudenza; l'affermazione «core a prova di proiettile» del reel non è verificabile in PubMed.
+- Cache del service worker portata a `scheda-viva-v23`.
+- Nessuna modifica alla struttura dei dati salvati.
+
 ## 2026-11-19 — Consiglio sul metodo 3/7
 
 - **Nuovo consiglio del giorno (TIPS):** «Poco tempo? Prova il 3/7» (serie da 3-7 ripetizioni, 15 secondi di pausa, circa 70% del massimale), presentato come opzione con prove ancora limitate.

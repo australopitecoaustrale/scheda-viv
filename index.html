@@ -508,7 +508,27 @@ const LIB = {
   run_int:{n:"Ripetute di corsa",p:"cardio",impact:1,m:[],need:"bw",t:"cardio",unit:"min",only:["mil","casa","cali"],cue:"Esempio: 6–8 tratti da 400 m veloci con 90 secondi di corsa lenta. Il tempo indicato è la durata totale della parte centrale."},
   ruck:{n:"Marcia con zaino",p:"cardio",m:["core"],need:"bw",t:"cardio",unit:"min",only:["mil"],cue:"Carico moderato e passo sostenuto. Allena gambe, schiena e resistenza come nelle esercitazioni militari."},
   z2:{n:"Cardio in zona 2",p:"cardio",m:[],need:"bw",t:"cardio",unit:"min",cue:"Cammino veloce, bici o cyclette a un ritmo in cui riesci ancora a parlare a frasi intere."},
-  intervals:{n:"Intervalli 30/30",p:"cardio",m:[],need:"bw",t:"cardio",unit:"min",cue:"30 s forte, 30 s piano, per il tempo indicato. Bici o corsa leggera."}
+  intervals:{n:"Intervalli 30/30",p:"cardio",m:[],need:"bw",t:"cardio",unit:"min",cue:"30 s forte, 30 s piano, per il tempo indicato. Bici o corsa leggera."},
+  plate_chop:{n:"Taglio diagonale con disco da mezzo inginocchiato",p:"core",m:["core"],s:["obliqui"],need:"bw",unit:"kg",t:"i",inc:2.5,only:["disco"],
+    cue:"Un ginocchio a terra, disco tenuto con due mani: portalo in diagonale dalla spalla al fianco opposto ruotando il busto.",
+    steps:["Mezzo inginocchiato con il busto alto, disco tenuto con due mani all'altezza di una spalla.","Porta il disco in diagonale verso il fianco opposto ruotando busto e braccia insieme.","Torna lento al punto di partenza, senza spostare le ginocchia."],
+    err:"Ruotare solo le braccia o inclinarsi di lato: il busto ruota, la schiena resta lunga.",adv:"Scendi in 3 secondi e aumenta il disco solo quando il busto resta fermo per tutta la serie.",animNote:"Animazione del Pallof press: il lavoro di controllo del busto è affine."},
+  plate_twist:{n:"Rotazione del busto con disco al petto",p:"core",m:["core"],s:["obliqui"],need:"bw",unit:"kg",t:"i",inc:2.5,only:["disco"],
+    cue:"In piedi, disco al petto: ruota il busto da un lato e dall'altro tenendo ferme le anche.",
+    steps:["In piedi, piedi alla larghezza delle spalle, disco tenuto al petto con i gomiti piegati.","Ruota il busto da un lato fino a dove riesci senza muovere le anche, poi torna al centro.","Alterna i lati con un ritmo lento e controllato."],
+    err:"Far girare le ginocchia e le anche con uno scatto: la rotazione deve venire dal busto.",adv:"Fai una pausa di 1 secondo a ogni lato e usa un disco più pesante solo con controllo totale.",animNote:"Animazione del Pallof press: la posizione di partenza è simile."},
+  plate_goblet:{n:"Squat con disco al petto",p:"squat",m:["quadricipiti","glutei","core"],st:["knee"],need:"bw",unit:"kg",t:"c",inc:2.5,only:["disco"],
+    cue:"Disco al petto con due mani, gomiti vicini: scendi con il busto alto e risali spingendo dai talloni.",
+    steps:["Disco al petto con due mani, piedi poco più larghi delle spalle, punte un po' aperte.","Scendi piegando anche e ginocchia insieme, con il busto alto e il peso sui talloni.","Risali spingendo il pavimento, senza bloccare le ginocchia in alto."],
+    err:"Gomiti che cadono e busto che si piega in avanti: tieni il disco vicino al petto.",adv:"Aggiungi una pausa di 2 secondi in basso.",animNote:"Animazione dello squat goblet: il movimento è lo stesso."},
+  plate_press:{n:"Spinta del disco sopra la testa",p:"vpush",m:["spalle","tricipiti","core"],st:["shoulder"],need:"bw",unit:"kg",t:"c",inc:2.5,only:["disco"],
+    cue:"Disco davanti al petto, mani sul bordo: spingilo in alto a braccia tese con glutei e addome contratti.",
+    steps:["In piedi con glutei e addome contratti, disco davanti al petto, mani sui lati.","Spingi il disco in alto fino a stendere le braccia, con la testa che si sposta un poco indietro.","Torna lento davanti al petto, senza inarcare la schiena."],
+    err:"Inarcare la schiena per spingere: se succede, riduci il peso del disco.",adv:"Fai una pausa di 2 secondi con le braccia tese sopra la testa.",animNote:"Animazione della spinta sopra la testa: il movimento è simile."},
+  plate_pickup:{n:"Raccolta del disco da terra",p:"hinge",m:["glutei","femorali","core"],st:["back"],need:"bw",unit:"kg",t:"c",inc:2.5,only:["disco"],
+    cue:"Piegati sulle anche con la schiena piatta, afferra il disco ai lati e risali portandolo al petto.",
+    steps:["Piedi alla larghezza delle spalle, disco a terra davanti a te.","Piegati sulle anche con la schiena piatta e afferra il disco ai lati.","Risali stendendo anche e ginocchia e porta il disco al petto, poi riappoggialo con controllo."],
+    err:"Arrotondare la schiena per raccogliere il disco: porta indietro il bacino e riduci il peso.",adv:"Alza il disco più lentamente e fai una pausa di 1 secondo in piedi prima di riappoggiarlo.",animNote:"Animazione dello stacco con manubri: il movimento è simile."}
 };
 const MUSCLES = ["petto","dorso","spalle","quadricipiti","glutei","femorali","bicipiti","tricipiti","core","polpacci"];
 const EQRANK = {bw:0, light:1, db:1, gym:2, bar:2};
@@ -518,6 +538,7 @@ const PROGRAMS = {
   casa:{n:"Corpo libero a casa", d:"Nessuna attrezzatura: circuiti con squat, piegamenti, affondi, plank, burpee e salti. Ideale con poco tempo."},
   mil:{n:"Preparazione militare", d:"Stile addestramento: forza a corpo libero, corsa continua e a ripetute, circuiti e marcia con zaino. Utile anche per le prove fisiche dei concorsi."},
   aero:{n:"Aerobica anni '80/'90", d:"Step, jumping jack, skip, calci e pugni stile Tae Bo e tonificazione con pesetti: cardio a ritmo di musica, anche a basso impatto."},
+  disco:{n:"Core con un solo disco", d:"Serve un solo disco da bilanciere (5-15 kg bastano): tagli diagonali, rotazioni, squat, spinte e raccolte da terra, più plank per il core. Sedute brevi, adatte a casa o in palestra."},
   yoga:{n:"Yoga e mobilità", d:"Saluto al sole, posizioni in piedi e di equilibrio, core e respirazione: forza dolce, flessibilità e calma."}
 };
 const MIL_STYLES = {ita:"Concorsi italiani (Esercito, GdF, Carabinieri)", usa:"Esercito USA (H2F/ACFT)", rus:"Esercito russo"};
@@ -530,6 +551,7 @@ const PROG_SPLITS = {
   mil_usa:{split:[{k:"ST",name:"Forza e potenza (stile ACFT)",slots:["squat","id:pushup","hinge","vpull","core","id:squat_jump"]},{k:"IN",name:"Ripetute (prova delle 2 miglia)",slots:["id:run_int","core","id:plank"]},{k:"SD",name:"Sprint, trasporto e condizionamento",slots:["id:mtn_climber","single","id:burpee","core","carry","hpush"]},{k:"RU",name:"Marcia con zaino",slots:["id:ruck","core"]}]},
   mil_rus:{split:[{k:"PU",name:"Trazioni e forza (stile russo)",slots:["id:pullup","id:chinup","dip","hpush","core","vpull"]},{k:"R3",name:"Corsa 3 km e 100 m",slots:["id:run_int","id:high_knees","core"]},{k:"KS",name:"Esercizio complesso (circuito)",slots:["id:burpee","id:squat_jump","hpush","core","metcon","vpull"]},{k:"FL",name:"Fondo",slots:["id:run","core"]}]},
   aero:{split:[{k:"ST",name:"Step e coreografia anni '90",slots:["id:step_aero","id:jumping_jack","id:high_knees","id:kick_punch","core","calf"]},{k:"TO",name:"Tonificazione con pesetti",slots:["squat","lat_raise_slot","bi","hinge","tri","core"]},{k:"TB",name:"Cardio Tae Bo e core",slots:["id:kick_punch","id:jumping_jack","id:mtn_climber","core","core","single"]}]},
+  disco:{split:[{k:"DA",name:"Disco A: core e rotazioni",slots:["id:plate_chop","id:plate_twist","id:plate_goblet","id:plate_press","id:plank","id:dead_bug"]},{k:"DB",name:"Disco B: stabilità e forza",slots:["id:plate_pickup","id:plate_goblet","id:plate_press","id:plate_chop","id:side_plank","id:bird_dog"]},{k:"DC",name:"Disco C: circuito",slots:["id:plate_goblet","id:plate_twist","id:plate_pickup","id:plate_press","id:plate_chop","id:plank"]}]},
   yoga:{split:[{k:"SS",name:"Saluto al sole e forza",slots:["id:sun_salute","id:warrior1","id:tree_pose","id:plank","id:glute_bridge","id:child_pose"]},{k:"MR",name:"Mobilità e respiro",slots:["id:cat_cow","id:sun_salute","id:bird_dog","id:dead_bug","id:side_plank","id:child_pose"]}]}
 };
 const FALLBACK = {vpull:"hpull", vpush:"hpush", carry:"core", tri:"hpush", bi:"hpull", calf:"single", shoulder:"vpush", kneeflex:"hinge", kneeext:"single", fly:"hpush", dip:"hpush", metcon:"jump", jump:"squat"};
@@ -666,7 +688,7 @@ const ANIM_OF = {back_squat:"squat",leg_press:"legpress",goblet_squat:"goblet",b
   leg_curl:"legcurl",nordic:"nordic",leg_ext:"legext",cable_fly:"fly",wall_sit:"wallsit",swing_db:"swing",sl_rdl:"slrdl",
   bridge2:"bridge",bridge_hold:"bridge",cross_crunch:"crunch",rev_crunch:"revcrunch",floor_lr:"floorlr",hollow:"hollow",incl_pu:"pushup",neg_pull:"pullup",dead_hang:"hang",bench_dip:"dip",air_squat:"boxsquat",
   jumping_jack:"jack",high_knees:"hknees",step_aero:"stepaero",kick_punch:"kick",sun_salute:"sunsal",warrior1:"warrior",child_pose:"child",cat_cow:"catcow",tree_pose:"tree",
-  dip:"dip",leg_raise:"legraise",pistol:"pistol",burpee:"burpee",mtn_climber:"mtnclimb",squat_jump:"squatjump",crunch:"crunch",chinup:"pullup",run:"run",run_int:"run",ruck:"ruck"};
+  dip:"dip",leg_raise:"legraise",pistol:"pistol",burpee:"burpee",mtn_climber:"mtnclimb",squat_jump:"squatjump",crunch:"crunch",chinup:"pullup",run:"run",run_int:"run",ruck:"ruck",plate_chop:"pallof",plate_twist:"pallof",plate_goblet:"goblet",plate_press:"ohp",plate_pickup:"hinge_db"};
 /* Passi per principianti: [posizione di partenza, movimento, errore da evitare] */
 const STEPS = {
   squat:["Bilanciere sulla parte alta della schiena, mani poco più larghe delle spalle, piedi a larghezza spalle con le punte un po' aperte.","Inspira, porta il bacino indietro e in basso come per sederti, con le ginocchia che seguono le punte. Risali spingendo il pavimento.","Talloni che si staccano o ginocchia che collassano verso l'interno: riduci il carico e la profondità finché restano stabili."],
@@ -1258,6 +1280,7 @@ function available(id, p){
   if (L.only && !L.only.includes(prog)) return false;
   if (L.lvl==="adv" && p.level==="principiante") return false;
   if (prog==="cali" || prog==="mil"){ if (excludedSet(p).has(id) || ((p.det?.impact==="low" || (p.det?.dislikes||[]).includes("salti")) && L.impact)) return false; return L.need==="bw" || L.need==="bar"; }
+  if (prog==="disco"){ if (excludedSet(p).has(id)) return false; return L.need==="bw"; }
   const ex = excludedSet(p); if (ex.has(id)) return false;
   if ((p.det?.impact==="low" || (p.det?.dislikes||[]).includes("salti")) && L.impact) return false;
   if (prog==="casa" || prog==="yoga") return L.need==="bw";
@@ -1737,7 +1760,7 @@ function renderOnboarding(){
       <div class="field"><span>Giorni a settimana</span><div class="chips">${[2,3,4,5,6].map(n => chip("days",n,n+" giorni",o.days===n,"radio")).join("")}</div></div>
       <div class="field"><span>Quali giorni? (scegline ${o.days})</span><div class="chips">${[1,2,3,4,5,6,7].map(n => chip("weekdays",n,WD[n],o.weekdays.includes(n))).join("")}</div></div>
       <div class="field"><span>Quanto tempo per seduta?</span><div class="chips">${[30,45,60,75].map(n => chip("duration",n,n+" min",o.duration===n,"radio")).join("")}</div></div>
-      ${(o.prog||"pesi")==="pesi" ? `<div class="field"><span>Dove ti alleni?</span><div class="chips">${Object.entries(EQUIP).map(([k,l]) => chip("equip",k,l,o.equip===k,"radio")).join("")}</div></div>` : `<p class="small muted">${o.prog==="casa" ? "Programma senza attrezzatura." : "Servono una sbarra e, se possibile, delle parallele: vanno bene quelle di un parco."}</p>`}
+      ${(o.prog||"pesi")==="pesi" ? `<div class="field"><span>Dove ti alleni?</span><div class="chips">${Object.entries(EQUIP).map(([k,l]) => chip("equip",k,l,o.equip===k,"radio")).join("")}</div></div>` : `<p class="small muted">${o.prog==="casa" ? "Programma senza attrezzatura." : o.prog==="disco" ? "Serve un solo disco da bilanciere (5-15 kg bastano)." : "Servono una sbarra e, se possibile, delle parallele: vanno bene quelle di un parco."}</p>`}
       <div class="field"><span>Hai fastidi ricorrenti da rispettare?</span><div class="chips">${["knee","shoulder","back"].map(k => chip("limits",k,JOINT[k][0].toUpperCase()+JOINT[k].slice(1),o.limits.includes(k))).join("")}</div><span class="small muted">Gli esercizi che li sollecitano verranno evitati quando esiste un'alternativa.</span></div></div>`;
   }
   if (st===4){
