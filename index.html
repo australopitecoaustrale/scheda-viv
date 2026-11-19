@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="Scheda di allenamento che si adatta ogni giorno a come stai.">
-<meta name="theme-color" content="#2350D0">
+<meta name="theme-color" content="#F7F1E8">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -16,38 +16,38 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400..800&family=Newsreader:opsz,wght@6..72,300..600&display=swap">
 <style>
-/* Layout: colonna unica da app (max 620px), barra schede in basso. Un solo carattere (Archivo) usato in due larghezze:
-   largo e pesante per titoli e numeri, normale per il testo. L'unico gesto forte è il bilanciere caricato della prontezza. */
+/* Layout: colonna unica da app (max 620px), barra schede in basso. Grafica ispirata al linguaggio visivo di Oura (carta color crema,
+   verde bosco, titoli in serif leggero) con Newsreader per i titoli e Hanken Grotesk per testo e numeri. L'unico gesto forte è il bilanciere caricato della prontezza. */
 :root{
-  --bg:#F1F3F0; --surface:#FFFFFF; --sunk:#E6EAE5; --ink:#191C1A; --muted:#5C655F; --line:#D6DCD5;
-  --accent:#2350D0; --accent-ink:#FFFFFF; --accent-soft:#E0E7FB;
-  --go:#1E8A50; --go-soft:#DFF1E6; --warn:#946A00; --warn-soft:#F8EDCB; --stop:#C4342C; --stop-soft:#F9E1DE;
+  --bg:#F7F1E8; --surface:#FFFFFF; --sunk:#EFE7DA; --ink:#1C1B1A; --muted:#6B6862; --line:#E1DCD3;
+  --accent:#224228; --accent-ink:#F7F1E8; --accent-soft:#E1E6D0;
+  --go:#2E6B3A; --go-soft:#E1E8D3; --warn:#8A5A10; --warn-soft:#F3E4C2; --stop:#B6301C; --stop-soft:#F6DDD6;
   --work:#D9412A;
   --p25:#D7322C; --p20:#2457D6; --p15:#E8B90F; --p10:#24924F; --p5:#F4F4F2; --p2:#9AA3AE; --steel:#8E978F;
-  --f:"Archivo",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-  --r:14px; --r-sm:9px;
+  --f:"Hanken Grotesk",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; --fd:"Newsreader",Georgia,"Times New Roman",serif;
+  --r:20px; --r-sm:12px;
 }
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
-  --bg:#131513; --surface:#1B1E1B; --sunk:#242824; --ink:#E8ECE8; --muted:#9AA39C; --line:#2E332E;
-  --accent:#7C9BFF; --accent-ink:#0E1430; --accent-soft:#1F2A4C;
-  --go:#57C78B; --go-soft:#173222; --warn:#E6B940; --warn-soft:#352F10; --stop:#F27A70; --stop-soft:#3C1A17;
-  --p5:#D9DCDF; --steel:#6E776F; --work:#F06A4E; color-scheme:dark }}
+  --bg:#141311; --surface:#1D1B18; --sunk:#26231F; --ink:#F2EBDD; --muted:#A8A196; --line:#35312B;
+  --accent:#B7CDA6; --accent-ink:#14210F; --accent-soft:#263222;
+  --go:#8FC48A; --go-soft:#1E2E1D; --warn:#E0B45C; --warn-soft:#35290F; --stop:#F08A78; --stop-soft:#3C1E19;
+  --p5:#D9DCDF; --steel:#7A7468; --work:#F06A4E; color-scheme:dark }}
 :root[data-theme="dark"]{
-  --bg:#131513; --surface:#1B1E1B; --sunk:#242824; --ink:#E8ECE8; --muted:#9AA39C; --line:#2E332E;
-  --accent:#7C9BFF; --accent-ink:#0E1430; --accent-soft:#1F2A4C;
-  --go:#57C78B; --go-soft:#173222; --warn:#E6B940; --warn-soft:#352F10; --stop:#F27A70; --stop-soft:#3C1A17;
-  --p5:#D9DCDF; --steel:#6E776F; --work:#F06A4E; color-scheme:dark }
+  --bg:#141311; --surface:#1D1B18; --sunk:#26231F; --ink:#F2EBDD; --muted:#A8A196; --line:#35312B;
+  --accent:#B7CDA6; --accent-ink:#14210F; --accent-soft:#263222;
+  --go:#8FC48A; --go-soft:#1E2E1D; --warn:#E0B45C; --warn-soft:#35290F; --stop:#F08A78; --stop-soft:#3C1E19;
+  --p5:#D9DCDF; --steel:#7A7468; --work:#F06A4E; color-scheme:dark }
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:15.5px;line-height:1.5;font-variant-numeric:tabular-nums;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 104px}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
 .app{max-width:620px;margin:0 auto}
-h1,h2,h3{font-family:var(--f);line-height:1.08;text-wrap:balance;margin:0}
-h1{font-size:2.15rem;font-weight:850;font-stretch:125%;letter-spacing:-.015em}
-h2{font-size:1.45rem;font-weight:800;font-stretch:118%;letter-spacing:-.01em}
-h3{font-size:1.08rem;font-weight:750;font-stretch:112%}
+h1,h2,h3{font-family:var(--fd);line-height:1.1;text-wrap:balance;margin:0;font-weight:400}
+h1{font-size:2.4rem;font-weight:300;letter-spacing:-.015em}
+h2{font-size:1.6rem;font-weight:350;letter-spacing:-.01em}
+h3{font-size:1.2rem;font-weight:450}
 p{margin:0}
 .muted{color:var(--muted)}
 .small{font-size:.87rem}
@@ -60,7 +60,7 @@ p{margin:0}
 .grow{flex:1;min-width:0}
 header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:14px 12px;margin-bottom:14px}
 .brand{display:flex;align-items:center;gap:9px}
-.brand b{white-space:nowrap;font-size:1.15rem;font-weight:850;font-stretch:125%;letter-spacing:-.01em}
+.brand b{white-space:nowrap;font-family:var(--fd);font-size:1.3rem;font-weight:450;letter-spacing:-.01em}
 .brand-mark{width:22px;height:22px;border-radius:50%;border:4px solid var(--accent);position:relative;flex:none}
 .brand-mark::after{content:"";position:absolute;inset:4px;border-radius:50%;background:var(--accent)}
 .pill{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;font-size:.78rem;font-weight:600;background:var(--sunk);color:var(--muted)}
@@ -71,7 +71,7 @@ header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background
 button,.btn{font:inherit;cursor:pointer;border:0;border-radius:12px;padding:12px 16px;font-weight:650;background:var(--sunk);color:var(--ink);transition:transform .08s ease,background .15s ease}
 button:active{transform:scale(.98)}
 button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,.chip:focus-within,a:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
-.btn-primary{background:var(--accent);color:var(--accent-ink);font-stretch:110%;font-weight:750}
+.btn-primary{background:var(--accent);color:var(--accent-ink);font-weight:650;border-radius:999px;padding:13px 22px}
 .btn-ghost{background:transparent;box-shadow:inset 0 0 0 1px var(--line)}
 .btn-sm{padding:7px 12px;font-size:.84rem;border-radius:9px}
 .btn-danger{background:var(--stop-soft);color:var(--stop)}
@@ -103,7 +103,7 @@ nav.tabs a[aria-current="page"]{color:var(--ink)}
 nav.tabs a[aria-current="page"]::before{content:"";position:absolute;top:0;left:30%;right:30%;height:3px;border-radius:0 0 3px 3px;background:var(--accent)}
 .today-head{display:flex;flex-direction:column;gap:6px}
 .coach{background:var(--sunk);border-radius:var(--r);padding:14px 16px;display:flex;flex-direction:column;gap:4px}
-.coach b{font-size:1rem;font-weight:750;font-stretch:112%}
+.coach b{font-family:var(--fd);font-size:1.12rem;font-weight:450}
 .ex{padding:15px 0;display:flex;flex-direction:column;gap:10px}
 .ex-head{display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
 .ex-name{font-weight:700;font-size:1.03rem}
@@ -1850,7 +1850,7 @@ function barbell(score, zone, opts={}){
   let pl = "";
   for (let i=0;i<n;i++){ const h = H[i], y = 50-h/2, xl = 92-(i+1)*15, xr = 228+i*15;
     pl += `<rect class="pl" style="animation-delay:${i*70}ms" x="${xl}" y="${y}" width="12" height="${h}" rx="3" fill="${cols[i]}"/><rect class="pl" style="animation-delay:${i*70}ms" x="${xr}" y="${y}" width="12" height="${h}" rx="3" fill="${cols[i]}"/>`; }
-  const mid = opts.colors ? "" : `<text x="160" y="58" text-anchor="middle" font-family="Archivo,sans-serif" font-weight="850" font-stretch="125%" font-size="28" fill="var(--ink)">${score}</text>`;
+  const mid = opts.colors ? "" : `<text x="160" y="58" text-anchor="middle" font-family="Hanken Grotesk,sans-serif" font-weight="850" font-stretch="125%" font-size="28" fill="var(--ink)">${score}</text>`;
   return `<svg class="barbell" viewBox="0 0 320 100" role="img" aria-label="${opts.colors?"Bilanciere":"Prontezza "+score+" su 100"}">
     <rect x="6" y="46" width="308" height="8" rx="4" fill="var(--steel)"/>
     <rect x="92" y="40" width="8" height="20" rx="2" fill="var(--steel)"/><rect x="220" y="40" width="8" height="20" rx="2" fill="var(--steel)"/>
