@@ -1,5 +1,13 @@
 # Registro delle modifiche
 
+## 2026-11-19 — Macchina adduttori
+
+- **Catalogo (v3):** aggiunto «Macchina adduttori» (livello base), da un reel con una giornata gambe (leg curl sdraiato, adduttori, leg press, iperestensioni, polpacci, leg extension).
+- **Non aggiunto il leg curl da sdraiato:** nel catalogo c'è già il leg curl da seduto, che ha fatto crescere di più i femorali in 12 settimane ([Maeo et al. 2021, 10.1249/MSS.0000000000002523](https://doi.org/10.1249/MSS.0000000000002523)): +14% contro +9% del volume totale.
+- **Evidenze sugli adduttori:** pochi studi, nessuno sulla crescita muscolare. Un trial su calciatori mostra più forza eccentrica degli adduttori con 8 settimane di allenamento ([Jensen et al. 2014, 10.1136/bjsports-2012-091095](https://doi.org/10.1136/bjsports-2012-091095)); macchina ed elastico reclutano gli adduttori in modo simile in 16 donne ([Brandt et al. 2013, PMID 24377067](https://pubmed.ncbi.nlm.nih.gov/24377067/)). Per questo l'esercizio è descritto come opzione per forza e prevenzione, non come necessario.
+- Cache del service worker portata a `scheda-viva-v24`.
+- Nessuna modifica alla struttura dei dati salvati.
+
 ## 2026-11-19 — Nuovo programma «Core con un solo disco»
 
 - **Nuovo programma:** «Core con un solo disco» (3 sedute: A rotazioni, B stabilità e forza, C circuito), selezionabile alla creazione del profilo. Serve solo un disco da bilanciere (5-15 kg bastano).

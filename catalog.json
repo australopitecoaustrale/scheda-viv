@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "updated": "2026-11-19",
   "note": "Esercizi da palestra aggiunti dall'autore. L'app li legge all'apertura: basta pubblicare questo file su GitHub Pages.",
   "exercises": {
@@ -538,6 +538,27 @@
       "err": "Spalle che salgono verso le orecchie e collo in avanti: abbassa le spalle prima di tirare.",
       "adv": "Scegli la presa più comoda per le spalle e mantienila per tutta la serie; aumenta il carico di 2,5-5 kg quando completi tutte le serie.",
       "animNote": "Animazione della lat machine: il movimento è lo stesso, cambia solo la presa."
+    },
+    "adductor_machine": {
+      "n": "Macchina adduttori",
+      "p": "adduct",
+      "m": [
+        "adduttori"
+      ],
+      "need": "gym",
+      "t": "i",
+      "unit": "kg",
+      "anim": "legext",
+      "lvl": "base",
+      "cue": "Seduto con la schiena appoggiata, chiudi le gambe in modo lento e controllato, senza usare lo slancio.",
+      "steps": [
+        "Siediti con la schiena appoggiata, cuscinetti all'interno delle ginocchia e l'apertura regolata su un'ampiezza comoda.",
+        "Chiudi le gambe lentamente fino a unire i cuscinetti, senza spingere con la schiena.",
+        "Riapri in controllo fino all'ampiezza di partenza, senza lasciar cadere il peso."
+      ],
+      "err": "Aprire le gambe più di quanto riesci a controllare: l'interno coscia si stira con il peso addosso. Scegli un'apertura comoda.",
+      "adv": "Fai la fase di apertura in 3 secondi e una pausa di 1 secondo con le gambe chiuse.",
+      "animNote": "Animazione della leg extension: la posizione da seduti è simile."
     }
   }
 }
