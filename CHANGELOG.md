@@ -1,5 +1,12 @@
 # Registro delle modifiche
 
+## 2026-11-19 — Consiglio sul metodo 3/7
+
+- **Nuovo consiglio del giorno (TIPS):** «Poco tempo? Prova il 3/7» (serie da 3-7 ripetizioni, 15 secondi di pausa, circa 70% del massimale), presentato come opzione con prove ancora limitate.
+- **Nuove fonti (Metodo):** Gillet et al. (2026), trial su 71 pazienti cardiopatici, DOI [10.1097/PHM.0000000000003170](https://doi.org/10.1097/PHM.0000000000003170); Montemurro et al. (2026), 4 settimane in adulti sani, DOI [10.1007/s00421-025-06010-x](https://doi.org/10.1007/s00421-025-06010-x). Le percentuali di un reel sul bicipite (+9,6% contro +5,5%) non sono state trovate in PubMed e non sono riportate.
+- Cache del service worker portata a `scheda-viva-v20`.
+- Nessuna modifica alla struttura dei dati salvati.
+
 ## 2026-11-19 — Due nuove varianti di lat machine
 
 - **Catalogo (v2):** aggiunti «Lat machine con maniglia a V (presa neutra)» e «Lat machine con presa parallela larga», livello base, stessa animazione della lat machine.
